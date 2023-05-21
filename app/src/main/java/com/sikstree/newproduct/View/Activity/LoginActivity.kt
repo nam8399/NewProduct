@@ -2,11 +2,13 @@ package com.sikstree.newproduct.View.Activity
 
 import android.content.Intent
 import android.graphics.Color
+import android.opengl.Visibility
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -41,12 +43,15 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initView() {
         val name : String = "불타는삼각김밥"
-        val builder = SpannableStringBuilder(name + "님\n프로필을 선택해 주세요!")
+        val builder_main = SpannableStringBuilder(name + "님\n프로필을 선택해 주세요!")
+        val builder_welcome = SpannableStringBuilder("어서오세요!\n" + name + "님")
 
         val colorBlueSpan = ForegroundColorSpan(Color.parseColor("#0CFBB2"))
-        builder.setSpan(colorBlueSpan, 0, name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        builder_main.setSpan(colorBlueSpan, 0, name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        builder_welcome.setSpan(colorBlueSpan, 0, name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-        binding.loginText.setText(builder)
+        binding.loginText.setText(builder_main)
+        binding.loginTextWelcome.setText(builder_welcome)
 
         var listManager = GridLayoutManager(this, 4)
         var listAdapter = viewModel.ListAdapterGrid()
@@ -60,6 +65,11 @@ class LoginActivity : AppCompatActivity() {
 
 
         binding.btnStartActive.setOnClickListener() {
+//            binding.loginMainLayout.visibility = View.GONE
+            binding.loginWelcomeLayout.visibility = View.VISIBLE
+        }
+
+        binding.loginWelcomeLayout.setOnClickListener() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
