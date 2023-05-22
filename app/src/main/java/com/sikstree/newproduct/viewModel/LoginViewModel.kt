@@ -72,7 +72,7 @@ class LoginViewModel() : ViewModel() {
 //            itemUrl = item.age.toString()
                 Glide
                     .with(itemView)
-                    .load(item.img)
+                    .load(R.drawable.ic_launcher_foreground)
                     .centerCrop()
                     .into(itemImg)
 
