@@ -4,10 +4,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.sikstree.newproduct.Data.UiState
 import com.sikstree.newproduct.R
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class MainViewModel() : ViewModel() {
     private val title = "MainViewModel"
+
+    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    val uiState = _uiState.asStateFlow()
 
     var serverStatus = MutableLiveData<String>()
     var serverHostTxt = MutableLiveData<String>()

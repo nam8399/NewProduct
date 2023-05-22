@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import com.sikstree.newproduct.Data.UiState
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.databinding.FragmentHomeBinding
 import com.sikstree.newproduct.viewModel.HomeViewModel
@@ -34,10 +37,40 @@ class HomeFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        initView()
+        showSomething()
 
-//        observerServerStatus()
 
+
+    }
+
+    private fun showSomething() { // UI State 정의
+        val viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
+
+        viewModel.uiState.asLiveData().observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is UiState.Loading -> {
+//                    showLoadingView()
+//                    hideRecyclerView()
+                }
+                is UiState.Empty -> {
+//                    hideLoadingView()
+//                    showEmptyText()
+                }
+                is UiState.Success -> {
+//                    hideLoadingView()
+//                    showRecyclerView()
+//                    adapter.submitList(it)
+                }
+                is UiState.Error -> {
+//                    hideLoadingView()
+//                    showErrorText(it.message.toString())
+                }
+            }
+        })
     }
 
 //    private fun initView() { // 홈 화면 뷰 초기화
