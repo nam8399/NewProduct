@@ -20,8 +20,8 @@ class MainViewModel() : ViewModel() {
 
     companion object {
         const val TAG_HOME = "home_fragment"
-        const val TAG_SERVERLIST = "serverlist_fragment"
-        const val TAG_ABOUT = "about_fragment"
+        const val TAG_PRODUCT = "product_fragment"
+        const val TAG_AUTH = "auth_fragment"
     }
 
     init {
@@ -41,15 +41,15 @@ class MainViewModel() : ViewModel() {
         }
 
         val home = manager.findFragmentByTag(Companion.TAG_HOME)
-        val serverlist = manager.findFragmentByTag(Companion.TAG_SERVERLIST)
-        val about = manager.findFragmentByTag(Companion.TAG_ABOUT)
+        val product = manager.findFragmentByTag(Companion.TAG_PRODUCT)
+        val about = manager.findFragmentByTag(Companion.TAG_AUTH)
 
         if (home != null){
             fragTransaction.hide(home)
         }
 
-        if (serverlist != null){
-            fragTransaction.hide(serverlist)
+        if (product != null){
+            fragTransaction.hide(product)
         }
 
         if (about != null) {
@@ -62,13 +62,13 @@ class MainViewModel() : ViewModel() {
             }
         }
 
-        else if (tag == Companion.TAG_SERVERLIST) {
-            if (serverlist != null) {
-                fragTransaction.show(serverlist)
+        else if (tag == Companion.TAG_PRODUCT) {
+            if (product != null) {
+                fragTransaction.show(product)
             }
         }
 
-        else if (tag == Companion.TAG_ABOUT){
+        else if (tag == Companion.TAG_AUTH){
             if (about != null){
                 fragTransaction.show(about)
             }

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.opengl.Visibility
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
@@ -67,13 +69,14 @@ class LoginActivity : AppCompatActivity() {
         binding.btnStartActive.setOnClickListener() {
 //            binding.loginMainLayout.visibility = View.GONE
             binding.loginWelcomeLayout.visibility = View.VISIBLE
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }, 3000)
+
         }
 
-        binding.loginWelcomeLayout.setOnClickListener() {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
     }
 
 

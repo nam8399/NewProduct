@@ -8,13 +8,13 @@
         android:icon="@drawable/icon_home"/>
 
     <item
-        android:id="@+id/serverlistFragment"
-        android:title="서버리스트"
+        android:id="@+id/productFragment"
+        android:title="제품 소개"
         android:icon="@drawable/icon_home"/>
 
     <item
-        android:id="@+id/aboutFragment"
-        android:title="스킨 검색"
+        android:id="@+id/authFragment"
+        android:title="인증"
         android:icon="@drawable/icon_home"/>
 
 </menu>

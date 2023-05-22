@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -22,13 +20,11 @@ import com.sikstree.newproduct.Adapter.ViewPager2Adater
 import com.sikstree.newproduct.Data.UiState
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Activity.MainActivity
-import com.sikstree.newproduct.databinding.FragmentHomeBinding
+import com.sikstree.newproduct.databinding.FragmentAuthBinding
 import com.sikstree.newproduct.viewModel.HomeViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 
-class HomeFragment() : Fragment() {
-    lateinit var binding : FragmentHomeBinding
+class AuthFragment() : Fragment() {
+    lateinit var binding : FragmentAuthBinding
     var isSeverAdd : Boolean = false
 //    lateinit var job : Job
     var bannerPosition : Int = 0
@@ -42,7 +38,7 @@ class HomeFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_auth, container, false)
 
         return binding.root
     }

@@ -23,12 +23,13 @@ import com.sikstree.newproduct.Data.UiState
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Activity.MainActivity
 import com.sikstree.newproduct.databinding.FragmentHomeBinding
+import com.sikstree.newproduct.databinding.FragmentProductBinding
 import com.sikstree.newproduct.viewModel.HomeViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 
-class HomeFragment() : Fragment() {
-    lateinit var binding : FragmentHomeBinding
+class ProductFragment() : Fragment() {
+    lateinit var binding : FragmentProductBinding
     var isSeverAdd : Boolean = false
 //    lateinit var job : Job
     var bannerPosition : Int = 0
@@ -42,7 +43,7 @@ class HomeFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_product, container, false)
 
         return binding.root
     }
@@ -160,6 +161,9 @@ class HomeFragment() : Fragment() {
         })
 
 
+        binding.imgCookie.setOnClickListener {
+            binding.imgCookie.isSelected = binding.imgCookie.isSelected != true
+        }
     }
 
 

@@ -10,10 +10,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import com.google.firebase.messaging.FirebaseMessaging
 import com.sikstree.newproduct.R
+import com.sikstree.newproduct.View.Fragment.AuthFragment
 import com.sikstree.newproduct.View.Fragment.HomeFragment
+import com.sikstree.newproduct.View.Fragment.ProductFragment
 import com.sikstree.newproduct.databinding.ActivityMainBinding
 import com.sikstree.newproduct.viewModel.MainViewModel
+import com.sikstree.newproduct.viewModel.MainViewModel.Companion.TAG_AUTH
 import com.sikstree.newproduct.viewModel.MainViewModel.Companion.TAG_HOME
+import com.sikstree.newproduct.viewModel.MainViewModel.Companion.TAG_PRODUCT
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
@@ -31,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         initFirebase()
         updateResult()
-
+        onClick()
 
     }
 
@@ -45,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     private fun initFirebase() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                binding.tokenId.text = task.result
+//                binding.tokenId.text = task.result
                 Log.d("토큰", task.result)
             }
         }
@@ -54,11 +58,23 @@ class MainActivity : AppCompatActivity() {
     private fun updateResult(isNewIntent: Boolean = false) {
         //true -> notification 으로 갱신된 것
         //false -> 아이콘 클릭으로 앱이 실행된 것
-        binding.tokenId.text = (intent.getStringExtra("notificationType") ?: "앱 런처") + if (isNewIntent) {
-            "(으)로 갱신했습니다."
-        } else {
-            "(으)로 실행했습니다."
+//        binding.tokenId.text = (intent.getStringExtra("notificationType") ?: "앱 런처") + if (isNewIntent) {
+//            "(으)로 갱신했습니다."
+//        } else {
+//            "(으)로 실행했습니다."
+//        }
+    }
+
+    fun onClick() {
+        binding.navigationView.setOnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.homeFragment -> viewModel.setFragment(TAG_HOME, HomeFragment(), fragmentManager)
+                R.id.productFragment -> viewModel.setFragment(TAG_PRODUCT, ProductFragment(), fragmentManager)
+                R.id.authFragment-> viewModel.setFragment(TAG_AUTH, AuthFragment(), fragmentManager)
+            }
+            true
         }
+
     }
 
 

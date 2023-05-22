@@ -18,17 +18,8 @@
 
         <FrameLayout
             android:id="@+id/mainFrameLayout"
-            android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/token_id"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:textColor="@color/black"
-                android:text="하위"
-                android:textSize="20dp">
-            </TextView>
         </FrameLayout>
 
 
