@@ -2,10 +2,10 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:color="@color/black"
+        android:color="#0CFBB2"
         android:state_checked="true"/>
 
     <item
-        android:color="@color/cardview_shadow_end_color"
+        android:color="#676767"
         android:state_checked="false"/>
 </selector>

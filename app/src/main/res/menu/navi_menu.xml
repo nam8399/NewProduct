@@ -5,16 +5,16 @@
     <item
         android:id="@+id/homeFragment"
         android:title="홈"
-        android:icon="@drawable/ic_home"/>
+        android:icon="@drawable/icon_home"/>
 
     <item
         android:id="@+id/serverlistFragment"
         android:title="서버리스트"
-        android:icon="@drawable/ic_menu"/>
+        android:icon="@drawable/icon_home"/>
 
     <item
         android:id="@+id/aboutFragment"
         android:title="스킨 검색"
-        android:icon="@drawable/ic_search"/>
+        android:icon="@drawable/icon_home"/>
 
 </menu>
