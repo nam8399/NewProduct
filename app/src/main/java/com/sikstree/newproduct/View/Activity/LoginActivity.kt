@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
 
         val colorBlueSpan = ForegroundColorSpan(Color.parseColor("#0CFBB2"))
         builder_main.setSpan(colorBlueSpan, 0, name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        builder_welcome.setSpan(colorBlueSpan, 0, name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        builder_welcome.setSpan(colorBlueSpan, 7, name.length + 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         binding.loginText.setText(builder_main)
         binding.loginTextWelcome.setText(builder_welcome)
