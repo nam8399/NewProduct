@@ -95,115 +95,25 @@ class ProductFragment() : Fragment() {
         binding.viewModel = viewModel
 
 
-
-
-
-
-        var list = ArrayList<Int>()
-
-        list.add(Color.parseColor("#ffff00"))
-        list.add(Color.parseColor("#bdbdbd"))
-        list.add(Color.parseColor("#0f9231"))
-        var adapter = ViewPager2Adater(list,activity as MainActivity)
-
-        binding.viewpager2.offscreenPageLimit=3
-        binding.viewpager2.getChildAt(0).overScrollMode=View.OVER_SCROLL_NEVER
-        binding.viewpager2.adapter = adapter
-
-        setupOnBoardingIndicators()
-        setCurrentOnboardingIndicator(0)
-
-        var transform = CompositePageTransformer()
-        transform.addTransformer(MarginPageTransformer(8))
-
-        transform.addTransformer(ViewPager2.PageTransformer{ view: View, fl: Float ->
-            var v = 1-Math.abs(fl)
-            view.scaleY = 0.6f + v * 0.4f
-        })
-
-        binding.viewpager2.setPageTransformer(transform)
-
-        adapter.setItemClickListener(object : ViewPager2Adater.OnItemClickListener{
-            override fun onClick(v: View, position: Int) {
-//                val intent = Intent(context, WebviewActivity::class.java)
-//                if (position == 0) {
-//                    intent.putExtra("url","https://www.youtube.com/watch?v=n1PkmOU7H2w")
-//                } else if(position == 1) {
-//                    intent.putExtra("url", "https://www.youtube.com/watch?v=hvydITbP-YE&t=95s")
-//                } else if(position == 2) {
-//                    intent.putExtra("url", "https://www.youtube.com/watch?v=n1PkmOU7H2w&t=2s")
-//                }
-//                startActivity(intent)
-            }
-        })
-
-        binding.viewpager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position : Int){
-                super.onPageSelected(position)
-                bannerPosition = position
-
-                setCurrentOnboardingIndicator(position)
-            }
-
-//            override fun onPageScrollStateChanged(state: Int) {
-//                super.onPageScrollStateChanged(state)
-//                super.onPageScrollStateChanged(state)
-//                when (state) {
-//                    ViewPager2.SCROLL_STATE_IDLE ->{
-//                        if (!job.isActive) scrollJobCreate()
-//                    }
-//
-//                    ViewPager2.SCROLL_STATE_DRAGGING -> job.cancel()
-//
-//                    ViewPager2.SCROLL_STATE_SETTLING -> {}
-//                }
-//            }
-        })
-
-
         binding.imgCookie.setOnClickListener {
             binding.imgCookie.isSelected = binding.imgCookie.isSelected != true
         }
-    }
 
+        binding.imgBread.setOnClickListener {
+            binding.imgBread.isSelected = binding.imgBread.isSelected != true
+        }
 
-    private fun setupOnBoardingIndicators(){ // 건축강의 뷰 인디게이터 구성셋팅
-        val indicators =
-            arrayOfNulls<ImageView>(3)
+        binding.imgRice.setOnClickListener {
+            binding.imgRice.isSelected = binding.imgRice.isSelected != true
+        }
 
-        var layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-
-        layoutParams.setMargins(8,0,8,0)
-
-        for( i in indicators.indices){
-            indicators[i] = ImageView(activity as MainActivity)
-            indicators[i]?.setImageDrawable(
-                ContextCompat.getDrawable(
-                    activity as MainActivity,
-                    R.drawable.onboarding_indicator_inactive
-                ))
-
-            indicators[i]?.layoutParams = layoutParams
-
-            binding.indicators?.addView(indicators[i])
+        binding.imgDrink.setOnClickListener {
+            binding.imgDrink.isSelected = binding.imgDrink.isSelected != true
         }
     }
 
-    private fun setCurrentOnboardingIndicator( index : Int){ // 건축 강의 인디게이터 뷰 이미지 셋팅
-        var childCount = binding.indicators?.childCount
-        for(i in  0 until childCount!!){
-            var imageView = binding.indicators?.getChildAt(i) as ImageView
-            if(i==index){
-                imageView.setImageDrawable(ContextCompat.getDrawable(activity as MainActivity,
-                    R.drawable.onboarding_indicator_active))
-            }else{
-                imageView.setImageDrawable(ContextCompat.getDrawable(activity as MainActivity,
-                    R.drawable.onboarding_indicator_inactive))
-            }
-        }
-    }
+
+
 
 //    fun scrollJobCreate() { // auto Scroll을 위한 함수
 //        job = lifecycleScope.launchWhenResumed {

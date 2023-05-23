@@ -78,19 +78,21 @@
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_marginLeft="16dp"
-                        android:src="@drawable/icon_drink">
+                        android:src="@drawable/selector_drink">
                     </ImageView>
                     <ImageView
                         android:id="@+id/img_cookie"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_marginLeft="16dp"
-                        android:src="@drawable/icon_cookie">
+                        android:src="@drawable/selector_cookie">
                     </ImageView>
                     <ImageView
+                        android:id="@+id/img_rice"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
-                        android:layout_marginLeft="16dp">
+                        android:layout_marginLeft="16dp"
+                        android:src="@drawable/selector_rice">
                     </ImageView>
 
                 </LinearLayout>
