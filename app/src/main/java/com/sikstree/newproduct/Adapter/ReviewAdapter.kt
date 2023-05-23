@@ -56,8 +56,8 @@ class ReviewAdapter(private val context: Context) : RecyclerView.Adapter<ReviewA
 
             when(item.review_brand_idx){
                 1 -> Glide.with(itemView).load(R.drawable.icon_cu).into(review_brand_img)
-//                2 -> Glide.with(itemView).load(R.drawable.icon_2).into(review_brand_img)
-//                3 -> Glide.with(itemView).load(R.drawable.icon_3).into(review_brand_img)
+                2 -> Glide.with(itemView).load(R.drawable.icon_gs25).into(review_brand_img)
+                3 -> Glide.with(itemView).load(R.drawable.icon_7eleven).into(review_brand_img)
 
             }
 
