@@ -17,7 +17,7 @@
             android:id="@+id/review_brand_img"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/icon_cu_circle"
+            android:src="@drawable/icon_cu"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="17dp">
         </ImageView>
@@ -135,20 +135,34 @@
         android:textColor="#979B9B"
         android:textSize="14sp">
     </TextView>
-    <TextView
+    <LinearLayout
         android:id="@+id/review_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="23개의 리뷰 모두 보기"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/review_text"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="18dp"
-        android:textColor="#979B9B"
-        android:textSize="14sp">
-    </TextView>
+        app:layout_constraintTop_toBottomOf="@+id/review_comment_count">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="불타는삼각김밥"
+             android:layout_marginLeft="20dp"
+            android:layout_marginTop="18dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="14sp">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="지립니다"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="18dp"
+            android:textColor="#E7E7E7"
+            android:textSize="14sp">
+        </TextView>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
