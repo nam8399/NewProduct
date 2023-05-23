@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ImageView.ScaleType
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.sikstree.newproduct.R
 
 class ViewPager2Adater(var list : ArrayList<Int>,var context : Context)  : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -35,15 +36,29 @@ class ViewPager2Adater(var list : ArrayList<Int>,var context : Context)  : Recyc
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 //        (holder as viewHolder).image.setBackgroundColor(list.get(position))
         if(position == 0) {
-            (holder as viewHolder).image.setImageResource(R.drawable.banner_1)
-            (holder as viewHolder).image.scaleType = ScaleType.CENTER_CROP
+            Glide.with(context)
+                .load(list.get(0))
+                .centerCrop()
+                .into((holder as viewHolder).image)
+//            (holder as viewHolder).image.setImageResource(R.drawable.img_retro_place)
+//            (holder as viewHolder).image.scaleType = ScaleType.CENTER_CROP
         } else if (position == 1) {
-            (holder as viewHolder).image.setImageResource(R.drawable.banner_2)
-            (holder as viewHolder).image.scaleType = ScaleType.CENTER_CROP
+            Glide.with(context)
+                .load(list.get(1))
+                .centerCrop()
+                .into((holder as viewHolder).image)
+//            (holder as viewHolder).image.setImageResource(R.drawable.img_retro_place)
+//            (holder as viewHolder).image.scaleType = ScaleType.CENTER_CROP
         } else if (position ==2) {
-            (holder as viewHolder).image.setImageResource(R.drawable.banner_bed)
-            (holder as viewHolder).image.scaleType = ScaleType.CENTER_CROP
+            Glide.with(context)
+                .load(list.get(2))
+                .centerCrop()
+                .into((holder as viewHolder).image)
+
+//            (holder as viewHolder).image.setImageResource(R.drawable.img_retro_place)
+//            (holder as viewHolder).image.scaleType = ScaleType.CENTER_CROP
         }
+
 
         (holder as viewHolder).image.setOnClickListener {
             itemClickListener.onClick(it, position)
