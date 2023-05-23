@@ -98,7 +98,8 @@
             <LinearLayout
                 android:id="@+id/frame_cu"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.7"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:padding="10dp"
@@ -108,37 +109,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/linear2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:layout_width="match_parent"
-                        android:layout_height="216dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:id="@+id/viewpager2"
-                        android:clipChildren="false"
-                        android:clipToPadding="false"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="20dp"
-                        android:orientation="horizontal"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:id="@+id/indicators"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/viewpager2"
-                        app:layout_constraintBottom_toBottomOf="parent"
-
-                        android:padding="15dp"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
             <View
                 android:id="@+id/linear2"
