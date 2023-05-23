@@ -18,7 +18,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.sikstree.newproduct.Adapter.ReviewAdapter
 import com.sikstree.newproduct.Adapter.ViewPager2Adater
+import com.sikstree.newproduct.Data.ReviewData
 import com.sikstree.newproduct.Data.UiState
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Activity.MainActivity
@@ -30,9 +32,10 @@ import kotlinx.coroutines.delay
 
 class ProductFragment() : Fragment() {
     lateinit var binding : FragmentProductBinding
-    var isSeverAdd : Boolean = false
-//    lateinit var job : Job
-    var bannerPosition : Int = 0
+    lateinit var reviewAdapter: ReviewAdapter
+    val datas = mutableListOf<ReviewData>()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +97,12 @@ class ProductFragment() : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        onclick()
+        initRecycler()
 
+    }
+
+    private fun onclick() {
         binding.imgCookie.setOnClickListener {
             binding.imgCookie.isSelected = binding.imgCookie.isSelected != true
         }
@@ -109,6 +117,30 @@ class ProductFragment() : Fragment() {
 
         binding.imgDrink.setOnClickListener {
             binding.imgDrink.isSelected = binding.imgDrink.isSelected != true
+        }
+    }
+
+
+    private fun initRecycler() {
+        reviewAdapter = ReviewAdapter(activity as MainActivity)
+        binding.reviewRecycler.adapter = reviewAdapter
+
+
+        datas.apply {
+            add(ReviewData(1, 1, "연세우유 말차생크림빵", "최고에요!", "3,800",
+                        "제품 설명을 해드리겠습니다.", "23개의 리뷰 모두 보기", "불타는삼각김밥", "지립니다."))
+            add(ReviewData(1, 1, "연세우유 말차생크림빵", "최고에요!", "3,800",
+                "제품 설명을 해드리겠습니다.", "23개의 리뷰 모두 보기", "불타는삼각김밥", "지립니다."))
+            add(ReviewData(1, 1, "연세우유 말차생크림빵", "최고에요!", "3,800",
+                "제품 설명을 해드리겠습니다.", "23개의 리뷰 모두 보기", "불타는삼각김밥", "지립니다."))
+            add(ReviewData(1, 1, "연세우유 말차생크림빵", "최고에요!", "3,800",
+                "제품 설명을 해드리겠습니다.", "23개의 리뷰 모두 보기", "불타는삼각김밥", "지립니다."))
+
+
+
+            reviewAdapter.datas = datas
+            reviewAdapter.notifyDataSetChanged()
+
         }
     }
 
