@@ -109,8 +109,6 @@ class HomeFragment() : Fragment() {
         binding.viewpager2.getChildAt(0).overScrollMode=View.OVER_SCROLL_NEVER
         binding.viewpager2.adapter = adapter
 
-        setupOnBoardingIndicators()
-        setCurrentOnboardingIndicator(0)
 
         var transform = CompositePageTransformer()
         transform.addTransformer(MarginPageTransformer(8))
@@ -141,7 +139,6 @@ class HomeFragment() : Fragment() {
                 super.onPageSelected(position)
                 bannerPosition = position
 
-                setCurrentOnboardingIndicator(position)
             }
 
 //            override fun onPageScrollStateChanged(state: Int) {
@@ -163,43 +160,7 @@ class HomeFragment() : Fragment() {
     }
 
 
-    private fun setupOnBoardingIndicators(){ // 건축강의 뷰 인디게이터 구성셋팅
-        val indicators =
-            arrayOfNulls<ImageView>(3)
 
-        var layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-
-        layoutParams.setMargins(8,0,8,0)
-
-        for( i in indicators.indices){
-            indicators[i] = ImageView(activity as MainActivity)
-            indicators[i]?.setImageDrawable(
-                ContextCompat.getDrawable(
-                    activity as MainActivity,
-                    R.drawable.onboarding_indicator_inactive
-                ))
-
-            indicators[i]?.layoutParams = layoutParams
-
-            binding.indicators?.addView(indicators[i])
-        }
-    }
-
-    private fun setCurrentOnboardingIndicator( index : Int){ // 건축 강의 인디게이터 뷰 이미지 셋팅
-        var childCount = binding.indicators?.childCount
-        for(i in  0 until childCount!!){
-            var imageView = binding.indicators?.getChildAt(i) as ImageView
-            if(i==index){
-                imageView.setImageDrawable(ContextCompat.getDrawable(activity as MainActivity,
-                    R.drawable.onboarding_indicator_active))
-            }else{
-                imageView.setImageDrawable(ContextCompat.getDrawable(activity as MainActivity,
-                    R.drawable.onboarding_indicator_inactive))
-            }
-        }
-    }
 
 //    fun scrollJobCreate() { // auto Scroll을 위한 함수
 //        job = lifecycleScope.launchWhenResumed {
