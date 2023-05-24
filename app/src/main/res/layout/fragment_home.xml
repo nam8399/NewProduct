@@ -14,11 +14,10 @@
         android:layout_height="match_parent"
         android:background="@color/backgroundColor"
         tools:context=".View.Fragment.HomeFragment">
-
-        <!-- TODO: Update blank fragment layout -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/home_text_layout"
                 android:layout_width="match_parent"
@@ -35,6 +34,7 @@
                     android:textStyle="bold"
                     android:layout_marginTop="32dp"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="24dp"
                     android:textSize="28sp"
                     android:lineSpacingExtra="-5sp"
                     android:gravity="center_vertical">
@@ -43,116 +43,221 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="bottom"
-                    android:layout_margin="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="26dp"
                     android:src="@drawable/icon_face_yummy">
                 </ImageView>
             </LinearLayout>
-            <View
-                android:id="@+id/linear1"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/home_text_layout"
-                android:background="#6F38DE"
-                android:layout_marginTop="20dp">
-            </View>
-            <LinearLayout
-                android:id="@+id/title_cu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear1">
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/icon_cu_circle"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="17dp">
-                </ImageView>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:text="CU"
-                        android:textColor="@color/white"
-                        android:textStyle="bold">
-                    </TextView>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:textColor="#E7E7E7"
-                        android:text="간단한 소개글?">
-                    </TextView>
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/frame_cu"
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:padding="10dp"
-                android:elevation="3dp"
-                android:orientation="vertical"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/title_cu"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                android:layout_height="match_parent">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <androidx.viewpager2.widget.ViewPager2
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/frame_cu"
                         android:layout_width="match_parent"
-                        android:layout_height="216dp"
+                        android:layout_height="390dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/frame_cu"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:id="@+id/viewpager2"
-                        android:clipChildren="false"
-                        android:clipToPadding="false"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="20dp"
-                        android:orientation="horizontal"/>
+                        app:layout_constraintTop_toTopOf="parent">
+                        <LinearLayout
+                            android:id="@+id/title_cu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/icon_cu_circle"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="17dp">
+                            </ImageView>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="18sp"
+                                    android:text="CU"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold">
+                                </TextView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:textColor="#E7E7E7"
+                                    android:text="간단한 소개글?">
+                                </TextView>
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/frame_cu_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:padding="10dp"
+                            android:elevation="3dp"
+                            android:orientation="vertical"
+                            android:layout_marginTop="20dp"
+                            app:layout_constraintTop_toBottomOf="@+id/title_cu"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent">
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <androidx.viewpager2.widget.ViewPager2
+                                    android:layout_width="match_parent"
+                                    android:layout_height="216dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:id="@+id/viewpager2"
+                                    android:clipChildren="false"
+                                    android:clipToPadding="false"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="20dp"
+                                    android:orientation="horizontal"/>
 
-                    <LinearLayout
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:id="@+id/indicators"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:gravity="center"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/viewpager2"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+
+                                    android:padding="15dp"/>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/frame_gs25"
                         android:layout_width="match_parent"
-                        android:id="@+id/indicators"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
+                        android:layout_height="390dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="32dp"
+                        android:background="@drawable/frame_gs25"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/viewpager2"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/frame_cu">
+                        <LinearLayout
+                            android:id="@+id/title_gs25"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="5dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/icon_cu_circle"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginTop="17dp">
+                            </ImageView>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="15dp"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="18sp"
+                                    android:text="GS25"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold">
+                                </TextView>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:textColor="#E7E7E7"
+                                    android:text="간단한 소개글?">
+                                </TextView>
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/frame_gs25_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:padding="10dp"
+                            android:elevation="3dp"
+                            android:orientation="vertical"
+                            android:layout_marginTop="20dp"
+                            app:layout_constraintTop_toBottomOf="@+id/title_gs25"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent">
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+                                <androidx.viewpager2.widget.ViewPager2
+                                    android:layout_width="match_parent"
+                                    android:layout_height="216dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    android:id="@+id/viewpager2_gs"
+                                    android:clipChildren="false"
+                                    android:clipToPadding="false"
+                                    android:paddingStart="10dp"
+                                    android:paddingEnd="10dp"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="20dp"
+                                    android:orientation="horizontal"/>
 
-                        android:padding="15dp"/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:id="@+id/indicators_gs"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:gravity="center"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/viewpager2_gs"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+
+                                    android:padding="15dp"/>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
-            <View
-                android:id="@+id/linear2"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frame_cu"
-                android:background="#6F38DE"
-                android:layout_marginTop="20dp">
-            </View>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+
+        </LinearLayout>
+        <!-- TODO: Update blank fragment layout -->
     </FrameLayout>
 </layout>
 
