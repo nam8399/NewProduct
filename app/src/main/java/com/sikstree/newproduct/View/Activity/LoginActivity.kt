@@ -1,5 +1,6 @@
 package com.sikstree.newproduct.View.Activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,14 +11,24 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.airbnb.lottie.model.content.RoundedCorners
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.sikstree.newproduct.Data.LoginState
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.databinding.ActivityLoginBinding
 import com.sikstree.newproduct.viewModel.LoginViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
@@ -26,13 +37,53 @@ class LoginActivity : AppCompatActivity() {
 
     private val TAG = this.javaClass.simpleName
 
-    private lateinit var launcher: ActivityResultLauncher<Intent>
-    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var fetchJob: Job
 
-    private var email: String = ""
-    private var tokenId: String? = null
+    private var tokenId: String? = null  //Google Auth 인증에 성공하면 token 값으로 설정된다
 
     var backPressedTime : Long = 0
+
+
+    /* GoogleSignInOptions */
+    private val googleSignInOptions: GoogleSignInOptions by lazy {
+        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+    }
+
+    /* GoogleSignIn */
+    private val googleSignIn by lazy {
+        GoogleSignIn.getClient(this, googleSignInOptions)
+    }
+
+    /* FirebaseAuth */
+    private val firebaseAuth by lazy {
+        FirebaseAuth.getInstance()
+    }
+
+    /* Google Auth 로그인 결과 수신 */
+    private val loginLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            Log.d(TAG, "loginLauncher - result : $result")
+            if (result.resultCode == Activity.RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                try {
+                    task.getResult(ApiException::class.java)?.let { account ->
+                        Log.d(TAG, "loginLauncher - firebaseAuthWithGoogle : ${account.id}")
+                        tokenId = account.idToken
+                        viewModel.saveToken(
+                            tokenId ?: throw java.lang.Exception()
+                        )  //Loading 상태 이후 Login 상태로 변경
+                    } ?: throw Exception()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    handleErrorState()  //Error 상태
+                }
+            } else {
+                handleErrorState()  //Error 상태
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,26 +93,103 @@ class LoginActivity : AppCompatActivity() {
 
 //        viewModel.setFragment(TAG_HOME, HomeFragment(), fragmentManager)
 
-        initView()
+        fetchJob = viewModel.fetchData(tokenId)
+        initViews()
+        observeData()
     }
 
-    private fun initView() {
-        firebaseAuth = FirebaseAuth.getInstance()
-        launcher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(), ActivityResultCallback { result ->
-                Log.e(TAG, "resultCode : ${result.resultCode}")
-                Log.e(TAG, "result : $result")
-                if (result.resultCode == AppCompatActivity.RESULT_OK) {
-                    viewModel.initFirebase(result)
+    private fun initViews() = with(binding) {
+        tokenId?.let {  //로그인 된 상태
+//            groupLoginRequired.isGone = true
+//            groupLogoutRequired.isVisible = true
+        } ?: kotlin.run {  //로그인 안된 상태
+//            groupLoginRequired.isVisible = true
+//            groupLogoutRequired.isGone = true
+        }
+
+        binding.loginGoogle.setOnClickListener {   //로그인 버튼 클릭 시
+            val signInIntent: Intent = googleSignIn.signInIntent
+            loginLauncher.launch(signInIntent)  //loginLauncher 로 결과 수신하여 처리
+        }
+//        btnLogout.setOnClickListener {  //로그아웃 버튼 클릭 시
+//            viewModel.signOut()
+//        }
+    }
+
+
+    /* viewModel 을  관찰하여 상태 변화에 따라 처리 */
+    private fun observeData() = viewModel.loginStateLiveData.observe(this) {
+        Log.d(TAG, "observeData() - it : $it")
+        when (it) {
+            is LoginState.UnInitialized -> initViews()
+            is LoginState.Loading -> handleLoadingState()
+            is LoginState.Login -> handleLoginState(it)
+            is LoginState.Success -> handleSuccessState(it)
+            is LoginState.Error -> handleLoadingState()
+        }
+    }
+
+
+    /* Loading 상태인 경우 */
+    private fun handleLoadingState() = with(binding) {
+//        progressBar.isVisible = true
+//        groupLoginRequired.isGone = true
+//        groupLogoutRequired.isGone = true
+    }
+
+
+    /* Google Auth Login 상태인 경우 */
+    private fun handleLoginState(state: LoginState.Login) = with(binding) {
+//        progressBar.isVisible = true
+        val credential = GoogleAuthProvider.getCredential(state.idToken, null)
+        firebaseAuth.signInWithCredential(credential)
+            .addOnCompleteListener(this@LoginActivity) { task ->
+                if (task.isSuccessful) {  //Login 성공
+                    viewModel?.setUserInfo(firebaseAuth.currentUser)  //Login 상태 이후 Success 상태로 변경, 정보 설정
+                } else { //Login 실패
+                    viewModel?.setUserInfo(null)
                 }
-            })
+            }
+    }
 
 
-        binding.run {
-            loginGoogle.setOnClickListener {
-                viewModel?.googleSignIn(this@LoginActivity,getString(R.string.default_web_client_id), launcher)
+    /* Google Auth Login Success 상태인 경우 */
+    private fun handleSuccessState(state: LoginState.Success) = with(binding) {
+//        progressBar.isGone = true
+        when (state) {
+            is LoginState.Success.Registered -> {  //Google Auth 등록된 상태
+                handleRegisteredState(state)  //Success.Registered 상태로 변경
+            }
+            is LoginState.Success.NotRegistered -> {  //Google Auth 미등록된 상태
+                Toast.makeText(this@LoginActivity, "NotRegistered", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+
+    /* Google Auth Login Registered 상태인 경우 */
+    private fun handleRegisteredState(state: LoginState.Success.Registered) = with(binding) {
+
+//        Glide.with(this@LoginActivity)
+//            .load(state.profileImgeUri.toString())
+//            .transition(
+//                DrawableTransitionOptions.withCrossFade(
+//                    DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()
+//                )
+//            )
+//            .diskCacheStrategy(DiskCacheStrategy.ALL)
+//            .apply {
+//                transforms(CenterCrop(), RoundedCorners(60f.fromDpToPx()))
+//            }
+//            .into(ivProfile)
+    }
+
+
+    /* Error 상태인 경우 */
+    private fun handleErrorState() = with(binding) {
+        Toast.makeText(this@LoginActivity, "Error State", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this@LoginActivity, StartActivity::class.java)
+        startActivity(intent)
     }
 
 

@@ -79,7 +79,7 @@
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/icon_cu_circle"
+                                android:src="@drawable/icon_cu"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="17dp">
                             </ImageView>
@@ -176,7 +176,7 @@
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/icon_cu_circle"
+                                android:src="@drawable/icon_gs25"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="17dp">
                             </ImageView>
@@ -273,7 +273,7 @@
                             <ImageView
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/icon_cu_circle"
+                                android:src="@drawable/icon_7eleven"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="17dp">
                             </ImageView>
