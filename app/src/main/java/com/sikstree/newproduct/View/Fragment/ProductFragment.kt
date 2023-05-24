@@ -18,6 +18,7 @@ import com.sikstree.newproduct.View.Activity.MainActivity
 import com.sikstree.newproduct.View.Activity.ReviewActivity
 import com.sikstree.newproduct.databinding.FragmentProductBinding
 import com.sikstree.newproduct.viewModel.HomeViewModel
+import com.sikstree.newproduct.viewModel.ProductViewModel
 
 class ProductFragment() : Fragment() {
     lateinit var binding : FragmentProductBinding
@@ -51,7 +52,7 @@ class ProductFragment() : Fragment() {
     }
 
     private fun showSomething() { // UI State 정의
-        val viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -81,7 +82,7 @@ class ProductFragment() : Fragment() {
     }
 
     private fun initView() { // 홈 화면 뷰 초기화
-        val viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

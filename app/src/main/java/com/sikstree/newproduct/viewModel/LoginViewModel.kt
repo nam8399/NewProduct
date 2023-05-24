@@ -16,23 +16,31 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.ktx.Firebase
 import com.sikstree.newproduct.Data.LoginState
 import kotlinx.coroutines.*
 
 class LoginViewModel() : ViewModel() {
     private val title = "LoginViewModel"
-
-    var serverStatus = MutableLiveData<String>()
-    var serverHostTxt = MutableLiveData<String>()
-
-    private val TAG = this.javaClass.simpleName
-
-    private lateinit var firebaseAuth: FirebaseAuth
-    private var email: String = ""
-    private var tokenId: String? = null
+    var uidList: ArrayList<String> = arrayListOf()
 
     private var _loginStateLiveData = MutableLiveData<LoginState>(LoginState.UnInitialized)
     val loginStateLiveData: LiveData<LoginState> = _loginStateLiveData
+    var login_check = MutableLiveData<Boolean>()
+
+    var auth : FirebaseAuth? = null
+    var firestore : FirebaseFirestore? = null
+    private var uid : String? = null
+
+    init {
+        auth = Firebase.auth
+        firestore = FirebaseFirestore.getInstance()
+        uid = FirebaseAuth.getInstance().currentUser?.uid
+        login_check.value = false
+    }
 
     fun fetchData(tokenId: String?): Job = viewModelScope.launch {
         setState(LoginState.Loading)
@@ -66,6 +74,25 @@ class LoginViewModel() : ViewModel() {
         } ?: kotlin.run {
             setState(LoginState.Success.NotRegistered)
         }
+    }
+
+    fun getLoginState() = viewModelScope.launch {
+        firestore?.collection("UserID")
+            ?.get()      // 문서 가져오기
+            ?.addOnSuccessListener { result ->
+                // 성공할 경우
+                for (document in result) {  // 가져온 문서들은 result에 들어감
+                    if (uid?.equals(document["uid"] as String)!!) {
+                        Log.d(title, "Login check - " + document["uid"] as String)
+                        login_check.value = true
+                        break
+                    }
+                }
+            }
+            ?.addOnFailureListener { exception ->
+                // 실패할 경우
+                Log.w(title, "Error getting documents: $exception")
+            }
     }
 
     /* 로그아웃 버튼 클릭 시 호출 */

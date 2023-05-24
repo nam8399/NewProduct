@@ -44,6 +44,18 @@ class HomeFragment() : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
+
+        val viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+
+        viewModel.getName()
+
+        viewModel.name.observe(viewLifecycleOwner) {
+            binding.homeText.text = it + "님!\n신상품 한 번 잡숴보세요"
+        }
+
         return binding.root
     }
 

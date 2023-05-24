@@ -94,26 +94,26 @@ class LoginActivity : AppCompatActivity() {
 //        viewModel.setFragment(TAG_HOME, HomeFragment(), fragmentManager)
 
         fetchJob = viewModel.fetchData(tokenId)
-        initViews()
+
         observeData()
     }
 
     private fun initViews() = with(binding) {
-        tokenId?.let {  //로그인 된 상태
-//            groupLoginRequired.isGone = true
-//            groupLogoutRequired.isVisible = true
-        } ?: kotlin.run {  //로그인 안된 상태
-//            groupLoginRequired.isVisible = true
-//            groupLogoutRequired.isGone = true
+        viewModel?.getLoginState()
+
+        viewModel?.login_check?.observe(this@LoginActivity) {
+            if (it) {
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                startActivity(intent)
+                Toast.makeText(this@LoginActivity, "자동 로그인", Toast.LENGTH_SHORT).show()
+                finish()
+            }
         }
 
-        binding.loginGoogle.setOnClickListener {   //로그인 버튼 클릭 시
+        loginGoogle.setOnClickListener {   //로그인 버튼 클릭 시
             val signInIntent: Intent = googleSignIn.signInIntent
             loginLauncher.launch(signInIntent)  //loginLauncher 로 결과 수신하여 처리
         }
-//        btnLogout.setOnClickListener {  //로그아웃 버튼 클릭 시
-//            viewModel.signOut()
-//        }
     }
 
 
@@ -145,9 +145,13 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(this@LoginActivity) { task ->
                 if (task.isSuccessful) {  //Login 성공
-                    viewModel?.setUserInfo(firebaseAuth.currentUser)  //Login 상태 이후 Success 상태로 변경, 정보 설정
+                    Toast.makeText(this@LoginActivity, "구글 로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@LoginActivity, StartActivity::class.java)
+                    intent.putExtra("uid",firebaseAuth.uid)
+                    startActivity(intent)
+                    finish()
                 } else { //Login 실패
-                    viewModel?.setUserInfo(null)
+                    Toast.makeText(this@LoginActivity, "구글 로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
     }
@@ -161,7 +165,7 @@ class LoginActivity : AppCompatActivity() {
                 handleRegisteredState(state)  //Success.Registered 상태로 변경
             }
             is LoginState.Success.NotRegistered -> {  //Google Auth 미등록된 상태
-                Toast.makeText(this@LoginActivity, "NotRegistered", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this@LoginActivity, "NotRegistered", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -188,8 +192,6 @@ class LoginActivity : AppCompatActivity() {
     /* Error 상태인 경우 */
     private fun handleErrorState() = with(binding) {
         Toast.makeText(this@LoginActivity, "Error State", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this@LoginActivity, StartActivity::class.java)
-        startActivity(intent)
     }
 
 

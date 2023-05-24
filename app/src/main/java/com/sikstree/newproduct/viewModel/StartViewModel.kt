@@ -1,27 +1,84 @@
 package com.sikstree.newproduct.viewModel
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.sikstree.newproduct.Data.IconData
+import com.sikstree.newproduct.Data.LoginData
 import com.sikstree.newproduct.R
+import kotlinx.coroutines.launch
 
 class StartViewModel() : ViewModel() {
     private val title = "LoginViewModel"
 
-    var serverStatus = MutableLiveData<String>()
-    var serverHostTxt = MutableLiveData<String>()
+    var iconClickPosition = MutableLiveData<Int>()
+
+    var auth : FirebaseAuth? = null
+    var firestore : FirebaseFirestore? = null
+    var name_check = MutableLiveData<Int>() // 0 : 기본, 1 : 성공, 2 : 실패
+
 
 
     init {
-        serverStatus.value = ""
-        serverHostTxt.value = ""
+        iconClickPosition.value = -1
 
+        auth = Firebase.auth
+        firestore = FirebaseFirestore.getInstance()
+        name_check.value = 0
+
+    }
+
+
+    fun getNameCheck(name : String) = viewModelScope.launch {
+        firestore?.collection("UserID")
+            ?.get()      // 문서 가져오기
+            ?.addOnSuccessListener { result ->
+                // 성공할 경우
+                Log.d(title, "result size : " + result.size())
+                if (result.size() == 0) {
+                    name_check.value = 1
+                }
+
+                for (document in result) {  // 가져온 문서들은 result에 들어감
+                    if (name?.equals(document["name"] as String)!!) {
+                        Log.d(title, "Name check - " + document["name"] as String)
+                        name_check.value = 2
+                        break
+                    }
+                }
+                name_check.value = 1
+            }
+            ?.addOnFailureListener { exception ->
+                // 실패할 경우
+                Log.w(title, "Error getting documents: $exception")
+            }
+    }
+
+
+
+
+
+    fun uploadFirebase(name : String) {
+        var loginData = LoginData()
+        loginData.uid = auth?.currentUser?.uid
+        loginData.name = name
+        loginData.imoji = iconClickPosition.value
+
+        firestore?.collection("UserID")?.document(auth!!.currentUser!!.uid)?.set(loginData)
+//        Toast.makeText(this,"저장완료",Toast.LENGTH_SHORT).show()
+        Log.d(title, "파이어베이스 저장완료 - " + auth!!.uid.toString())
     }
 
 
@@ -29,32 +86,16 @@ class StartViewModel() : ViewModel() {
 
 //    var datas = mutableListOf<ItemData>()
 
-        var datas : ArrayList<IconData> = arrayListOf()
+        var datas : ArrayList<Int> = arrayListOf()
 
         init{
-            var data = IconData("","","")
+            var data = IconData("")
             for (i in 1..12)
-                datas.add(data)
+                datas.add(i)
 
             notifyDataSetChanged()
         }
 
-
-//        init {
-//            firestore = FirebaseFirestore.getInstance()
-//            firestore?.collection("retroItems")?.orderBy("title", Query.Direction.DESCENDING)
-//                ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-////                    datas.clear()
-//                    if (querySnapshot == null) return@addSnapshotListener
-//
-//                    // 데이터 받아오기
-//                    for (snapshot in querySnapshot!!.documents) {
-//                        var item = snapshot.toObject(ItemData::class.java)
-//                        datas.add(item!!)
-//                    }
-//                    notifyDataSetChanged()
-//                }
-//        }
 
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -62,21 +103,21 @@ class StartViewModel() : ViewModel() {
 //            private val itemTitle: TextView = itemView.findViewById(R.id.item_title)
             private val itemUrl: String = ""
             private val itemImg: ImageView = itemView.findViewById(R.id.item_img)
+            private val layoutListItem: ConstraintLayout = itemView.findViewById(R.id.layoutListItem)
 
-            fun bind(item: IconData) {
-//                itemTitle.text = item.title
-//            itemUrl = item.age.toString()
+
+            fun bind(position : Int) {
+
+                layoutListItem.setOnClickListener {
+                    Log.d(title, "position : " + position)
+                    iconClickPosition.value = position
+                }
                 Glide
                     .with(itemView)
                     .load(R.drawable.ic_launcher_foreground)
                     .centerCrop()
                     .into(itemImg)
 
-
-//                itemImg.setOnClickListener { // 아이템 클릭 시 LiveData 값을 변경하여 Fragment에서 Observe 하다가 변경 시 웹뷰 띄우도록 설정
-//                    Log.d(title, "Item Onclick! " + item.url)
-//                    itemOnclickEvent.value = item.url
-//                }
 
             }
         }
@@ -89,7 +130,7 @@ class StartViewModel() : ViewModel() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.bind(datas[position])
+            holder.bind(position)
 
 
 //        holder.layout.layoutListItem.setOnClickListener {
