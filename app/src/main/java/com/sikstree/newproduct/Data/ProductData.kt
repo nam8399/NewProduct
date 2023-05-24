@@ -4,6 +4,7 @@ data class ProductData (
     val review_brand_idx : Int, // 브랜드 명 구분 값
     val review_imoji_idx  : Int, // 상품 평 이모지 구분 값
     val review_title : String, // 상품 명
+    val review_title_sub : String, // 상품 명
     val review_great : String, // 상품 평가 ex)최고에요
     val review_price : String, // 가격
     val review_text : String, // 상품 메인 리뷰

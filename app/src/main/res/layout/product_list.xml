@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -17,20 +18,49 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/icon_cu"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="17dp">
-        </ImageView>
-        <TextView
-            android:id="@+id/review_title"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:text="연세우유 말차생크림빵"
-            android:gravity="left"
             android:layout_gravity="center"
-            android:textSize="18sp"
-            android:textColor="#E7E7E7">
+            android:layout_marginLeft="20dp">
+        </ImageView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp">
+            <TextView
+                android:id="@+id/review_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="연세우유 말차생크림빵"
+                android:gravity="left"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:textColor="#E7E7E7">
+            </TextView>
+            <TextView
+                android:id="@+id/review_title_sub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="제조사"
+                android:gravity="left"
+                android:layout_gravity="center"
+                android:textSize="12sp"
+                android:textColor="#BABFBF">
+            </TextView>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/review_price"
+            android:layout_width="78dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/review_price"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginRight="20dp"
+            android:text="3,800원">
         </TextView>
     </LinearLayout>
     <LinearLayout
@@ -105,17 +135,6 @@
             android:layout_weight="1"
             android:layout_height="match_parent">
         </View>
-        <TextView
-            android:id="@+id/review_price"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="#222222"
-            android:background="@drawable/review_price"
-            android:textStyle="bold"
-            android:layout_marginRight="20dp"
-            android:text="3,800원">
-        </TextView>
     </LinearLayout>
     <TextView
         android:id="@+id/review_text"

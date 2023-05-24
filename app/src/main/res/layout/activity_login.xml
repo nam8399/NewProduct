@@ -19,130 +19,39 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/login_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="불타는삼각김밥님\n프로필을 선택해 주세요!"
-                android:textColor="@color/white"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/login_icon_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textAppearance="@style/logintext"
-                android:gravity="center_horizontal|center_vertical">
-            </TextView>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/login_icon_layout"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintHeight_percent="0.6"
-                android:background="@drawable/login_icon_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginBottom="48dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:textAppearance="@style/btn_start"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:visibility="invisible"
-                    android:clipToOutline="true"
-                    android:text="시작하기"
-                    android:background="@drawable/btn_start">
-                </TextView>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerGridView"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:foregroundGravity="center"
-                    app:layout_constraintHeight_percent="0.6"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-                <TextView
-                    android:id="@+id/btn_start_active"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginBottom="48dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:textStyle="bold"
-                    android:textAppearance="@style/btn_start_active"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:clipToOutline="true"
-                    android:text="시작하기"
-                    android:background="@drawable/btn_start_active">
-                </TextView>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/login_welcome_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/backgroundColor"
-            android:visibility="invisible">
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/animationView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:lottie_rawRes="@raw/celebration"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
             <LinearLayout
+                android:id="@+id/login_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-                <TextView
-                    android:id="@+id/login_text_welcome"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="어서오세요!\n불타는삼각김밥님"
-                    android:textColor="@color/white"
-                    android:textAppearance="@style/logintext"
-                    android:gravity="center_horizontal|center_vertical">
-                </TextView>
-                <TextView
-                    android:id="@+id/login_text_welcome_sun"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="이달의 편의점 신상품을 확인해 보세요!"
-                    android:textColor="@color/white"
-                    android:textAppearance="@style/logintext_sub"
-                    android:gravity="center_horizontal|center_vertical">
-                </TextView>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/login_google"
+                android:orientation="vertical"
+                android:gravity="center_horizontal|center_vertical">
+                <ImageView
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:src="@drawable/icon_hugging"
+                    android:layout_marginBottom="24dp">
+                </ImageView>
+                <ImageView
+                    android:layout_width="221dp"
+                    android:layout_height="68dp"
+                    android:src="@drawable/img_welcome_text">
+                </ImageView>
             </LinearLayout>
+            <ImageView
+                android:id="@+id/login_google"
+                android:layout_width="344dp"
+                android:layout_height="56dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/btn_google"
+                android:layout_marginBottom="44dp">
+            </ImageView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

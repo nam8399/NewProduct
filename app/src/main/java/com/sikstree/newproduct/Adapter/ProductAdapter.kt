@@ -38,6 +38,7 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val review_title: TextView = itemView.findViewById(R.id.review_title)
+        private val review_title_sub: TextView = itemView.findViewById(R.id.review_title_sub)
         private val review_great: TextView = itemView.findViewById(R.id.review_great)
         private val review_text: TextView = itemView.findViewById(R.id.review_text)
         private val review_comment_count: TextView = itemView.findViewById(R.id.review_comment_count)
@@ -74,6 +75,7 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
             review_price.text = item.review_price + "원"
             review_cm_id.text = item.review_cm_id
             review_cm_comment.text = item.review_cm_comment
+            review_title_sub.text = item.review_title_sub
 
             when(item.review_imoji_idx){
                 1 -> Glide.with(itemView).load(R.drawable.icon_1).into(review_imoji)

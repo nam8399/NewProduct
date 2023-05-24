@@ -1,34 +1,36 @@
 package com.sikstree.newproduct.View.Activity
 
 import android.content.Intent
-import android.graphics.Color
-import android.opengl.Visibility
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.util.Log
-import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.GridLayoutManager
-import com.google.firebase.messaging.FirebaseMessaging
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.sikstree.newproduct.R
-import com.sikstree.newproduct.View.Fragment.HomeFragment
 import com.sikstree.newproduct.databinding.ActivityLoginBinding
 import com.sikstree.newproduct.viewModel.LoginViewModel
-import com.sikstree.newproduct.viewModel.MainViewModel
-import com.sikstree.newproduct.viewModel.MainViewModel.Companion.TAG_HOME
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
     private val viewModel : LoginViewModel by viewModels()
-    private val fragmentManager : FragmentManager = supportFragmentManager
+
+    private val TAG = this.javaClass.simpleName
+
+    private lateinit var launcher: ActivityResultLauncher<Intent>
+    private lateinit var firebaseAuth: FirebaseAuth
+
+    private var email: String = ""
+    private var tokenId: String? = null
 
     var backPressedTime : Long = 0
 
@@ -44,39 +46,22 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        val name : String = "불타는삼각김밥"
-        val builder_main = SpannableStringBuilder(name + "님\n프로필을 선택해 주세요!")
-        val builder_welcome = SpannableStringBuilder("어서오세요!\n" + name + "님")
-
-        val colorBlueSpan = ForegroundColorSpan(Color.parseColor("#0CFBB2"))
-        builder_main.setSpan(colorBlueSpan, 0, name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        builder_welcome.setSpan(colorBlueSpan, 7, name.length + 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        binding.loginText.setText(builder_main)
-        binding.loginTextWelcome.setText(builder_welcome)
-
-        var listManager = GridLayoutManager(this, 4)
-        var listAdapter = viewModel.ListAdapterGrid()
+        firebaseAuth = FirebaseAuth.getInstance()
+        launcher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(), ActivityResultCallback { result ->
+                Log.e(TAG, "resultCode : ${result.resultCode}")
+                Log.e(TAG, "result : $result")
+                if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                    viewModel.initFirebase(result)
+                }
+            })
 
 
-        var recyclerList = binding.recyclerGridView.apply {
-            setHasFixedSize(true)
-            layoutManager = listManager
-            adapter = listAdapter
+        binding.run {
+            loginGoogle.setOnClickListener {
+                viewModel?.googleSignIn(this@LoginActivity,getString(R.string.default_web_client_id), launcher)
+            }
         }
-
-
-        binding.btnStartActive.setOnClickListener() {
-//            binding.loginMainLayout.visibility = View.GONE
-            binding.loginWelcomeLayout.visibility = View.VISIBLE
-            Handler(Looper.getMainLooper()).postDelayed({
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }, 3000)
-
-        }
-
     }
 
 
