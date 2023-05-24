@@ -100,9 +100,9 @@ class HomeFragment() : Fragment() {
 
         var list = ArrayList<Int>()
 
-        list.add(Color.parseColor("#ffff00"))
-        list.add(Color.parseColor("#bdbdbd"))
-        list.add(Color.parseColor("#0f9231"))
+        list.add(R.drawable.banner_review)
+        list.add(R.drawable.banner_review)
+        list.add(R.drawable.banner_review)
         var adapter = ViewPager2Adater(list,activity as MainActivity)
 
         binding.viewpager2.offscreenPageLimit=3

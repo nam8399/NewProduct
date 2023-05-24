@@ -79,16 +79,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewpager2"
                 android:layout_width="match_parent"
                 android:layout_height="344dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/viewpager2"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:orientation="horizontal"/>
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
