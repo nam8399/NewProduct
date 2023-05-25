@@ -3,6 +3,7 @@ package com.sikstree.newproduct.View.Fragment
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,8 @@ import com.sikstree.newproduct.viewModel.HomeViewModel
 import com.sikstree.newproduct.viewModel.ProductViewModel
 
 class ProductFragment() : Fragment() {
+    private val title = "ProductFragment"
+
     lateinit var binding : FragmentProductBinding
     lateinit var reviewAdapter: ProductAdapter
     var datas = arrayListOf<ProductData>()
@@ -129,6 +132,16 @@ class ProductFragment() : Fragment() {
             reviewAdapter.notifyDataSetChanged()
 
         }
+
+        reviewAdapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener{
+            override fun onItemClick(v: View, data: ProductData, pos : Int) {
+                Log.d(title, "상품 선택 pos : " + pos)
+                val intent = Intent(context, ReviewActivity::class.java)
+                startActivity(intent)
+            }
+
+        })
+
     }
 
     private fun initRecycler(data : ArrayList<ProductData>) {

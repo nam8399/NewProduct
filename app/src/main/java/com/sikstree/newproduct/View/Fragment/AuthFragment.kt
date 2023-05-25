@@ -1,12 +1,22 @@
 package com.sikstree.newproduct.View.Fragment
 
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -22,6 +32,8 @@ import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Activity.MainActivity
 import com.sikstree.newproduct.databinding.FragmentAuthBinding
 import com.sikstree.newproduct.viewModel.HomeViewModel
+import java.io.File
+import java.io.FileOutputStream
 
 class AuthFragment() : Fragment() {
     lateinit var binding : FragmentAuthBinding
@@ -40,10 +52,18 @@ class AuthFragment() : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_auth, container, false)
 
+
+
+        binding.frameLayout.setOnClickListener() {
+            if(imageExternalSave(activity as MainActivity, viewToBitmap(binding.authTitle), "")) {
+                Toast.makeText(context,"사진저장 성공", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         showSomething()
@@ -52,6 +72,54 @@ class AuthFragment() : Fragment() {
 
 
     }
+
+    fun viewToBitmap(view: View): Bitmap {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+
+        return bitmap
+    }
+
+
+    fun imageExternalSave(context: Context, bitmap: Bitmap, path: String): Boolean {
+        val state = Environment.getExternalStorageState()
+        if (Environment.MEDIA_MOUNTED == state) {
+
+            val rootPath =
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                    .toString()
+            val dirName = "/" + path
+            val fileName = System.currentTimeMillis().toString() + ".png"
+            val savePath = File(rootPath + dirName)
+            savePath.mkdirs()
+
+            val file = File(savePath, fileName)
+            if (file.exists()) file.delete()
+
+            try {
+                val out = FileOutputStream(file)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+                out.flush()
+                out.close()
+
+                //갤러리 갱신
+                context.sendBroadcast(
+                    Intent(
+                        Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                        Uri.parse("file://" + Environment.getExternalStorageDirectory())
+                    )
+                )
+
+                return true
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        return false
+    }
+
+
 
     private fun showSomething() { // UI State 정의
         val viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)

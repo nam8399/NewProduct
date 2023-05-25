@@ -1,21 +1,13 @@
 package com.sikstree.newproduct.Adapter
 
 import android.content.Context
-import android.graphics.Color
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.CompositePageTransformer
-import androidx.viewpager2.widget.MarginPageTransformer
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.sikstree.newproduct.Data.ProductData
 import com.sikstree.newproduct.R
@@ -27,6 +19,14 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.product_list,parent,false)
         return ViewHolder(view)
+    }
+
+    interface OnItemClickListener{
+        fun onItemClick(v:View, data: ProductData, pos : Int)
+    }
+    private var listener : OnItemClickListener? = null
+    fun setOnItemClickListener(listener : OnItemClickListener) {
+        this.listener = listener
     }
 
     override fun getItemCount(): Int = datas.size
@@ -52,6 +52,14 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
 
 
         fun bind(item: ProductData) {
+            val pos = adapterPosition
+            if(pos!= RecyclerView.NO_POSITION)
+            {
+                itemView.setOnClickListener {
+                    listener?.onItemClick(itemView,item,pos)
+                }
+            }
+
             review_title.text = item.review_title
             review_great.text = item.review_great
             review_price.text = item.review_price + "원"
@@ -89,7 +97,6 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
 
 
         }
-
 
 
     }

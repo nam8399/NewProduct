@@ -38,7 +38,7 @@ class ReviewActivity : AppCompatActivity() {
     private fun initView() = with(binding) {
         btnX.setOnClickListener { finish() }
         btnReview.setOnClickListener {
-            val intent = Intent(this@ReviewActivity, MainActivity::class.java)
+            val intent = Intent(this@ReviewActivity, ChoiceActivity::class.java)
             startActivity(intent)
         }
     }
