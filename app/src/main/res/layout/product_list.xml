@@ -80,8 +80,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewpager2"
+            <ImageView
+                android:id="@+id/review_img"
                 android:layout_width="match_parent"
                 android:layout_height="344dp"
                 android:clipChildren="false"
@@ -92,16 +92,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:id="@+id/indicators"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:padding="15dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
     <LinearLayout

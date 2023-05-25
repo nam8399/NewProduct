@@ -11,5 +11,5 @@ data class ProductData (
     val review_comment_count : String, // 리뷰 건 수 ex) 3개외 리뷰 모두보기
     val review_cm_id : String, // 다음 리뷰 작성자 이름
     val review_cm_comment : String, // 다음 리뷰 문구
-    val review_img_list : ArrayList<Int>
+    val review_img : Int
 )

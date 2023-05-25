@@ -47,9 +47,8 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
         private val review_cm_comment: TextView = itemView.findViewById(R.id.review_cm_comment)
         private val review_imoji: ImageView = itemView.findViewById(R.id.review_imoji)
         private val review_brand_img: ImageView = itemView.findViewById(R.id.review_brand_img)
+        private val review_img: ImageView = itemView.findViewById(R.id.review_img)
 
-        private val viewpager2: ViewPager2 = itemView.findViewById(R.id.viewpager2)
-        private val review_indicators: LinearLayout = itemView.findViewById(R.id.indicators)
 
 
         fun bind(item: ProductData) {
@@ -77,6 +76,8 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
             review_cm_comment.text = item.review_cm_comment
             review_title_sub.text = item.review_title_sub
 
+            Glide.with(itemView).load(item.review_img).into(review_img)
+
             when(item.review_imoji_idx){
                 1 -> Glide.with(itemView).load(R.drawable.icon_1).into(review_imoji)
                 2 -> Glide.with(itemView).load(R.drawable.icon_2).into(review_imoji)
@@ -93,95 +94,10 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
             }
 
 
-            initAdapter(item)
-
         }
 
-        private fun initAdapter(item: ProductData) {
-            var adapter = ViewPager2Adater(item.review_img_list, context)
 
-//            viewpager2.offscreenPageLimit=3
-            viewpager2.getChildAt(0).overScrollMode=View.OVER_SCROLL_NEVER
-            viewpager2.adapter = adapter
 
-            setupOnBoardingIndicators()
-            setCurrentOnboardingIndicator(0)
-
-            var transform = CompositePageTransformer()
-            transform.addTransformer(MarginPageTransformer(8))
-
-            transform.addTransformer(ViewPager2.PageTransformer{ view: View, fl: Float ->
-                var v = 1-Math.abs(fl)
-                view.scaleY = 0.6f + v * 0.4f
-            })
-
-            viewpager2.setPageTransformer(transform)
-
-            adapter.setItemClickListener(object : ViewPager2Adater.OnItemClickListener{
-                override fun onClick(v: View, position: Int) {
-//                val intent = Intent(context, WebviewActivity::class.java)
-//                if (position == 0) {
-//                    intent.putExtra("url","https://www.youtube.com/watch?v=n1PkmOU7H2w")
-//                } else if(position == 1) {
-//                    intent.putExtra("url", "https://www.youtube.com/watch?v=hvydITbP-YE&t=95s")
-//                } else if(position == 2) {
-//                    intent.putExtra("url", "https://www.youtube.com/watch?v=n1PkmOU7H2w&t=2s")
-//                }
-//                startActivity(intent)
-                }
-            })
-
-            viewpager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-                override fun onPageSelected(position : Int){
-                    super.onPageSelected(position)
-                    bannerPosition = position
-
-                    setCurrentOnboardingIndicator(position)
-                }
-
-            })
-        }
-
-        private fun setupOnBoardingIndicators(){
-            val indicators =
-                arrayOfNulls<ImageView>(3)
-
-            var layoutParams = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-
-            layoutParams.setMargins(8,0,8,0)
-
-            for( i in indicators.indices){
-                indicators[i] = ImageView(context)
-                indicators[i]?.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.onboarding_indicator_inactive
-                    ))
-
-                indicators[i]?.layoutParams = layoutParams
-
-                review_indicators?.addView(indicators[i])
-
-            }
-        }
-
-        private fun setCurrentOnboardingIndicator( index : Int){ // 건축 강의 인디게이터 뷰 이미지 셋팅
-            var childCount = review_indicators?.childCount
-            for(i in  0 until childCount!!){
-                var imageView = review_indicators?.getChildAt(i) as ImageView
-                if(i==index){
-                    imageView.setImageDrawable(
-                        ContextCompat.getDrawable(context,
-                        R.drawable.onboarding_indicator_active))
-                }else{
-                    imageView.setImageDrawable(
-                        ContextCompat.getDrawable(context,
-                        R.drawable.onboarding_indicator_inactive))
-                }
-            }
-        }
     }
 
 

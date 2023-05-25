@@ -127,18 +127,17 @@ class ProductFragment() : Fragment() {
         reviewAdapter = ProductAdapter(activity as MainActivity)
         binding.reviewRecycler.adapter = reviewAdapter
 
-        var imgList = ArrayList<Int>()
-        imgList.add(R.drawable.banner_review)
-        imgList.add(R.drawable.banner_review)
-        imgList.add(R.drawable.banner_review)
+        var review_img : Int
+
+        review_img = R.drawable.banner_review
 
         datas.apply {
             add(ProductData(1, 5, "연세우유 말차생크림빵","CU", "최고에요!", "3,800",
-                        "제품 설명을 해드리겠습니다. 제품 설명을 해드리겠습니다. 제품 설명을 해드리겠습니다. 제품 설명을 해드리겠습니다.", "23", "불타는삼각김밥", "지립니다.", imgList))
+                        "제품 설명을 해드리겠습니다. 제품 설명을 해드리겠습니다. 제품 설명을 해드리겠습니다. 제품 설명을 해드리겠습니다.", "23", "불타는삼각김밥", "지립니다.", review_img))
             add(ProductData(2, 3, "연세우유 말차생크림빵", "GS25","최고에요!", "3,200",
-                "제품 설명을 해드리겠습니다.", "25", "불타는삼각김밥", "지립니다.", imgList))
+                "제품 설명을 해드리겠습니다.", "25", "불타는삼각김밥", "지립니다.", review_img))
             add(ProductData(3, 4, "연세우유 말차생크림빵", "세븐일레븐","최고에요!", "4,200",
-                "제품 설명을 해드리겠습니다.", "16", "불타는삼각김밥", "지립니다.", imgList))
+                "제품 설명을 해드리겠습니다.", "16", "불타는삼각김밥", "지립니다.", review_img))
 
 
             reviewAdapter.datas = datas
