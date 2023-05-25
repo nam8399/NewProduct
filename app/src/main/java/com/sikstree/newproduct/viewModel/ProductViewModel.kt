@@ -53,42 +53,21 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     }
 
 
-    fun selectRice(data : ArrayList<ProductData>) {
+    fun selectItem(data : ArrayList<ProductData>, idx : Int): ArrayList<ProductData>? {
+        if (data.size == 0) {
+            return null
+        }
 
-        for (i in 0..data.size) {
-            if (data.get(i).review_category_idx == 1) {
-                riceData.value?.add(data.get(i))
+        var itemData = arrayListOf<ProductData>()
+
+        for (i in 0..data.size-1) {
+            if (data.get(i).review_category_idx == idx) {
+                itemData.add(data.get(i))
             }
         }
+
+        return itemData
     }
-
-    fun selectCookie(data : ArrayList<ProductData>) {
-
-        for (i in 0..data.size) {
-            if (data.get(i).review_category_idx == 2) {
-                riceData.value?.add(data.get(i))
-            }
-        }
-    }
-
-    fun selectBread(data : ArrayList<ProductData>) {
-
-        for (i in 0..data.size) {
-            if (data.get(i).review_category_idx == 3) {
-                breadData.value?.add(data.get(i))
-            }
-        }
-    }
-
-    fun selectDrink(data : ArrayList<ProductData>) {
-
-        for (i in 0..data.size) {
-            if (data.get(i).review_category_idx == 4) {
-                drinkData.value?.add(data.get(i))
-            }
-        }
-    }
-
 
 
 }

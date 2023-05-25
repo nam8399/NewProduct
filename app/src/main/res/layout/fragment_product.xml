@@ -71,7 +71,8 @@
                             android:layout_width="64dp"
                             android:layout_height="64dp"
                             android:layout_weight="1"
-                            android:src="@drawable/icon_all">
+                            android:onClick="@{()->viewModel.clickCategory(0)}"
+                            android:src="@drawable/selector_all">
                         </ImageView>
                         <TextView
                             android:id="@+id/text_all"

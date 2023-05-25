@@ -22,7 +22,7 @@ import com.sikstree.newproduct.R
 
 class ProductAdapter(private val context: Context) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
-    var datas = mutableListOf<ProductData>()
+    var datas = ArrayList<ProductData>()
     var bannerPosition : Int = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.product_list,parent,false)

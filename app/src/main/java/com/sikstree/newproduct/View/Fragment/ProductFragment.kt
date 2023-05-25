@@ -1,6 +1,7 @@
 package com.sikstree.newproduct.View.Fragment
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,7 @@ import com.sikstree.newproduct.viewModel.ProductViewModel
 class ProductFragment() : Fragment() {
     lateinit var binding : FragmentProductBinding
     lateinit var reviewAdapter: ProductAdapter
-    val datas = mutableListOf<ProductData>()
+    var datas = arrayListOf<ProductData>()
     lateinit var viewModel: ProductViewModel
 
 
@@ -97,24 +98,33 @@ class ProductFragment() : Fragment() {
 
     }
 
-
-    private fun initRecycler() {
-        reviewAdapter = ProductAdapter(activity as MainActivity)
-        binding.reviewRecycler.adapter = reviewAdapter
+    private fun initData() {
+        datas.clear()
 
         var review_img : Int
 
         review_img = R.drawable.banner_review
 
         datas.apply {
-            add(ProductData(1, 5, 1,"연세우유 말차생크림빵","CU", "최고에요!", "3,800",
-                         "23", "불타는삼각김밥", "지립니다.", review_img))
-            add(ProductData(2, 3, 2,"연세우유 말차생크림빵", "GS25","최고에요!", "3,200",
-                 "25", "불타는삼각김밥", "지립니다.", review_img))
-            add(ProductData(3, 4, 3,"연세우유 말차생크림빵", "세븐일레븐","최고에요!", "4,200",
-                 "16", "불타는삼각김밥", "지립니다.", review_img))
+            add(ProductData(1, 1, 1,"연세우유 말차생크림빵","CU", "최고에요!", "3,800",
+                "23", "불타는삼각김밥", "지립니다.", review_img))
+            add(ProductData(2, 2, 2,"연세우유 말차생크림빵", "GS25","최고에요!", "3,200",
+                "25", "불타는삼각김밥", "지립니다.", review_img))
+            add(ProductData(3, 3, 3,"연세우유 말차생크림빵", "세븐일레븐","최고에요!", "4,200",
+                "16", "불타는삼각김밥", "지립니다.", review_img))
+        }
 
 
+    }
+
+
+    private fun initRecycler() {
+        datas.clear()
+        reviewAdapter = ProductAdapter(activity as MainActivity)
+        binding.reviewRecycler.adapter = reviewAdapter
+        initData()
+
+        datas.apply {
             reviewAdapter.datas = datas
             reviewAdapter.notifyDataSetChanged()
 
@@ -125,16 +135,13 @@ class ProductFragment() : Fragment() {
         reviewAdapter = ProductAdapter(activity as MainActivity)
         binding.reviewRecycler.adapter = reviewAdapter
 
-        var review_img : Int
-
-        review_img = R.drawable.banner_review
-
-        for (i in 0..data.size) {
-            datas.add(data.get(i))
+        if (data.size == 0) {
+            return
         }
 
-        datas.apply {
-            reviewAdapter.datas = datas
+
+        data.apply {
+            reviewAdapter.datas = data
             reviewAdapter.notifyDataSetChanged()
         }
     }
@@ -142,44 +149,88 @@ class ProductFragment() : Fragment() {
     private fun observeCategory() = with(viewModel) {
         onclickIdx.observe(viewLifecycleOwner, Observer {
             when (it) {
-                1 -> {
-                    allData.value?.let { data -> selectRice(data) }
-                    riceData.value?.let { data -> initRecycler(data) }
+                0 -> {
+                    initRecycler()
                     with(binding) {
+                        imgAll.isSelected = true
+                        imgCookie.isSelected = false
+                        imgBread.isSelected = false
+                        imgRice.isSelected = false
+                        imgDrink.isSelected = false
+
+                        textAll.setTextColor(Color.WHITE)
+                        textRice.setTextColor(Color.parseColor("#676767"))
+                        textCookie.setTextColor(Color.parseColor("#676767"))
+                        textBread.setTextColor(Color.parseColor("#676767"))
+                        textDrink.setTextColor(Color.parseColor("#676767"))
+                    }
+                }
+                1 -> {
+                    initData()
+                    selectItem(datas, 1)?.let { data -> initRecycler(data) }
+                    with(binding) {
+                        imgAll.isSelected = false
                         imgCookie.isSelected = false
                         imgBread.isSelected = false
                         imgRice.isSelected = true
                         imgDrink.isSelected = false
+
+                        textAll.setTextColor(Color.parseColor("#676767"))
+                        textRice.setTextColor(Color.WHITE)
+                        textCookie.setTextColor(Color.parseColor("#676767"))
+                        textBread.setTextColor(Color.parseColor("#676767"))
+                        textDrink.setTextColor(Color.parseColor("#676767"))
                     }
                 }
                 2 -> {
-                    allData.value?.let { data -> selectCookie(data) }
-                    cookieData.value?.let { data -> initRecycler(data) }
+                    initData()
+                    selectItem(datas, 2)?.let { data -> initRecycler(data) }
                     with(binding) {
+                        imgAll.isSelected = false
                         imgCookie.isSelected = true
                         imgBread.isSelected = false
                         imgRice.isSelected = false
                         imgDrink.isSelected = false
+
+                        textAll.setTextColor(Color.parseColor("#676767"))
+                        textRice.setTextColor(Color.parseColor("#676767"))
+                        textCookie.setTextColor(Color.WHITE)
+                        textBread.setTextColor(Color.parseColor("#676767"))
+                        textDrink.setTextColor(Color.parseColor("#676767"))
                     }
                 }
                 3 -> {
-                    allData.value?.let { data -> selectBread(data) }
-                    breadData.value?.let { data -> initRecycler(data) }
+                    initData()
+                    selectItem(datas, 3)?.let { data -> initRecycler(data) }
                     with(binding) {
+                        imgAll.isSelected = false
                         imgCookie.isSelected = false
                         imgBread.isSelected = true
                         imgRice.isSelected = false
                         imgDrink.isSelected = false
+
+                        textAll.setTextColor(Color.parseColor("#676767"))
+                        textCookie.setTextColor(Color.parseColor("#676767"))
+                        textCookie.setTextColor(Color.parseColor("#676767"))
+                        textBread.setTextColor(Color.WHITE)
+                        textDrink.setTextColor(Color.parseColor("#676767"))
                     }
                 }
                 4 -> {
-                    allData.value?.let { data -> selectDrink(data) }
-                    drinkData.value?.let { data -> initRecycler(data) }
+                    initData()
+                    selectItem(datas, 4)?.let { data -> initRecycler(data) }
                     with(binding) {
+                        imgAll.isSelected = false
                         imgCookie.isSelected = false
                         imgBread.isSelected = false
                         imgRice.isSelected = false
                         imgDrink.isSelected = true
+
+                        textAll.setTextColor(Color.parseColor("#676767"))
+                        textCookie.setTextColor(Color.parseColor("#676767"))
+                        textCookie.setTextColor(Color.parseColor("#676767"))
+                        textBread.setTextColor(Color.parseColor("#676767"))
+                        textDrink.setTextColor(Color.WHITE)
                     }
                 }
             }
