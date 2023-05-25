@@ -93,6 +93,7 @@
                             android:id="@+id/img_rice"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
+                            android:onClick="@{()->viewModel.clickCategory(1)}"
                             android:src="@drawable/selector_rice">
                         </ImageView>
                         <TextView
@@ -115,6 +116,7 @@
                             android:id="@+id/img_cookie"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
+                            android:onClick="@{()->viewModel.clickCategory(2)}"
                             android:src="@drawable/selector_cookie">
                         </ImageView>
                         <TextView
@@ -137,6 +139,7 @@
                             android:id="@+id/img_bread"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
+                            android:onClick="@{()->viewModel.clickCategory(3)}"
                             android:src="@drawable/selector_bread">
                         </ImageView>
                         <TextView
@@ -159,6 +162,7 @@
                             android:id="@+id/img_drink"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
+                            android:onClick="@{()->viewModel.clickCategory(4)}"
                             android:src="@drawable/selector_drink">
                         </ImageView>
                         <TextView
@@ -178,10 +182,10 @@
                 android:id="@+id/frame_cu"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintHeight_percent="0.7"
+                app:layout_constraintHeight_percent="0.72"
                 android:elevation="3dp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/linear2"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
                 <androidx.recyclerview.widget.RecyclerView
@@ -193,16 +197,6 @@
                     tools:listitem="@layout/product_list">
                 </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
-            <View
-                android:id="@+id/linear2"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_scrollview"
-                android:background="#6F38DE"
-                android:layout_marginTop="20dp">
-            </View>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

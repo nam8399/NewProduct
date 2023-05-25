@@ -24,6 +24,7 @@ class ProductFragment() : Fragment() {
     lateinit var binding : FragmentProductBinding
     lateinit var reviewAdapter: ProductAdapter
     val datas = mutableListOf<ProductData>()
+    lateinit var viewModel: ProductViewModel
 
 
 
@@ -41,8 +42,15 @@ class ProductFragment() : Fragment() {
         return binding.root
     }
 
+    companion object {
+
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
 
         showSomething()
 
@@ -54,8 +62,6 @@ class ProductFragment() : Fragment() {
     }
 
     private fun showSomething() { // UI State 정의
-        val viewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
-
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
@@ -83,49 +89,12 @@ class ProductFragment() : Fragment() {
     }
 
     private fun initView() { // 홈 화면 뷰 초기화
-        val viewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
-
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        onclick()
+//        onclick()
         initRecycler()
 
-    }
-
-    private fun onclick() = with(binding) {
-        imgCookie.setOnClickListener {
-            imgCookie.isSelected = true
-            imgBread.isSelected = false
-            imgRice.isSelected = false
-            imgDrink.isSelected = false
-        }
-
-        imgBread.setOnClickListener {
-            imgCookie.isSelected = false
-            imgBread.isSelected = true
-            imgRice.isSelected = false
-            imgDrink.isSelected = false
-        }
-
-        imgRice.setOnClickListener {
-            imgCookie.isSelected = false
-            imgBread.isSelected = false
-            imgRice.isSelected = true
-            imgDrink.isSelected = false
-        }
-
-        imgDrink.setOnClickListener {
-            imgCookie.isSelected = false
-            imgBread.isSelected = false
-            imgRice.isSelected = false
-            imgDrink.isSelected = true
-        }
-
-        imgBread.setOnClickListener {
-            val intent = Intent(context, ReviewActivity::class.java)
-            startActivity(intent)
-        }
     }
 
 
@@ -152,8 +121,71 @@ class ProductFragment() : Fragment() {
         }
     }
 
-    private fun observeCategory() {
+    private fun initRecycler(data : ArrayList<ProductData>) {
+        reviewAdapter = ProductAdapter(activity as MainActivity)
+        binding.reviewRecycler.adapter = reviewAdapter
 
+        var review_img : Int
+
+        review_img = R.drawable.banner_review
+
+        for (i in 0..data.size) {
+            datas.add(data.get(i))
+        }
+
+        datas.apply {
+            reviewAdapter.datas = datas
+            reviewAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun observeCategory() = with(viewModel) {
+        onclickIdx.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                1 -> {
+                    allData.value?.let { data -> selectRice(data) }
+                    riceData.value?.let { data -> initRecycler(data) }
+                    with(binding) {
+                        imgCookie.isSelected = false
+                        imgBread.isSelected = false
+                        imgRice.isSelected = true
+                        imgDrink.isSelected = false
+                    }
+                }
+                2 -> {
+                    allData.value?.let { data -> selectCookie(data) }
+                    cookieData.value?.let { data -> initRecycler(data) }
+                    with(binding) {
+                        imgCookie.isSelected = true
+                        imgBread.isSelected = false
+                        imgRice.isSelected = false
+                        imgDrink.isSelected = false
+                    }
+                }
+                3 -> {
+                    allData.value?.let { data -> selectBread(data) }
+                    breadData.value?.let { data -> initRecycler(data) }
+                    with(binding) {
+                        imgCookie.isSelected = false
+                        imgBread.isSelected = true
+                        imgRice.isSelected = false
+                        imgDrink.isSelected = false
+                    }
+                }
+                4 -> {
+                    allData.value?.let { data -> selectDrink(data) }
+                    drinkData.value?.let { data -> initRecycler(data) }
+                    with(binding) {
+                        imgCookie.isSelected = false
+                        imgBread.isSelected = false
+                        imgRice.isSelected = false
+                        imgDrink.isSelected = true
+                    }
+                }
+            }
+
+
+        })
     }
 
 

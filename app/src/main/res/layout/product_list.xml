@@ -107,7 +107,7 @@
             android:id="@+id/review_imoji"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/icon_5"
+            android:src="@drawable/icon_note"
             android:layout_marginLeft="20dp"
             android:layout_gravity="center">
         </ImageView>
@@ -120,7 +120,7 @@
             android:layout_marginTop="1dp"
             android:layout_marginLeft="6dp"
             android:textSize="16sp"
-            android:text="최고에요!">
+            android:text="여러분의 리뷰를 기다려요...">
         </TextView>
         <View
             android:layout_width="0dp"
@@ -134,6 +134,15 @@
             android:src="@drawable/icon_comment">
         </ImageView>
     </LinearLayout>
+    <View
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_grade_frame"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </View>
     <TextView
         android:id="@+id/review_comment_count"
         android:layout_width="match_parent"
@@ -142,6 +151,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/review_grade_frame"
+        android:visibility="gone"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="18dp"
@@ -153,9 +163,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/review_comment_count">
+        app:layout_constraintTop_toBottomOf="@+id/review_comment_count"
+        app:layout_constraintBottom_toBottomOf="parent">
         <TextView
             android:id="@+id/review_cm_id"
             android:layout_width="wrap_content"

@@ -47,17 +47,28 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
         private val review_imoji: ImageView = itemView.findViewById(R.id.review_imoji)
         private val review_brand_img: ImageView = itemView.findViewById(R.id.review_brand_img)
         private val review_img: ImageView = itemView.findViewById(R.id.review_img)
+        private val review_comment_layout : LinearLayout = itemView.findViewById(R.id.review_comment)
 
 
 
         fun bind(item: ProductData) {
             review_title.text = item.review_title
             review_great.text = item.review_great
-            review_comment_count.text = item.review_comment_count + "개의 리뷰 모두 보기"
             review_price.text = item.review_price + "원"
-            review_cm_id.text = item.review_cm_id
-            review_cm_comment.text = item.review_cm_comment
+
+            if (!"".equals(item.review_cm_comment) && !item.review_cm_comment.isEmpty()) {
+                review_comment_layout.visibility = View.VISIBLE
+                review_cm_id.text = item.review_cm_id
+                review_cm_comment.text = item.review_cm_comment
+            }
+
+            if (!"".equals(item.review_comment_count) && !item.review_comment_count.isEmpty()) {
+                review_comment_count.visibility = View.VISIBLE
+                review_comment_count.text = item.review_comment_count + "개의 리뷰 모두 보기"
+            }
+
             review_title_sub.text = item.review_title_sub
+
 
             Glide.with(itemView).load(item.review_img).into(review_img)
 

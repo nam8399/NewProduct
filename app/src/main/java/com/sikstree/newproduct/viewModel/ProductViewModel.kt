@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.sikstree.minecraftstatus.Model.Event
 import com.sikstree.newproduct.Data.MyApplication
+import com.sikstree.newproduct.Data.ProductData
 import com.sikstree.newproduct.Data.UiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -28,13 +29,65 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState = _uiState.asStateFlow()
 
+    var onclickIdx = MutableLiveData<Int>()
     var categoryIdx = MutableLiveData<Int>()
+    var allData = MutableLiveData<ArrayList<ProductData>>()
+    var riceData = MutableLiveData<ArrayList<ProductData>>()
+    var cookieData = MutableLiveData<ArrayList<ProductData>>()
+    var breadData = MutableLiveData<ArrayList<ProductData>>()
+    var drinkData = MutableLiveData<ArrayList<ProductData>>()
 
     init {
         categoryIdx.value = 0 // 0 : 전체, 1 : 신선제품, 2 : 과자, 3 : 빵, 4 : 음료
+        onclickIdx.value = 0 // 0 : 전체, 1 : 신선제품, 2 : 과자, 3 : 빵, 4 : 음료
+        allData.value = ArrayList<ProductData>()
+        riceData.value = ArrayList<ProductData>()
+        cookieData.value = ArrayList<ProductData>()
+        breadData.value = ArrayList<ProductData>()
+        drinkData.value = ArrayList<ProductData>()
     }
 
 
+    fun clickCategory(idx : Int) {
+        onclickIdx.value = idx
+    }
+
+
+    fun selectRice(data : ArrayList<ProductData>) {
+
+        for (i in 0..data.size) {
+            if (data.get(i).review_category_idx == 1) {
+                riceData.value?.add(data.get(i))
+            }
+        }
+    }
+
+    fun selectCookie(data : ArrayList<ProductData>) {
+
+        for (i in 0..data.size) {
+            if (data.get(i).review_category_idx == 2) {
+                riceData.value?.add(data.get(i))
+            }
+        }
+    }
+
+    fun selectBread(data : ArrayList<ProductData>) {
+
+        for (i in 0..data.size) {
+            if (data.get(i).review_category_idx == 3) {
+                breadData.value?.add(data.get(i))
+            }
+        }
+    }
+
+    fun selectDrink(data : ArrayList<ProductData>) {
+
+        for (i in 0..data.size) {
+            if (data.get(i).review_category_idx == 4) {
+                drinkData.value?.add(data.get(i))
+            }
+        }
+    }
 
 
 
