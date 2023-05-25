@@ -48,6 +48,8 @@ class ProductFragment() : Fragment() {
 
         initView()
 
+        observeCategory()
+
 
     }
 
@@ -56,7 +58,6 @@ class ProductFragment() : Fragment() {
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
 
         viewModel.uiState.asLiveData().observe(viewLifecycleOwner, Observer {
             when (it) {
@@ -92,33 +93,38 @@ class ProductFragment() : Fragment() {
 
     }
 
-    private fun onclick() {
-        binding.imgCookie.setOnClickListener {
-            binding.imgCookie.isSelected = true
-            binding.imgBread.isSelected = false
-            binding.imgRice.isSelected = false
-            binding.imgDrink.isSelected = false
+    private fun onclick() = with(binding) {
+        imgCookie.setOnClickListener {
+            imgCookie.isSelected = true
+            imgBread.isSelected = false
+            imgRice.isSelected = false
+            imgDrink.isSelected = false
         }
 
-        binding.imgBread.setOnClickListener {
-            binding.imgCookie.isSelected = false
-            binding.imgBread.isSelected = true
-            binding.imgRice.isSelected = false
-            binding.imgDrink.isSelected = false
+        imgBread.setOnClickListener {
+            imgCookie.isSelected = false
+            imgBread.isSelected = true
+            imgRice.isSelected = false
+            imgDrink.isSelected = false
         }
 
-        binding.imgRice.setOnClickListener {
-            binding.imgCookie.isSelected = false
-            binding.imgBread.isSelected = false
-            binding.imgRice.isSelected = true
-            binding.imgDrink.isSelected = false
+        imgRice.setOnClickListener {
+            imgCookie.isSelected = false
+            imgBread.isSelected = false
+            imgRice.isSelected = true
+            imgDrink.isSelected = false
         }
 
-        binding.imgDrink.setOnClickListener {
-            binding.imgCookie.isSelected = false
-            binding.imgBread.isSelected = false
-            binding.imgRice.isSelected = false
-            binding.imgDrink.isSelected = true
+        imgDrink.setOnClickListener {
+            imgCookie.isSelected = false
+            imgBread.isSelected = false
+            imgRice.isSelected = false
+            imgDrink.isSelected = true
+        }
+
+        imgBread.setOnClickListener {
+            val intent = Intent(context, ReviewActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -132,25 +138,22 @@ class ProductFragment() : Fragment() {
         review_img = R.drawable.banner_review
 
         datas.apply {
-            add(ProductData(1, 5, "연세우유 말차생크림빵","CU", "최고에요!", "3,800",
-                        "제품 설명을 해드리겠습니다. 제품 설명을 해드리겠습니다. 제품 설명을 해드리겠습니다. 제품 설명을 해드리겠습니다.", "23", "불타는삼각김밥", "지립니다.", review_img))
-            add(ProductData(2, 3, "연세우유 말차생크림빵", "GS25","최고에요!", "3,200",
-                "제품 설명을 해드리겠습니다.", "25", "불타는삼각김밥", "지립니다.", review_img))
-            add(ProductData(3, 4, "연세우유 말차생크림빵", "세븐일레븐","최고에요!", "4,200",
-                "제품 설명을 해드리겠습니다.", "16", "불타는삼각김밥", "지립니다.", review_img))
+            add(ProductData(1, 5, 1,"연세우유 말차생크림빵","CU", "최고에요!", "3,800",
+                         "23", "불타는삼각김밥", "지립니다.", review_img))
+            add(ProductData(2, 3, 2,"연세우유 말차생크림빵", "GS25","최고에요!", "3,200",
+                 "25", "불타는삼각김밥", "지립니다.", review_img))
+            add(ProductData(3, 4, 3,"연세우유 말차생크림빵", "세븐일레븐","최고에요!", "4,200",
+                 "16", "불타는삼각김밥", "지립니다.", review_img))
 
 
             reviewAdapter.datas = datas
             reviewAdapter.notifyDataSetChanged()
 
         }
+    }
 
+    private fun observeCategory() {
 
-
-        binding.imgBread.setOnClickListener {
-            val intent = Intent(context, ReviewActivity::class.java)
-            startActivity(intent)
-        }
     }
 
 
@@ -158,12 +161,10 @@ class ProductFragment() : Fragment() {
 
     override fun onResume() {
         super.onResume()
-//        scrollJobCreate()
     }
 
     override fun onPause() {
         super.onPause()
-//        job.cancel()
     }
 
 }

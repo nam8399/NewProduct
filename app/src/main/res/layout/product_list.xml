@@ -127,21 +127,13 @@
             android:layout_weight="1"
             android:layout_height="match_parent">
         </View>
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/icon_comment">
+        </ImageView>
     </LinearLayout>
-    <TextView
-        android:id="@+id/review_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="21dp"
-        app:layout_constraintTop_toBottomOf="@+id/review_grade_frame"
-        android:text="제품 설명을 해드리겠습니다. 이게 뭐냐면요.."
-        android:textColor="#E7E7E7"
-        android:textSize="14sp">
-    </TextView>
     <TextView
         android:id="@+id/review_comment_count"
         android:layout_width="match_parent"
@@ -149,7 +141,7 @@
         android:text="23개의 리뷰 모두 보기"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/review_text"
+        app:layout_constraintTop_toBottomOf="@+id/review_grade_frame"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="18dp"

@@ -28,6 +28,11 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState = _uiState.asStateFlow()
 
+    var categoryIdx = MutableLiveData<Int>()
+
+    init {
+        categoryIdx.value = 0 // 0 : 전체, 1 : 신선제품, 2 : 과자, 3 : 빵, 4 : 음료
+    }
 
 
 

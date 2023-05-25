@@ -40,7 +40,6 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
         private val review_title: TextView = itemView.findViewById(R.id.review_title)
         private val review_title_sub: TextView = itemView.findViewById(R.id.review_title_sub)
         private val review_great: TextView = itemView.findViewById(R.id.review_great)
-        private val review_text: TextView = itemView.findViewById(R.id.review_text)
         private val review_comment_count: TextView = itemView.findViewById(R.id.review_comment_count)
         private val review_price: TextView = itemView.findViewById(R.id.review_price)
         private val review_cm_id: TextView = itemView.findViewById(R.id.review_cm_id)
@@ -52,22 +51,6 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
 
 
         fun bind(item: ProductData) {
-            var builder_reviewtxt : SpannableStringBuilder
-
-            if (item.review_text.length > 50) {
-                var reviewtxt = ""
-                reviewtxt = item.review_text.substring(0,50) + "... 더보기"
-                builder_reviewtxt = SpannableStringBuilder(reviewtxt)
-
-                val graySpan = ForegroundColorSpan(Color.parseColor("#979B9B"))
-                builder_reviewtxt.setSpan(graySpan, 53, reviewtxt.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                review_text.text = builder_reviewtxt
-            } else {
-                review_text.text = item.review_text
-            }
-
-
-
             review_title.text = item.review_title
             review_great.text = item.review_great
             review_comment_count.text = item.review_comment_count + "개의 리뷰 모두 보기"

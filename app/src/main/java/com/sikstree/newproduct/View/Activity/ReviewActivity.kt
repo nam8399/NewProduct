@@ -1,5 +1,6 @@
 package com.sikstree.newproduct.View.Activity
 
+import android.content.Intent
 import android.graphics.Insets.add
 import android.os.Bundle
 import android.widget.Toast
@@ -28,12 +29,18 @@ class ReviewActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-//        viewModel.setFragment(TAG_HOME, HomeFragment(), fragmentManager)
-        binding.btnX.setOnClickListener {
-            finish()
-        }
 
+
+        initView()
         initRecycler()
+    }
+
+    private fun initView() = with(binding) {
+        btnX.setOnClickListener { finish() }
+        btnReview.setOnClickListener {
+            val intent = Intent(this@ReviewActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initRecycler() {
