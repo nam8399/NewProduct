@@ -3,11 +3,15 @@ package com.sikstree.newproduct.View.Activity
 import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.app.Activity
 import android.app.appsearch.SetSchemaRequest.READ_EXTERNAL_STORAGE
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Insets.add
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -33,15 +37,15 @@ class AddReviewActivity : AppCompatActivity() {
     private var img_count = 0
 
 
-    private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-    private val checkPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
-        result.forEach {
-            if(!it.value) {
-                Toast.makeText(applicationContext, "권한 동의 필요!", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        }
-    }
+//    private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+//    private val checkPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
+//        result.forEach {
+//            if(!it.value) {
+//                Toast.makeText(applicationContext, "권한 동의 필요!", Toast.LENGTH_SHORT).show()
+//                finish()
+//            }
+//        }
+//    }
 
     var backPressedTime : Long = 0
 
@@ -53,29 +57,70 @@ class AddReviewActivity : AppCompatActivity() {
 
         onClick()
 
-        checkPermission.launch(permissionList)
+//        checkPermission.launch(permissionList)
     }
 
 
     private fun onClick() = with(binding){
         btnSkip.setOnClickListener() {
-            val intent = Intent(this@AddReviewActivity, MainActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
         btnImgadd.setOnClickListener {
-            if (img_count==0) { readImage(btnImg1).launch("image/*") }
-            else if (img_count==1) { readImage(btnImg2).launch("image/*") }
-            else if (img_count==2) { readImage(btnImg3).launch("image/*") }
+            navigatePhotos()
         }
 
 
     }
 
 
-    private fun readImage(img : ImageView) = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        Glide.with(this@AddReviewActivity).load(uri).into(img)
-        img_count++
+
+
+    private fun navigatePhotos() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        startActivityForResult(intent,2000)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode != Activity.RESULT_OK) {
+            Toast.makeText(this,"잘못된 접근입니다",Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (requestCode == 2000) {
+            var currentImgUrl : Uri? = data?.data
+
+            try {
+                val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,currentImgUrl)
+
+                when(img_count) {
+                    0 -> {
+                        binding.btnImg1.setImageBitmap(bitmap)
+                        binding.btnImg1.visibility = View.VISIBLE
+                        img_count++
+                    }
+                    1 -> {
+                        binding.btnImg2.setImageBitmap(bitmap)
+                        binding.btnImg2.visibility = View.VISIBLE
+                        img_count++
+                    }
+                    2 -> {
+                        binding.btnImg3.setImageBitmap(bitmap)
+                        binding.btnImg3.visibility = View.VISIBLE
+                        img_count++
+                    }
+                    3 -> {
+                        Toast.makeText(this@AddReviewActivity, "이미지 등록은 3장까지 가능합니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        } else {
+            Log.d("AddReviewActivity", "Something Wrong")
+        }
     }
 
 

@@ -40,6 +40,7 @@ class ReviewActivity : AppCompatActivity() {
         btnReview.setOnClickListener {
             val intent = Intent(this@ReviewActivity, ChoiceActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 

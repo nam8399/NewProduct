@@ -1,13 +1,19 @@
 package com.sikstree.newproduct.View.Activity
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Fragment.AuthFragment
@@ -24,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     private val viewModel : MainViewModel by viewModels()
     private val fragmentManager : FragmentManager = supportFragmentManager
     var backPressedTime : Long = 0
+    val MY_PERMISSION_ACCESS_ALL = 100
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +45,43 @@ class MainActivity : AppCompatActivity() {
         updateResult()
         onClick()
 
+
+        if(ContextCompat.checkSelfPermission(this@MainActivity,android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+            && ContextCompat.checkSelfPermission(this@MainActivity,android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+            && ContextCompat.checkSelfPermission(this@MainActivity,android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+
+            Toast.makeText(this@MainActivity, "권한 허용 완료", Toast.LENGTH_SHORT).show()
+        }
+
+        // 권한이 없을 때 권한을 요구함
+        else {
+            ActivityCompat.requestPermissions(
+                this@MainActivity,
+                arrayOf(android.Manifest.permission.CAMERA,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                1
+            )
+        }
     }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+//        if(requestCode == 1){
+//            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+//                Snackbar.make(binding.root, "위치 권한이 동의 되었습니다.", Snackbar.LENGTH_SHORT).show()
+//            }
+//            else{
+//                Snackbar.make(binding.root, "권한에 동의하지 않을 경우 이용할 수 없습니다.", Snackbar.LENGTH_SHORT).show()
+//            }
+//        }
+    }
+
 
 
     override fun onNewIntent(intent: Intent?) {
@@ -76,6 +120,8 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
 
 
 

@@ -44,8 +44,9 @@ class ChoiceActivity : AppCompatActivity() {
             if (viewModel?.btnEnable?.value == true) {
                 val intent = Intent(this@ChoiceActivity,AddReviewActivity::class.java)
                 startActivity(intent)
+                finish()
             } else {
-                Toast.makeText(this@ChoiceActivity, "버튼 비활성화", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ChoiceActivity, "아이콘을 클릭해주세요!", Toast.LENGTH_SHORT).show()
             }
         }
     }

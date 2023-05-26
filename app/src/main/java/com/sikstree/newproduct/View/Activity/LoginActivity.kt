@@ -20,6 +20,7 @@ import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.sikstree.newproduct.Data.LoginState
@@ -105,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
             if (it) {
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(intent)
-                Toast.makeText(this@LoginActivity, "자동 로그인", Toast.LENGTH_SHORT).show()
+//                Snackbar.make(binding.root, "자동 로그인", Snackbar.LENGTH_SHORT).show()
                 finish()
             }
         }
