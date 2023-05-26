@@ -157,6 +157,15 @@ class ProductFragment() : Fragment() {
             reviewAdapter.datas = data
             reviewAdapter.notifyDataSetChanged()
         }
+
+        reviewAdapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener{
+            override fun onItemClick(v: View, data: ProductData, pos : Int) {
+                Log.d(title, "상품 선택 pos : " + pos)
+                val intent = Intent(context, ReviewActivity::class.java)
+                startActivity(intent)
+            }
+
+        })
     }
 
     private fun observeCategory() = with(viewModel) {
@@ -250,17 +259,6 @@ class ProductFragment() : Fragment() {
 
 
         })
-    }
-
-
-
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
     }
 
 }

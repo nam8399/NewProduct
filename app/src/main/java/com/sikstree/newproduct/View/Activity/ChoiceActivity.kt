@@ -42,7 +42,8 @@ class ChoiceActivity : AppCompatActivity() {
     private fun onClick() = with(binding){
         btnNext.setOnClickListener() {
             if (viewModel?.btnEnable?.value == true) {
-                Toast.makeText(this@ChoiceActivity, "버튼 활성화", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@ChoiceActivity,AddReviewActivity::class.java)
+                startActivity(intent)
             } else {
                 Toast.makeText(this@ChoiceActivity, "버튼 비활성화", Toast.LENGTH_SHORT).show()
             }

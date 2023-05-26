@@ -112,15 +112,10 @@ class StartViewModel() : ViewModel() {
                     Log.d(title, "position : " + position)
                     iconClickPosition.value = position
                 }
-
-                Glide
-                    .with(itemView)
-                    .load(datas.get(position))
-                    .centerCrop()
-                    .into(itemImg)
-
-
+                itemImg.setImageResource(datas.get(position))
+                itemImg.isSelected = iconClickPosition.value == position
             }
+
         }
 
 
