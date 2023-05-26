@@ -78,7 +78,7 @@ class StartActivity : AppCompatActivity() {
         binding.loginTextWelcome.setText(builder_welcome)
 
         var listManager = GridLayoutManager(this, 4)
-        var listAdapter = viewModel.ListAdapterGrid()
+        var listAdapter = viewModel.ListAdapterGrid(initIcon())
 
 
         var recyclerList = binding.recyclerGridView.apply {
@@ -107,6 +107,25 @@ class StartActivity : AppCompatActivity() {
             }, 3000)
         }
 
+    }
+
+    private fun initIcon(): ArrayList<Int> {
+        var list = arrayListOf<Int>()
+
+        list.add(R.drawable.imoji_1)
+        list.add(R.drawable.imoji_2)
+        list.add(R.drawable.imoji_3)
+        list.add(R.drawable.imoji_4)
+        list.add(R.drawable.imoji_5)
+        list.add(R.drawable.imoji_6)
+        list.add(R.drawable.imoji_7)
+        list.add(R.drawable.imoji_8)
+        list.add(R.drawable.imoji_9)
+        list.add(R.drawable.imoji_10)
+        list.add(R.drawable.imoji_11)
+        list.add(R.drawable.imoji_12)
+
+        return list
     }
 
 

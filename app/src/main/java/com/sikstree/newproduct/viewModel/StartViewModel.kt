@@ -82,19 +82,19 @@ class StartViewModel() : ViewModel() {
     }
 
 
-    inner class ListAdapterGrid(): RecyclerView.Adapter<ListAdapterGrid.ViewHolder>() {
+    inner class ListAdapterGrid(iconList : ArrayList<Int>): RecyclerView.Adapter<ListAdapterGrid.ViewHolder>() {
 
 //    var datas = mutableListOf<ItemData>()
 
-        var datas : ArrayList<Int> = arrayListOf()
+        var datas = iconList
 
-        init{
-            var data = IconData("")
-            for (i in 1..12)
-                datas.add(i)
-
-            notifyDataSetChanged()
-        }
+//        init{
+//            var data = IconData("")
+//            for (i in 1..12)
+//                datas.add(i)
+//
+//            notifyDataSetChanged()
+//        }
 
 
 
@@ -112,9 +112,10 @@ class StartViewModel() : ViewModel() {
                     Log.d(title, "position : " + position)
                     iconClickPosition.value = position
                 }
+
                 Glide
                     .with(itemView)
-                    .load(R.drawable.ic_launcher_foreground)
+                    .load(datas.get(position))
                     .centerCrop()
                     .into(itemImg)
 
