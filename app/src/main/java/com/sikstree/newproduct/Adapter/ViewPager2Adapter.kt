@@ -55,8 +55,6 @@ class ViewPager2Adater(var list : ArrayList<Int>,var context : Context)  : Recyc
                 .centerCrop()
                 .into((holder as viewHolder).image)
 
-//            (holder as viewHolder).image.setImageResource(R.drawable.img_retro_place)
-//            (holder as viewHolder).image.scaleType = ScaleType.CENTER_CROP
         }
 
 

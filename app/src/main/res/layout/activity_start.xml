@@ -120,6 +120,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
+                <ImageView
+                    android:id="@+id/start_imoji"
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="24dp"
+                    android:src="@drawable/imoji_1">
+                </ImageView>
                 <TextView
                     android:id="@+id/login_text_welcome"
                     android:layout_width="match_parent"

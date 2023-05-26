@@ -153,19 +153,6 @@ class HomeFragment() : Fragment() {
 
             }
 
-//            override fun onPageScrollStateChanged(state: Int) {
-//                super.onPageScrollStateChanged(state)
-//                super.onPageScrollStateChanged(state)
-//                when (state) {
-//                    ViewPager2.SCROLL_STATE_IDLE ->{
-//                        if (!job.isActive) scrollJobCreate()
-//                    }
-//
-//                    ViewPager2.SCROLL_STATE_DRAGGING -> job.cancel()
-//
-//                    ViewPager2.SCROLL_STATE_SETTLING -> {}
-//                }
-//            }
         })
 
 
@@ -174,41 +161,6 @@ class HomeFragment() : Fragment() {
 
 
 
-//    fun scrollJobCreate() { // auto Scroll을 위한 함수
-//        job = lifecycleScope.launchWhenResumed {
-//            delay(2000)
-//            binding.viewpager2.setCurrentItem(++bannerPosition, true)
-//            if (bannerPosition == 2) {
-//                bannerPosition = -1
-//            }
-//        }
-//    }
-
-//    fun observerServerStatus() {
-//        val loadingAnimDialog = CustomLoadingDialog(activity as MainActivity)
-//        binding.viewModel?.apply {
-//            event.observe(viewLifecycleOwner, EventObserver {
-//                if (it) {
-//                    binding.serverStatusOff.visibility = View.GONE
-//                    binding.serverStatusOn.visibility = View.VISIBLE
-//                } else {
-//                    binding.serverStatusOff.visibility = View.VISIBLE
-//                    binding.serverStatusOn.visibility = View.GONE
-//                }
-//
-//            })
-//
-//            showDialog.observe(viewLifecycleOwner, Observer { // showDialog 변수를 observing 하면서 다이얼로그 show 및 dismiss
-//                if (it) {
-//                    loadingAnimDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//                    loadingAnimDialog.show()
-//                } else {
-//                    loadingAnimDialog.dismiss()
-//                }
-//            })
-//        }
-//
-//    }
 
     override fun onResume() {
         super.onResume()

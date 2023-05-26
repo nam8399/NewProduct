@@ -93,12 +93,19 @@ class StartActivity : AppCompatActivity() {
                 binding.btnStartActive.isSelected = true
                 binding.btnStartActive.isEnabled = true
             }
+
+            var recyclerList = binding.recyclerGridView.apply {
+                setHasFixedSize(true)
+                layoutManager = listManager
+                adapter = listAdapter
+            }
         }
 
 
         binding.btnStartActive.setOnClickListener() {
 //            binding.loginMainLayout.visibility = View.GONE
             binding.loginWelcomeLayout.visibility = View.VISIBLE
+            binding.startImoji.setImageResource(initIcon().get(viewModel.iconClickPosition.value!!))
             Handler(Looper.getMainLooper()).postDelayed({
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
@@ -112,19 +119,18 @@ class StartActivity : AppCompatActivity() {
     private fun initIcon(): ArrayList<Int> {
         var list = arrayListOf<Int>()
 
-        list.add(R.drawable.imoji_1)
-        list.add(R.drawable.imoji_2)
-        list.add(R.drawable.imoji_3)
-        list.add(R.drawable.imoji_4)
-        list.add(R.drawable.imoji_5)
-        list.add(R.drawable.imoji_6)
-        list.add(R.drawable.imoji_7)
-        list.add(R.drawable.imoji_8)
-        list.add(R.drawable.imoji_9)
-        list.add(R.drawable.imoji_10)
-        list.add(R.drawable.imoji_11)
-        list.add(R.drawable.imoji_12)
-
+        list.add(R.drawable.selector_imoji_1)
+        list.add(R.drawable.selector_imoji_2)
+        list.add(R.drawable.selector_imoji_3)
+        list.add(R.drawable.selector_imoji_4)
+        list.add(R.drawable.selector_imoji_5)
+        list.add(R.drawable.selector_imoji_6)
+        list.add(R.drawable.selector_imoji_7)
+        list.add(R.drawable.selector_imoji_8)
+        list.add(R.drawable.selector_imoji_9)
+        list.add(R.drawable.selector_imoji_10)
+        list.add(R.drawable.selector_imoji_11)
+        list.add(R.drawable.selector_imoji_12)
         return list
     }
 
