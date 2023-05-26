@@ -88,7 +88,6 @@
                     android:textAppearance="@style/btn_start_active"
                     android:gravity="center_horizontal|center_vertical"
                     android:clipToOutline="true"
-                    android:text="시작하기"
                     android:enabled="false"
                     android:background="@drawable/selector_startbtn">
                 </TextView>
