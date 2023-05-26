@@ -1,20 +1,14 @@
 package com.sikstree.newproduct.View.Fragment
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -24,8 +18,6 @@ import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Activity.MainActivity
 import com.sikstree.newproduct.databinding.FragmentHomeBinding
 import com.sikstree.newproduct.viewModel.HomeViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 
 class HomeFragment() : Fragment() {
     lateinit var binding : FragmentHomeBinding
@@ -105,21 +97,28 @@ class HomeFragment() : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-
-
-
-
-
         var list = ArrayList<Int>()
 
         list.add(R.drawable.banner_review)
         list.add(R.drawable.banner_review)
         list.add(R.drawable.banner_review)
+
+        initviewpagerCU(list)
+        initviewpagerGS(list)
+        initviewpager7(list)
+
+
+
+
+
+    }
+
+    private fun initviewpager7(list: ArrayList<Int>) = with(binding) {
         var adapter = ViewPager2Adater(list,activity as MainActivity)
 
-        binding.viewpager2.offscreenPageLimit=3
-        binding.viewpager2.getChildAt(0).overScrollMode=View.OVER_SCROLL_NEVER
-        binding.viewpager2.adapter = adapter
+        viewpager27.offscreenPageLimit=3
+        viewpager27.getChildAt(0).overScrollMode=View.OVER_SCROLL_NEVER
+        viewpager27.adapter = adapter
 
 
         var transform = CompositePageTransformer()
@@ -130,7 +129,7 @@ class HomeFragment() : Fragment() {
             view.scaleY = 0.6f + v * 0.4f
         })
 
-        binding.viewpager2.setPageTransformer(transform)
+        viewpager27.setPageTransformer(transform)
 
         adapter.setItemClickListener(object : ViewPager2Adater.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
@@ -146,7 +145,7 @@ class HomeFragment() : Fragment() {
             }
         })
 
-        binding.viewpager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+        viewpager27.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position : Int){
                 super.onPageSelected(position)
                 bannerPosition = position
@@ -154,12 +153,91 @@ class HomeFragment() : Fragment() {
             }
 
         })
-
-
     }
 
+    private fun initviewpagerGS(list: ArrayList<Int>) = with(binding) {
+        var adapter = ViewPager2Adater(list,activity as MainActivity)
+
+        viewpager2Gs.offscreenPageLimit=3
+        viewpager2Gs.getChildAt(0).overScrollMode=View.OVER_SCROLL_NEVER
+        viewpager2Gs.adapter = adapter
 
 
+        var transform = CompositePageTransformer()
+        transform.addTransformer(MarginPageTransformer(8))
+
+        transform.addTransformer(ViewPager2.PageTransformer{ view: View, fl: Float ->
+            var v = 1-Math.abs(fl)
+            view.scaleY = 0.6f + v * 0.4f
+        })
+
+        viewpager2Gs.setPageTransformer(transform)
+
+        adapter.setItemClickListener(object : ViewPager2Adater.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+//                val intent = Intent(context, WebviewActivity::class.java)
+//                if (position == 0) {
+//                    intent.putExtra("url","https://www.youtube.com/watch?v=n1PkmOU7H2w")
+//                } else if(position == 1) {
+//                    intent.putExtra("url", "https://www.youtube.com/watch?v=hvydITbP-YE&t=95s")
+//                } else if(position == 2) {
+//                    intent.putExtra("url", "https://www.youtube.com/watch?v=n1PkmOU7H2w&t=2s")
+//                }
+//                startActivity(intent)
+            }
+        })
+
+        viewpager2Gs.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position : Int){
+                super.onPageSelected(position)
+                bannerPosition = position
+
+            }
+
+        })
+    }
+
+    private fun initviewpagerCU(list: ArrayList<Int>) = with(binding) {
+        var adapter = ViewPager2Adater(list,activity as MainActivity)
+
+        viewpager2.offscreenPageLimit=3
+        viewpager2.getChildAt(0).overScrollMode=View.OVER_SCROLL_NEVER
+        viewpager2.adapter = adapter
+
+
+        var transform = CompositePageTransformer()
+        transform.addTransformer(MarginPageTransformer(8))
+
+        transform.addTransformer(ViewPager2.PageTransformer{ view: View, fl: Float ->
+            var v = 1-Math.abs(fl)
+            view.scaleY = 0.6f + v * 0.4f
+        })
+
+        viewpager2.setPageTransformer(transform)
+
+        adapter.setItemClickListener(object : ViewPager2Adater.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+//                val intent = Intent(context, WebviewActivity::class.java)
+//                if (position == 0) {
+//                    intent.putExtra("url","https://www.youtube.com/watch?v=n1PkmOU7H2w")
+//                } else if(position == 1) {
+//                    intent.putExtra("url", "https://www.youtube.com/watch?v=hvydITbP-YE&t=95s")
+//                } else if(position == 2) {
+//                    intent.putExtra("url", "https://www.youtube.com/watch?v=n1PkmOU7H2w&t=2s")
+//                }
+//                startActivity(intent)
+            }
+        })
+
+        viewpager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position : Int){
+                super.onPageSelected(position)
+                bannerPosition = position
+
+            }
+
+        })
+    }
 
 
     override fun onResume() {

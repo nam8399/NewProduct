@@ -207,6 +207,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
                                 <androidx.viewpager2.widget.ViewPager2
+                                    android:id="@+id/viewpager2_gs"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     app:layout_constraintHeight_percent="0.7"
@@ -289,6 +290,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
                                 <androidx.viewpager2.widget.ViewPager2
+                                    android:id="@+id/viewpager2_7"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     app:layout_constraintHeight_percent="0.7"
