@@ -124,7 +124,12 @@ class AuthFragment() : Fragment() {
                 try {
                     val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver,currentImgUrl)
 
-                    binding.imgCertification.setImageBitmap(bitmap)
+
+                    with(binding) {
+                        imgCertification.setImageBitmap(bitmap)
+                        btnAddCert.isEnabled = true
+                        btnAddCert.isSelected = true
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

@@ -73,7 +73,7 @@
                     android:background="@color/black">
                 </ImageView>
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <ImageView
+            <Button
                 android:id="@+id/btn_add_cert"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
@@ -82,11 +82,12 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/btn_add_cert"
+                android:enabled="false"
+                android:background="@drawable/selector_btn_add_cert"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/frame_certification">
-            </ImageView>
+            </Button>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
