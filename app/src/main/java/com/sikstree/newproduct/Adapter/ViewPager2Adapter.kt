@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sikstree.newproduct.R
 
-class ViewPager2Adater(var list : ArrayList<Int>,var context : Context)  : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class ViewPager2Adater(var list : ArrayList<String>,var context : Context)  : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         var view = LayoutInflater.from(parent.context).inflate(R.layout.item,parent,false)

@@ -33,6 +33,7 @@ import com.sikstree.newproduct.Adapter.ViewPager2Adater
 import com.sikstree.newproduct.Data.UiState
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Activity.MainActivity
+import com.sikstree.newproduct.View.Dialog.CustomDialog
 import com.sikstree.newproduct.databinding.FragmentAuthBinding
 import com.sikstree.newproduct.viewModel.HomeViewModel
 import java.io.File
@@ -41,12 +42,22 @@ import java.io.FileOutputStream
 class AuthFragment() : Fragment() {
     lateinit var binding : FragmentAuthBinding
     var isSeverAdd : Boolean = false
-//    lateinit var job : Job
-    var bannerPosition : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
+    init{
+        instance = this
+    }
+
+    companion object{
+        private var instance: AuthFragment? = null
+        fun getInstance():AuthFragment?{
+            return instance
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +68,9 @@ class AuthFragment() : Fragment() {
 
 
         binding.imgCertification.setOnClickListener() {
-            navigatePhotos()
+//            navigatePhotos()
+            val dlg = CustomDialog(activity as MainActivity)
+            dlg.show()
         }
 
         binding.btnAddCert.setOnClickListener() {
@@ -78,10 +91,15 @@ class AuthFragment() : Fragment() {
 
     }
 
-    private fun navigatePhotos() {
+    fun navigatePhotos() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startActivityForResult(intent,2000)
+    }
+
+    fun CallCamera(){
+        val itt = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(itt, 3000)
     }
 
 
@@ -99,19 +117,25 @@ class AuthFragment() : Fragment() {
 //            Toast.makeText(this,"잘못된 접근입니다",Toast.LENGTH_SHORT).show()
             return
         }
+        when (requestCode) {
+            2000 -> {
+                var currentImgUrl : Uri? = data?.data
 
-        if (requestCode == 2000) {
-            var currentImgUrl : Uri? = data?.data
+                try {
+                    val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver,currentImgUrl)
 
-            try {
-                val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver,currentImgUrl)
-
-                binding.imgCertification.setImageBitmap(bitmap)
-            } catch (e: Exception) {
-                e.printStackTrace()
+                    binding.imgCertification.setImageBitmap(bitmap)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
-        } else {
-            Log.d("AddReviewActivity", "Something Wrong")
+
+            3000 -> {
+                if(data?.extras?.get("data") != null){
+                    val img = data?.extras?.get("data") as Bitmap
+                    binding.imgCertification.setImageBitmap(img)
+                }
+            }
         }
     }
 

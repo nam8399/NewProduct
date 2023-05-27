@@ -24,19 +24,20 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
-class HomeViewModel( application: Application) : AndroidViewModel(application){
+class HomeViewModel( application: Application) : AndroidViewModel(application) {
 
 
     private val title = "HomeViewModel"
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState = _uiState.asStateFlow()
-    var auth : FirebaseAuth? = null
-    var firestore : FirebaseFirestore? = null
-    private var uid : String? = null
+    var auth: FirebaseAuth? = null
+    var firestore: FirebaseFirestore? = null
+    private var uid: String? = null
+    var login_check = MutableLiveData<Boolean>()
 
     var name = MutableLiveData<String>()
-
+    var getEvent = MutableLiveData<Int>()
 
 
     init {
@@ -44,6 +45,13 @@ class HomeViewModel( application: Application) : AndroidViewModel(application){
         firestore = FirebaseFirestore.getInstance()
         uid = FirebaseAuth.getInstance().currentUser?.uid
         name.value = ""
+        getEvent.value = 0 // 0 : 기본, 1 : CU 이미지, 2: GS 이미지, 3: 7eleven 이미지
+    }
+
+    companion object {
+        var listCU = ArrayList<String>()
+        var listGS = ArrayList<String>()
+        var list7 = ArrayList<String>()
     }
 
 
@@ -66,8 +74,77 @@ class HomeViewModel( application: Application) : AndroidViewModel(application){
             }
     }
 
+    fun getCU() = viewModelScope.launch {
+        firestore?.collection("HomeCU")
+            ?.get()      // 문서 가져오기
+            ?.addOnSuccessListener { result ->
+                // 성공할 경우
+                listCU.clear()
+                for (document in result) {  // 가져온 문서들은 result에 들어감
+                    listCU.add(document["img"] as String)
+                    Log.d(title, "로그확인 : " + document["img"] as String)
+                }
+                getEvent.value = 1
+            }
+            ?.addOnFailureListener { exception ->
+                // 실패할 경우
+                Log.w(title, "Error getting documents: $exception")
+            }
+    }
 
 
+    fun getGS() = viewModelScope.launch {
+        firestore?.collection("HomeGS")
+            ?.get()      // 문서 가져오기
+            ?.addOnSuccessListener { result ->
+                // 성공할 경우
+                listGS.clear()
+                for (document in result) {  // 가져온 문서들은 result에 들어감
+                    listGS.add(document["img"] as String)
+                }
 
 
+                getEvent.value = 2
+
+            }
+            ?.addOnFailureListener { exception ->
+                // 실패할 경우
+                Log.w(title, "Error getting documents: $exception")
+            }
+    }
+
+
+    fun get7() = viewModelScope.launch {
+        firestore?.collection("Home7")
+            ?.get()      // 문서 가져오기
+            ?.addOnSuccessListener { result ->
+                // 성공할 경우
+                list7.clear()
+                for (document in result) {  // 가져온 문서들은 result에 들어감
+                    list7.add(document["img"] as String)
+                }
+
+                getEvent.value = 3
+
+            }
+            ?.addOnFailureListener { exception ->
+                // 실패할 경우
+                Log.w(title, "Error getting documents: $exception")
+            }
+    }
+
+
+    fun getListCU(): ArrayList<String> {
+        return listCU
+    }
+
+
+    fun getListGS(): ArrayList<String> {
+        return listGS
+    }
+
+
+    fun getList7(): ArrayList<String> {
+        return list7
+    }
 }

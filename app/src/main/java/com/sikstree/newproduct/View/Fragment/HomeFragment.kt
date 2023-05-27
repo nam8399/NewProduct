@@ -1,6 +1,7 @@
 package com.sikstree.newproduct.View.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -97,23 +99,24 @@ class HomeFragment() : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        var list = ArrayList<Int>()
+        viewModel.getCU()
+        viewModel.getGS()
+        viewModel.get7()
 
-        list.add(R.drawable.banner_review)
-        list.add(R.drawable.banner_review)
-        list.add(R.drawable.banner_review)
-
-        initviewpagerCU(list)
-        initviewpagerGS(list)
-        initviewpager7(list)
-
-
-
+        viewModel.getEvent.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                1 -> {
+                    initviewpagerCU(viewModel.getListCU())
+                }
+                2 -> initviewpagerGS(viewModel.getListGS())
+                3 -> initviewpager7(viewModel.getList7())
+            }
+        })
 
 
     }
 
-    private fun initviewpager7(list: ArrayList<Int>) = with(binding) {
+    private fun initviewpager7(list: ArrayList<String>) = with(binding) {
         var adapter = ViewPager2Adater(list,activity as MainActivity)
 
         viewpager27.offscreenPageLimit=3
@@ -155,7 +158,7 @@ class HomeFragment() : Fragment() {
         })
     }
 
-    private fun initviewpagerGS(list: ArrayList<Int>) = with(binding) {
+    private fun initviewpagerGS(list: ArrayList<String>) = with(binding) {
         var adapter = ViewPager2Adater(list,activity as MainActivity)
 
         viewpager2Gs.offscreenPageLimit=3
@@ -197,7 +200,7 @@ class HomeFragment() : Fragment() {
         })
     }
 
-    private fun initviewpagerCU(list: ArrayList<Int>) = with(binding) {
+    private fun initviewpagerCU(list: ArrayList<String>) = with(binding) {
         var adapter = ViewPager2Adater(list,activity as MainActivity)
 
         viewpager2.offscreenPageLimit=3
