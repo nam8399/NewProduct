@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.sikstree.newproduct.Adapter.ViewPager2Adater
+import com.sikstree.newproduct.Data.HomeData
 import com.sikstree.newproduct.Data.UiState
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Activity.MainActivity
@@ -105,9 +106,7 @@ class HomeFragment() : Fragment() {
 
         viewModel.getEvent.observe(viewLifecycleOwner, Observer {
             when(it) {
-                1 -> {
-                    initviewpagerCU(viewModel.getListCU())
-                }
+                1 -> initviewpagerCU(viewModel.getListCU())
                 2 -> initviewpagerGS(viewModel.getListGS())
                 3 -> initviewpager7(viewModel.getList7())
             }
@@ -116,7 +115,7 @@ class HomeFragment() : Fragment() {
 
     }
 
-    private fun initviewpager7(list: ArrayList<String>) = with(binding) {
+    private fun initviewpager7(list: ArrayList<HomeData>) = with(binding) {
         var adapter = ViewPager2Adater(list,activity as MainActivity)
 
         viewpager27.offscreenPageLimit=3
@@ -152,13 +151,13 @@ class HomeFragment() : Fragment() {
             override fun onPageSelected(position : Int){
                 super.onPageSelected(position)
                 bannerPosition = position
-
+                binding.sevenName.setText(list.get(position).name)
             }
 
         })
     }
 
-    private fun initviewpagerGS(list: ArrayList<String>) = with(binding) {
+    private fun initviewpagerGS(list: ArrayList<HomeData>) = with(binding) {
         var adapter = ViewPager2Adater(list,activity as MainActivity)
 
         viewpager2Gs.offscreenPageLimit=3
@@ -194,13 +193,14 @@ class HomeFragment() : Fragment() {
             override fun onPageSelected(position : Int){
                 super.onPageSelected(position)
                 bannerPosition = position
+                binding.gsName.setText(list.get(position).name)
 
             }
 
         })
     }
 
-    private fun initviewpagerCU(list: ArrayList<String>) = with(binding) {
+    private fun initviewpagerCU(list: ArrayList<HomeData>) = with(binding) {
         var adapter = ViewPager2Adater(list,activity as MainActivity)
 
         viewpager2.offscreenPageLimit=3
@@ -236,6 +236,7 @@ class HomeFragment() : Fragment() {
             override fun onPageSelected(position : Int){
                 super.onPageSelected(position)
                 bannerPosition = position
+                binding.cuName.setText(list.get(position).name)
 
             }
 

@@ -109,11 +109,11 @@ class ProductFragment() : Fragment() {
         review_img = R.drawable.banner_review
 
         datas.apply {
-            add(ProductData(1, 1, 1,"연세우유 말차생크림빵","CU", "최고에요!", "3,800",
+            add(ProductData(1, 1, 1,"연세우유 말차생크림빵",  "3,800",
                 "23", "불타는삼각김밥", "지립니다.", review_img))
-            add(ProductData(2, 2, 2,"연세우유 말차생크림빵", "GS25","최고에요!", "3,200",
+            add(ProductData(2, 2, 2,"연세우유 말차생크림빵",  "3,200",
                 "25", "불타는삼각김밥", "지립니다.", review_img))
-            add(ProductData(3, 3, 3,"연세우유 말차생크림빵", "세븐일레븐","최고에요!", "4,200",
+            add(ProductData(3, 3, 3,"연세우유 말차생크림빵",  "4,200",
                 "16", "불타는삼각김밥", "지립니다.", review_img))
         }
 

@@ -61,7 +61,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/frame_cu"
                         android:layout_width="match_parent"
-                        android:layout_height="390dp"
+                        android:layout_height="400dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="5dp"
@@ -87,31 +87,25 @@
                             </ImageView>
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_marginLeft="10dp"
+                                android:layout_gravity="center"
                                 android:layout_marginTop="15dp"
                                 android:orientation="vertical">
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:textSize="18sp"
+                                    android:textSize="20sp"
                                     android:text="CU"
                                     android:textColor="@color/white"
                                     android:textStyle="bold">
-                                </TextView>
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="12sp"
-                                    android:textColor="#E7E7E7"
-                                    android:text="간단한 소개글?">
                                 </TextView>
                             </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
                             android:id="@+id/frame_cu_text"
                             android:layout_width="match_parent"
-                            android:layout_height="272dp"
+                            android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:elevation="3dp"
                             android:orientation="vertical"
@@ -126,8 +120,8 @@
                                 <androidx.viewpager2.widget.ViewPager2
                                     android:id="@+id/viewpager2"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    app:layout_constraintHeight_percent="0.7"
+                                    android:layout_height="0dp"
+                                    app:layout_constraintHeight_percent="0.85"
                                     android:clipChildren="false"
                                     android:clipToPadding="false"
                                     android:paddingLeft="10dp"
@@ -137,7 +131,20 @@
                                     app:layout_constraintHorizontal_bias="0.0"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
-
+                                <TextView
+                                    android:id="@+id/cu_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/viewpager2"
+                                    android:text="백종원 비빔밥한줄"
+                                    android:textStyle="bold"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="19dp"
+                                    android:textColor="#E7E7E7"
+                                    android:textSize="16sp">
+                                </TextView>
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
 
@@ -145,7 +152,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/frame_gs25"
                         android:layout_width="match_parent"
-                        android:layout_height="390dp"
+                        android:layout_height="400dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="32dp"
@@ -171,31 +178,25 @@
                             </ImageView>
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="15dp"
+                                android:layout_gravity="center"
                                 android:orientation="vertical">
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:textSize="18sp"
+                                    android:textSize="20sp"
                                     android:text="GS25"
                                     android:textColor="@color/white"
                                     android:textStyle="bold">
-                                </TextView>
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="12sp"
-                                    android:textColor="#E7E7E7"
-                                    android:text="간단한 소개글?">
                                 </TextView>
                             </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
                             android:id="@+id/frame_gs25_text"
                             android:layout_width="match_parent"
-                            android:layout_height="272dp"
+                            android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:elevation="3dp"
                             android:orientation="vertical"
@@ -206,11 +207,12 @@
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
+
                                 <androidx.viewpager2.widget.ViewPager2
                                     android:id="@+id/viewpager2_gs"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    app:layout_constraintHeight_percent="0.7"
+                                    android:layout_height="0dp"
+                                    app:layout_constraintHeight_percent="0.85"
                                     android:clipChildren="false"
                                     android:clipToPadding="false"
                                     android:paddingLeft="10dp"
@@ -220,7 +222,20 @@
                                     app:layout_constraintHorizontal_bias="0.0"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
-
+                                <TextView
+                                    android:id="@+id/gs_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/viewpager2_gs"
+                                    android:text="백종원 비빔밥한줄"
+                                    android:textStyle="bold"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="19dp"
+                                    android:textColor="#E7E7E7"
+                                    android:textSize="16sp">
+                                </TextView>
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
 
@@ -228,7 +243,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/frame_7eleven"
                         android:layout_width="match_parent"
-                        android:layout_height="390dp"
+                        android:layout_height="400dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="32dp"
@@ -256,31 +271,25 @@
                             </ImageView>
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="15dp"
                                 android:orientation="vertical">
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:textSize="18sp"
+                                    android:textSize="20sp"
                                     android:text="세븐일레븐"
                                     android:textColor="@color/white"
                                     android:textStyle="bold">
-                                </TextView>
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="12sp"
-                                    android:textColor="#E7E7E7"
-                                    android:text="간단한 소개글?">
                                 </TextView>
                             </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
                             android:id="@+id/frame_7elven_text"
                             android:layout_width="match_parent"
-                            android:layout_height="272dp"
+                            android:layout_height="wrap_content"
                             android:padding="10dp"
                             android:elevation="3dp"
                             android:orientation="vertical"
@@ -291,11 +300,12 @@
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
+
                                 <androidx.viewpager2.widget.ViewPager2
                                     android:id="@+id/viewpager2_7"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    app:layout_constraintHeight_percent="0.7"
+                                    android:layout_height="0dp"
+                                    app:layout_constraintHeight_percent="0.85"
                                     android:clipChildren="false"
                                     android:clipToPadding="false"
                                     android:paddingLeft="10dp"
@@ -305,7 +315,20 @@
                                     app:layout_constraintHorizontal_bias="0.0"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
-
+                                <TextView
+                                    android:id="@+id/seven_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/viewpager2_7"
+                                    android:text="백종원 비빔밥한줄"
+                                    android:textStyle="bold"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginTop="19dp"
+                                    android:textColor="#E7E7E7"
+                                    android:textSize="16sp">
+                                </TextView>
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </LinearLayout>
 

@@ -8,9 +8,10 @@ import android.widget.ImageView
 import android.widget.ImageView.ScaleType
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.sikstree.newproduct.Data.HomeData
 import com.sikstree.newproduct.R
 
-class ViewPager2Adater(var list : ArrayList<String>,var context : Context)  : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class ViewPager2Adater(var list : ArrayList<HomeData>, var context : Context)  : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         var view = LayoutInflater.from(parent.context).inflate(R.layout.item,parent,false)
@@ -37,21 +38,21 @@ class ViewPager2Adater(var list : ArrayList<String>,var context : Context)  : Re
 //        (holder as viewHolder).image.setBackgroundColor(list.get(position))
         if(position == 0) {
             Glide.with(context)
-                .load(list.get(0))
+                .load(list.get(0).img)
                 .centerCrop()
                 .into((holder as viewHolder).image)
 //            (holder as viewHolder).image.setImageResource(R.drawable.img_retro_place)
 //            (holder as viewHolder).image.scaleType = ScaleType.CENTER_CROP
         } else if (position == 1) {
             Glide.with(context)
-                .load(list.get(1))
+                .load(list.get(1).img)
                 .centerCrop()
                 .into((holder as viewHolder).image)
 //            (holder as viewHolder).image.setImageResource(R.drawable.img_retro_place)
 //            (holder as viewHolder).image.scaleType = ScaleType.CENTER_CROP
         } else if (position ==2) {
             Glide.with(context)
-                .load(list.get(2))
+                .load(list.get(2).img)
                 .centerCrop()
                 .into((holder as viewHolder).image)
 

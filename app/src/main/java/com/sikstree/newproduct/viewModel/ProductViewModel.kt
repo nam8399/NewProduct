@@ -7,7 +7,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.sikstree.minecraftstatus.Model.Event
+import com.sikstree.newproduct.Data.HomeData
 import com.sikstree.newproduct.Data.MyApplication
 import com.sikstree.newproduct.Data.ProductData
 import com.sikstree.newproduct.Data.UiState
@@ -26,6 +33,10 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
 
     private val title = "ProductViewModel"
 
+    private var firestore : FirebaseFirestore? = null
+    private var uid : String? = null
+
+
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState = _uiState.asStateFlow()
 
@@ -37,6 +48,8 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     var breadData = MutableLiveData<ArrayList<ProductData>>()
     var drinkData = MutableLiveData<ArrayList<ProductData>>()
 
+    var getEvent = MutableLiveData<Int>()
+
     init {
         categoryIdx.value = 0 // 0 : 전체, 1 : 신선제품, 2 : 과자, 3 : 빵, 4 : 음료
         onclickIdx.value = 0 // 0 : 전체, 1 : 신선제품, 2 : 과자, 3 : 빵, 4 : 음료
@@ -45,7 +58,14 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
         cookieData.value = ArrayList<ProductData>()
         breadData.value = ArrayList<ProductData>()
         drinkData.value = ArrayList<ProductData>()
+
+        getEvent.value = 0 // 0 : 기본, 1 : CU, 2: GS, 3: 7eleven
     }
+
+    companion object {
+        var listAll = ArrayList<ProductData>()
+    }
+
 
 
     fun clickCategory(idx : Int) {
@@ -67,6 +87,22 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
         }
 
         return itemData
+    }
+
+
+    fun makeData() {
+        firestore?.collection("Review")?.orderBy("timestamp", Query.Direction.DESCENDING)
+            ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                listAll.clear()
+                if (querySnapshot == null) return@addSnapshotListener
+
+                // 데이터 받아오기
+                for (snapshot in querySnapshot!!.documents) {
+                    var item = snapshot.toObject(ProductData::class.java)
+                    listAll.add(item!!)
+                }
+            }
+
     }
 
 

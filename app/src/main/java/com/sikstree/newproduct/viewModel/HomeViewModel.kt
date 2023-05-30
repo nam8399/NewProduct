@@ -12,6 +12,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.sikstree.minecraftstatus.Model.Event
+import com.sikstree.newproduct.Data.HomeData
 import com.sikstree.newproduct.Data.MyApplication
 import com.sikstree.newproduct.Data.UiState
 import kotlinx.coroutines.CoroutineScope
@@ -49,9 +50,9 @@ class HomeViewModel( application: Application) : AndroidViewModel(application) {
     }
 
     companion object {
-        var listCU = ArrayList<String>()
-        var listGS = ArrayList<String>()
-        var list7 = ArrayList<String>()
+        var listCU = ArrayList<HomeData>()
+        var listGS = ArrayList<HomeData>()
+        var list7 = ArrayList<HomeData>()
     }
 
 
@@ -81,7 +82,7 @@ class HomeViewModel( application: Application) : AndroidViewModel(application) {
                 // 성공할 경우
                 listCU.clear()
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                    listCU.add(document["img"] as String)
+                    listCU.add(HomeData(document["img"] as String, document["name"] as String))
                     Log.d(title, "로그확인 : " + document["img"] as String)
                 }
                 getEvent.value = 1
@@ -100,7 +101,7 @@ class HomeViewModel( application: Application) : AndroidViewModel(application) {
                 // 성공할 경우
                 listGS.clear()
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                    listGS.add(document["img"] as String)
+                    listGS.add(HomeData(document["img"] as String, document["name"] as String))
                 }
 
 
@@ -121,7 +122,7 @@ class HomeViewModel( application: Application) : AndroidViewModel(application) {
                 // 성공할 경우
                 list7.clear()
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                    list7.add(document["img"] as String)
+                    list7.add(HomeData(document["img"] as String, document["name"] as String))
                 }
 
                 getEvent.value = 3
@@ -134,17 +135,17 @@ class HomeViewModel( application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun getListCU(): ArrayList<String> {
+    fun getListCU(): ArrayList<HomeData> {
         return listCU
     }
 
 
-    fun getListGS(): ArrayList<String> {
+    fun getListGS(): ArrayList<HomeData> {
         return listGS
     }
 
 
-    fun getList7(): ArrayList<String> {
+    fun getList7(): ArrayList<HomeData> {
         return list7
     }
 }
