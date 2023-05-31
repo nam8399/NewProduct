@@ -61,7 +61,6 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
             }
 
             review_title.text = item.review_title
-            review_great.text = item.review_great
             review_price.text = item.review_price + "원"
 
             if (!"".equals(item.review_cm_comment) && !item.review_cm_comment.isEmpty()) {
@@ -70,28 +69,51 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
                 review_cm_comment.text = item.review_cm_comment
             }
 
-            if (!"".equals(item.review_comment_count) && !item.review_comment_count.isEmpty()) {
+            if (!"".equals(item.review_cnt) && !item.review_cnt.isEmpty()) {
                 review_comment_count.visibility = View.VISIBLE
-                review_comment_count.text = item.review_comment_count + "개의 리뷰 모두 보기"
+                review_comment_count.text = item.review_cnt + "개의 리뷰 모두 보기"
             }
 
-            review_title_sub.text = item.review_title_sub
 
 
             Glide.with(itemView).load(item.review_img).into(review_img)
 
             when(item.review_imoji_idx){
-                1 -> Glide.with(itemView).load(R.drawable.icon_1).into(review_imoji)
-                2 -> Glide.with(itemView).load(R.drawable.icon_2).into(review_imoji)
-                3 -> Glide.with(itemView).load(R.drawable.icon_3).into(review_imoji)
-                4 -> Glide.with(itemView).load(R.drawable.icon_4).into(review_imoji)
-                5 -> Glide.with(itemView).load(R.drawable.icon_5).into(review_imoji)
+                1 -> {
+                    Glide.with(itemView).load(R.drawable.icon_1).into(review_imoji)
+                    review_great.text = "별로에요.."
+                }
+                2 -> {
+                    Glide.with(itemView).load(R.drawable.icon_2).into(review_imoji)
+                    review_great.text = "애매해요.."
+                }
+                3 -> {
+                    Glide.with(itemView).load(R.drawable.icon_3).into(review_imoji)
+                    review_great.text = "보통이에요!"
+                }
+                4 -> {
+                    Glide.with(itemView).load(R.drawable.icon_4).into(review_imoji)
+                    review_great.text = "좋아요!"
+                }
+                5 -> {
+                    Glide.with(itemView).load(R.drawable.icon_5).into(review_imoji)
+                    review_great.text = "최고에요!"
+                }
             }
 
             when(item.review_brand_idx){
-                1 -> Glide.with(itemView).load(R.drawable.icon_cu).into(review_brand_img)
-                2 -> Glide.with(itemView).load(R.drawable.icon_gs25).into(review_brand_img)
-                3 -> Glide.with(itemView).load(R.drawable.icon_7eleven).into(review_brand_img)
+                1 -> {
+                    Glide.with(itemView).load(R.drawable.icon_cu).into(review_brand_img)
+                    review_title_sub.text = "CU"
+                }
+                2 -> {
+                    Glide.with(itemView).load(R.drawable.icon_gs25).into(review_brand_img)
+                    review_title_sub.text = "GS25"
+                }
+                3 -> {
+                    Glide.with(itemView).load(R.drawable.icon_7eleven).into(review_brand_img)
+                    review_title_sub.text = "세븐일레븐"
+                }
 
             }
 

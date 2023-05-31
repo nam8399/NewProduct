@@ -58,6 +58,8 @@ class ProductFragment() : Fragment() {
 
         showSomething()
 
+        initData()
+
         initView()
 
         observeCategory()
@@ -103,29 +105,40 @@ class ProductFragment() : Fragment() {
 
     private fun initData() {
         datas.clear()
+//
+//        var review_img : Int
+//
+//        review_img = R.drawable.banner_review
+//
+//        datas.apply {
+//            add(ProductData(1, 1, 1,"연세우유 말차생크림빵",  "3,800",
+//                "23", "불타는삼각김밥", "지립니다.", ""))
+//            add(ProductData(2, 2, 2,"연세우유 말차생크림빵",  "3,200",
+//                "25", "불타는삼각김밥", "지립니다.", ""))
+//            add(ProductData(3, 3, 3,"연세우유 말차생크림빵",  "4,200",
+//                "16", "불타는삼각김밥", "지립니다.", ""))
+//        }
 
-        var review_img : Int
+        viewModel.initData()
 
-        review_img = R.drawable.banner_review
-
-        datas.apply {
-            add(ProductData(1, 1, 1,"연세우유 말차생크림빵",  "3,800",
-                "23", "불타는삼각김밥", "지립니다.", review_img))
-            add(ProductData(2, 2, 2,"연세우유 말차생크림빵",  "3,200",
-                "25", "불타는삼각김밥", "지립니다.", review_img))
-            add(ProductData(3, 3, 3,"연세우유 말차생크림빵",  "4,200",
-                "16", "불타는삼각김밥", "지립니다.", review_img))
-        }
+        viewModel.getEvent.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                1 -> {
+                    for (i in 0..viewModel.getList().size-1) {
+                        datas.add(viewModel.getList().get(i))
+                    }
+                    initRecycler()
+                }
+            }
+        })
 
 
     }
 
 
     private fun initRecycler() {
-        datas.clear()
         reviewAdapter = ProductAdapter(activity as MainActivity)
         binding.reviewRecycler.adapter = reviewAdapter
-        initData()
 
         datas.apply {
             reviewAdapter.datas = datas
@@ -188,7 +201,6 @@ class ProductFragment() : Fragment() {
                     }
                 }
                 1 -> {
-                    initData()
                     selectItem(datas, 1)?.let { data -> initRecycler(data) }
                     with(binding) {
                         imgAll.isSelected = false
@@ -205,7 +217,6 @@ class ProductFragment() : Fragment() {
                     }
                 }
                 2 -> {
-                    initData()
                     selectItem(datas, 2)?.let { data -> initRecycler(data) }
                     with(binding) {
                         imgAll.isSelected = false
@@ -222,7 +233,6 @@ class ProductFragment() : Fragment() {
                     }
                 }
                 3 -> {
-                    initData()
                     selectItem(datas, 3)?.let { data -> initRecycler(data) }
                     with(binding) {
                         imgAll.isSelected = false
@@ -239,7 +249,6 @@ class ProductFragment() : Fragment() {
                     }
                 }
                 4 -> {
-                    initData()
                     selectItem(datas, 4)?.let { data -> initRecycler(data) }
                     with(binding) {
                         imgAll.isSelected = false

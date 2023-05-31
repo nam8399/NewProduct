@@ -1,10 +1,13 @@
 package com.sikstree.newproduct.Data
 
 data class ReviewData (
-    val review_profile : String,
+    val review_profile : Int,
     val review_id : String,
-    val review_grade : Int,
-    val review_text : String,
+    val review_imoji : Int,
+    val review_title : String,
+    val review_comment : String,
     val review_date : String,
-    val image_has : Boolean
+    val review_img : String,
+    val review_img2 : String,
+    val review_img3 : String
 )

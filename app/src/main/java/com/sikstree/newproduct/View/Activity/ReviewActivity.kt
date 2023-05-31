@@ -54,9 +54,9 @@ class ReviewActivity : AppCompatActivity() {
         imgList.add(R.drawable.banner_review)
 
         datas.apply {
-            add(ReviewData("", "불타는삼각김밥", 1,"", "2023.05.24", false))
-            add(ReviewData("", "불타는삼각김밥", 2,"지립니다.", "2023.05.23", false))
-            add(ReviewData("", "불타는삼각김밥", 3,"지립니다.", "2023.05.22", true))
+//            add(ReviewData("", "불타는삼각김밥", 1,"", "2023.05.24", false))
+//            add(ReviewData("", "불타는삼각김밥", 2,"지립니다.", "2023.05.23", false))
+//            add(ReviewData("", "불타는삼각김밥", 3,"지립니다.", "2023.05.22", true))
 
 
 

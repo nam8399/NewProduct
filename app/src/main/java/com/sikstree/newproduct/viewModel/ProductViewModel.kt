@@ -51,6 +51,7 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     var getEvent = MutableLiveData<Int>()
 
     init {
+        firestore = FirebaseFirestore.getInstance()
         categoryIdx.value = 0 // 0 : 전체, 1 : 신선제품, 2 : 과자, 3 : 빵, 4 : 음료
         onclickIdx.value = 0 // 0 : 전체, 1 : 신선제품, 2 : 과자, 3 : 빵, 4 : 음료
         allData.value = ArrayList<ProductData>()
@@ -63,7 +64,7 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     }
 
     companion object {
-        var listAll = ArrayList<ProductData>()
+        var listAll = arrayListOf<ProductData>()
     }
 
 
@@ -91,18 +92,86 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
 
 
     fun makeData() {
-        firestore?.collection("Review")?.orderBy("timestamp", Query.Direction.DESCENDING)
+        Log.d(title, "makeData")
+        firestore?.collection("Review")
             ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 listAll.clear()
                 if (querySnapshot == null) return@addSnapshotListener
+
+                getEvent.value = 1
 
                 // 데이터 받아오기
                 for (snapshot in querySnapshot!!.documents) {
                     var item = snapshot.toObject(ProductData::class.java)
                     listAll.add(item!!)
+                    var i = 0
+                    Log.d(title, "데이터 받아오는중 " + i)
+                    i++
                 }
             }
 
+    }
+
+    fun initData() = viewModelScope.launch {
+        Log.d(title, "initData")
+        firestore?.collection("Review")
+            ?.get()      // 문서 가져오기
+            ?.addOnSuccessListener { result ->
+                // 성공할 경우
+                Log.d(title, "성공")
+                listAll.clear()
+                for (document in result) {  // 가져온 문서들은 result에 들어감
+                    listAll.add(ProductData(Integer.parseInt(document["review_brand_idx"] as String),
+                        Integer.parseInt(document["review_category_idx"] as String),
+                        Integer.parseInt(document["review_imoji_idx"] as String),
+                        document["review_title"] as String,
+                        document["review_price"] as String,
+                        document["review_cnt"] as String,
+                        document["review_cm_id"] as String,
+                        document["review_cm_comment"] as String,
+                        document["review_img"] as String))
+                    Log.d(title, "로그확인 : " + document["review_brand_idx"] as String)
+                }
+                getEvent.value = 1
+            }
+            ?.addOnFailureListener { exception ->
+                // 실패할 경우
+                Log.w(title, "Error getting documents: $exception")
+            }
+    }
+
+    fun initDetailData() = viewModelScope.launch {
+        Log.d(title, "initData")
+        firestore?.collection("Review_Detail")
+            ?.get()      // 문서 가져오기
+            ?.addOnSuccessListener { result ->
+                // 성공할 경우
+                Log.d(title, "성공")
+                listAll.clear()
+                for (document in result) {  // 가져온 문서들은 result에 들어감
+                    listAll.add(ProductData(Integer.parseInt(document["review_brand_idx"] as String),
+                        Integer.parseInt(document["review_category_idx"] as String),
+                        Integer.parseInt(document["review_imoji_idx"] as String),
+                        document["review_title"] as String,
+                        document["review_price"] as String,
+                        document["review_cnt"] as String,
+                        document["review_cm_id"] as String,
+                        document["review_cm_comment"] as String,
+                        document["review_img"] as String))
+                    Log.d(title, "로그확인 : " + document["review_brand_idx"] as String)
+                }
+                getEvent.value = 1
+            }
+            ?.addOnFailureListener { exception ->
+                // 실패할 경우
+                Log.w(title, "Error getting documents: $exception")
+            }
+    }
+
+
+
+    fun getList(): ArrayList<ProductData> {
+        return listAll
     }
 
 
