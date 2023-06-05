@@ -69,7 +69,7 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
                 review_cm_comment.text = item.review_cm_comment
             }
 
-            if (!"".equals(item.review_cnt) && !item.review_cnt.isEmpty()) {
+            if (!"".equals(item.review_cnt) && !item.review_cnt.isEmpty() && !item.review_cnt.equals("0")) {
                 review_comment_count.visibility = View.VISIBLE
                 review_comment_count.text = item.review_cnt + "개의 리뷰 모두 보기"
             }

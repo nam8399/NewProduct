@@ -40,7 +40,7 @@ class ReviewAdapter(private val context: Context) : RecyclerView.Adapter<ReviewA
         private val review_profile: ImageView = itemView.findViewById(R.id.review_profile)
         private val review_imoji: ImageView = itemView.findViewById(R.id.review_imoji)
         private val review_id: TextView = itemView.findViewById(R.id.review_id)
-//        private val review_grade: TextView = itemView.findViewById(R.id.review_grade)
+        private val review_grade_text: TextView = itemView.findViewById(R.id.review_grade_text)
         private val review_text: TextView = itemView.findViewById(R.id.review_text)
         private val review_date: TextView = itemView.findViewById(R.id.review_date)
         private val review_img: LinearLayout = itemView.findViewById(R.id.review_img)
@@ -49,33 +49,58 @@ class ReviewAdapter(private val context: Context) : RecyclerView.Adapter<ReviewA
 
         fun bind(item: ReviewData) {
             review_id.text = item.review_id
-            review_text.text = item.review_text
+            review_text.text = item.review_comment
             review_date.text = item.review_date
 
-            if (!item.image_has) {
+            if (item.review_img.isEmpty() || "".equals(item.review_img)) {
                 review_img.visibility = View.GONE
             }
 
-            if (item.review_text.equals("")) {
+            if ("".equals(item.review_comment) || item.review_comment.isEmpty()) {
                 review_text_layout.visibility = View.GONE
             }
 
 
-            when(item.review_grade){
-                1 -> Glide.with(itemView).load(R.drawable.icon_1).into(review_imoji)
-                2 -> Glide.with(itemView).load(R.drawable.icon_2).into(review_imoji)
-                3 -> Glide.with(itemView).load(R.drawable.icon_3).into(review_imoji)
-                4 -> Glide.with(itemView).load(R.drawable.icon_4).into(review_imoji)
-                5 -> Glide.with(itemView).load(R.drawable.icon_5).into(review_imoji)
+            when(item.review_imoji){
+                1 -> {
+                    Glide.with(itemView).load(R.drawable.icon_1).into(review_imoji)
+                    review_grade_text.text = "별로에요.."
+                }
+                2 -> {
+                    Glide.with(itemView).load(R.drawable.icon_2).into(review_imoji)
+                    review_grade_text.text = "애매해요.."
+                }
+                3 -> {
+                    Glide.with(itemView).load(R.drawable.icon_3).into(review_imoji)
+                    review_grade_text.text = "보통이에요!"
+                }
+                4 -> {
+                    Glide.with(itemView).load(R.drawable.icon_4).into(review_imoji)
+                    review_grade_text.text = "좋아요!"
+                }
+                5 -> {
+                    Glide.with(itemView).load(R.drawable.icon_5).into(review_imoji)
+                    review_grade_text.text = "최고에요!"
+                }
             }
 
 
-
+            when(item.review_profile){
+                1 -> Glide.with(itemView).load(R.drawable.imoji_1).into(review_profile)
+                2 -> Glide.with(itemView).load(R.drawable.imoji_2).into(review_profile)
+                3 -> Glide.with(itemView).load(R.drawable.imoji_3).into(review_profile)
+                4 -> Glide.with(itemView).load(R.drawable.imoji_4).into(review_profile)
+                5 -> Glide.with(itemView).load(R.drawable.imoji_5).into(review_profile)
+                6 -> Glide.with(itemView).load(R.drawable.imoji_6).into(review_profile)
+                7 -> Glide.with(itemView).load(R.drawable.imoji_7).into(review_profile)
+                8 -> Glide.with(itemView).load(R.drawable.imoji_8).into(review_profile)
+                9 -> Glide.with(itemView).load(R.drawable.imoji_9).into(review_profile)
+                10 -> Glide.with(itemView).load(R.drawable.imoji_10).into(review_profile)
+                11 -> Glide.with(itemView).load(R.drawable.imoji_11).into(review_profile)
+                12 -> Glide.with(itemView).load(R.drawable.imoji_12).into(review_profile)
+            }
 
         }
-
-
-
     }
 
 

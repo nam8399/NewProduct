@@ -16,7 +16,7 @@ import com.sikstree.newproduct.viewModel.ReviewViewModel
 
 class ReviewActivity : AppCompatActivity() {
     private lateinit var binding : ActivityReviewBinding
-    private val viewModel : ReviewViewModel by viewModels()
+    private val mViewModel : ReviewViewModel by viewModels()
 
     lateinit var reviewAdapter: ReviewAdapter
     val datas = mutableListOf<ReviewData>()
@@ -26,22 +26,35 @@ class ReviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_review)
-        binding.viewModel = viewModel
+        binding.viewModel = mViewModel
         binding.lifecycleOwner = this
 
 
 
         initView()
-        initRecycler()
+//        initRecycler()
     }
 
     private fun initView() = with(binding) {
+        mViewModel?.initDetailData(intent.getStringExtra("title").toString())
         btnX.setOnClickListener { finish() }
         btnReview.setOnClickListener {
             val intent = Intent(this@ReviewActivity, ChoiceActivity::class.java)
             startActivity(intent)
             finish()
         }
+
+        mViewModel?.getEvent?.observe(this@ReviewActivity) {
+            when(it) {
+                1 -> {
+                    for (i in 0..mViewModel.getList().size-1) {
+                        datas.add(mViewModel.getList().get(i))
+                    }
+                    initRecycler()
+                }
+            }
+        }
+
     }
 
     private fun initRecycler() {

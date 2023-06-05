@@ -104,26 +104,12 @@ class ProductFragment() : Fragment() {
     }
 
     private fun initData() {
-        datas.clear()
-//
-//        var review_img : Int
-//
-//        review_img = R.drawable.banner_review
-//
-//        datas.apply {
-//            add(ProductData(1, 1, 1,"연세우유 말차생크림빵",  "3,800",
-//                "23", "불타는삼각김밥", "지립니다.", ""))
-//            add(ProductData(2, 2, 2,"연세우유 말차생크림빵",  "3,200",
-//                "25", "불타는삼각김밥", "지립니다.", ""))
-//            add(ProductData(3, 3, 3,"연세우유 말차생크림빵",  "4,200",
-//                "16", "불타는삼각김밥", "지립니다.", ""))
-//        }
-
         viewModel.initData()
 
         viewModel.getEvent.observe(viewLifecycleOwner, Observer {
             when(it) {
                 1 -> {
+                    datas.clear()
                     for (i in 0..viewModel.getList().size-1) {
                         datas.add(viewModel.getList().get(i))
                     }
@@ -150,6 +136,8 @@ class ProductFragment() : Fragment() {
             override fun onItemClick(v: View, data: ProductData, pos : Int) {
                 Log.d(title, "상품 선택 pos : " + pos)
                 val intent = Intent(context, ReviewActivity::class.java)
+                Log.d(title, "클릭 리뷰 데이터" + data.review_title)
+                intent.putExtra("title",data.review_title)
                 startActivity(intent)
             }
 
