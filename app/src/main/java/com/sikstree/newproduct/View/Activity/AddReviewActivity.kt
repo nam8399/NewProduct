@@ -1,55 +1,50 @@
 package com.sikstree.newproduct.View.Activity
 
-import android.Manifest
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Activity
-import android.app.appsearch.SetSchemaRequest.READ_EXTERNAL_STORAGE
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Insets.add
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
-import com.sikstree.newproduct.Adapter.ReviewAdapter
-import com.sikstree.newproduct.Data.ProductData
 import com.sikstree.newproduct.Data.ReviewData
 import com.sikstree.newproduct.Data.UserUtil
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.databinding.ActivityAddreviewBinding
-import com.sikstree.newproduct.databinding.ActivityChoiceBinding
-import com.sikstree.newproduct.databinding.ActivityReviewBinding
 import com.sikstree.newproduct.viewModel.AddReviewViewModel
-import com.sikstree.newproduct.viewModel.ChoiceViewModel
-import com.sikstree.newproduct.viewModel.ReviewViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class AddReviewActivity : AppCompatActivity() {
+    private val title = "AddReviewActivity"
     private lateinit var binding : ActivityAddreviewBinding
-    private val viewModel : AddReviewViewModel by viewModels()
-    private var img_count = 0
+    private val mViewModel : AddReviewViewModel by viewModels()
+
 
     var backPressedTime : Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_addreview)
-        binding.viewModel = viewModel
+        binding.viewModel = mViewModel
         binding.lifecycleOwner = this
 
         initView()
         onClick()
     }
+
+    companion object {
+        var imgUri = ""
+        var imgUri2 = ""
+        var imgUri3 = ""
+        private var img_count = 0
+    }
+
 
     private fun initView() = with(binding) {
         choiceProductName.text = intent.getStringExtra("title")
@@ -58,7 +53,7 @@ class AddReviewActivity : AppCompatActivity() {
 
     private fun onClick() = with(binding){
         btnSkip.setOnClickListener() {
-            viewModel?.addReviewImoji(ReviewData(UserUtil.USER_PROFILE_IDX,
+            mViewModel?.addReview(ReviewData(UserUtil.USER_PROFILE_IDX,
                 UserUtil.USER_NAME,
                 intent.getIntExtra("iconIdx", 0),
                 intent.getStringExtra("title").toString(),
@@ -69,7 +64,33 @@ class AddReviewActivity : AppCompatActivity() {
                 ""
             ))
             UserUtil.PRODUCT_VIEW_RESET = true
-            finish()
+        }
+
+        btnAdd.setOnClickListener {
+            mViewModel?.uploadImg(imgUri.toUri(), imgUri2.toUri(), imgUri3.toUri(), img_count)
+        }
+
+        mViewModel?.imgAddEvent?.observe(this@AddReviewActivity) {
+            if (it) {
+                mViewModel?.addReview(ReviewData(UserUtil.USER_PROFILE_IDX,
+                    UserUtil.USER_NAME,
+                    intent.getIntExtra("iconIdx", 0),
+                    intent.getStringExtra("title").toString(),
+                    reviewEditText.text.toString(),
+                    getTime(),
+                    mViewModel.getImgArr().get(0),
+                    mViewModel.getImgArr().get(1),
+                    mViewModel.getImgArr().get(2)
+                ))
+            }
+
+        }
+
+        mViewModel.finishEvent.observe(this@AddReviewActivity) {
+            if (it) {
+                finish()
+                UserUtil.PRODUCT_VIEW_RESET = true
+            }
         }
 
         btnImgadd.setOnClickListener {
@@ -111,17 +132,20 @@ class AddReviewActivity : AppCompatActivity() {
                     0 -> {
                         binding.btnImg1.setImageBitmap(bitmap)
                         binding.btnImg1.visibility = View.VISIBLE
+                        imgUri = currentImgUrl.toString()!!
                         img_count++
                     }
                     1 -> {
                         binding.btnImg2.setImageBitmap(bitmap)
                         binding.btnImg2.visibility = View.VISIBLE
                         img_count++
+                        imgUri2 = currentImgUrl.toString()!!
                     }
                     2 -> {
                         binding.btnImg3.setImageBitmap(bitmap)
                         binding.btnImg3.visibility = View.VISIBLE
                         img_count++
+                        imgUri3 = currentImgUrl.toString()!!
                     }
                     3 -> {
                         Toast.makeText(this@AddReviewActivity, "이미지 등록은 3장까지 가능합니다.", Toast.LENGTH_SHORT).show()

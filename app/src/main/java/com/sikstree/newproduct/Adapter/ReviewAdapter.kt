@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
+import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -17,6 +18,9 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.sikstree.newproduct.Data.ReviewData
 import com.sikstree.newproduct.R
 
@@ -39,6 +43,9 @@ class ReviewAdapter(private val context: Context) : RecyclerView.Adapter<ReviewA
 
         private val review_profile: ImageView = itemView.findViewById(R.id.review_profile)
         private val review_imoji: ImageView = itemView.findViewById(R.id.review_imoji)
+        private val img_1: ImageView = itemView.findViewById(R.id.img_1)
+        private val img_2: ImageView = itemView.findViewById(R.id.img_2)
+        private val img_3: ImageView = itemView.findViewById(R.id.img_3)
         private val review_id: TextView = itemView.findViewById(R.id.review_id)
         private val review_grade_text: TextView = itemView.findViewById(R.id.review_grade_text)
         private val review_text: TextView = itemView.findViewById(R.id.review_text)
@@ -54,6 +61,10 @@ class ReviewAdapter(private val context: Context) : RecyclerView.Adapter<ReviewA
 
             if (item.review_img.isEmpty() || "".equals(item.review_img)) {
                 review_img.visibility = View.GONE
+            } else {
+                Glide.with(itemView).load(item.review_img).transform(CenterCrop(), RoundedCorners(12)).into(img_1)
+                Glide.with(itemView).load(item.review_img2).transform(CenterCrop(), RoundedCorners(12)).into(img_2)
+                Glide.with(itemView).load(item.review_img3).transform(CenterCrop(), RoundedCorners(12)).into(img_3)
             }
 
             if ("".equals(item.review_comment) || item.review_comment.isEmpty()) {

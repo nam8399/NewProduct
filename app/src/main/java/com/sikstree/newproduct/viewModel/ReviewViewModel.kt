@@ -99,43 +99,18 @@ class ReviewViewModel() : ViewModel() {
         }
 
 
-//        init {
-//            firestore = FirebaseFirestore.getInstance()
-//            firestore?.collection("retroItems")?.orderBy("title", Query.Direction.DESCENDING)
-//                ?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-////                    datas.clear()
-//                    if (querySnapshot == null) return@addSnapshotListener
-//
-//                    // 데이터 받아오기
-//                    for (snapshot in querySnapshot!!.documents) {
-//                        var item = snapshot.toObject(ItemData::class.java)
-//                        datas.add(item!!)
-//                    }
-//                    notifyDataSetChanged()
-//                }
-//        }
-
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-//            private val itemTitle: TextView = itemView.findViewById(R.id.item_title)
             private val itemUrl: String = ""
             private val itemImg: ImageView = itemView.findViewById(R.id.item_img)
 
             fun bind(item: IconData) {
-//                itemTitle.text = item.title
-//            itemUrl = item.age.toString()
                 Glide
                     .with(itemView)
                     .load(R.drawable.ic_launcher_foreground)
                     .centerCrop()
                     .into(itemImg)
 
-
-//                itemImg.setOnClickListener { // 아이템 클릭 시 LiveData 값을 변경하여 Fragment에서 Observe 하다가 변경 시 웹뷰 띄우도록 설정
-//                    Log.d(title, "Item Onclick! " + item.url)
-//                    itemOnclickEvent.value = item.url
-//                }
 
             }
         }
@@ -150,10 +125,6 @@ class ReviewViewModel() : ViewModel() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.bind(datas[position])
 
-
-//        holder.layout.layoutListItem.setOnClickListener {
-//            Toast.makeText(holder.layout.context, "${list[position]} Click!", Toast.LENGTH_SHORT).show()
-//        }
         }
 
         override fun getItemCount(): Int {

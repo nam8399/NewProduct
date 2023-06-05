@@ -186,6 +186,7 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/review_edit_text"
             android:layout_width="match_parent"
             android:layout_height="168dp"
             android:background="@drawable/review_add_background"
@@ -198,6 +199,7 @@
             android:paddingRight="16dp"
             android:hint="20자 이내로 입력해 주세요"
             android:textColorHint="#676767"
+            android:textColor="@color/white"
             android:gravity="left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
