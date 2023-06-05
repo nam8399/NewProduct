@@ -34,16 +34,28 @@ class ChoiceActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        initView()
         observeIcon()
         onClick()
 
     }
 
+    private fun initView() = with(binding) {
+        productName.text = intent.getStringExtra("title")
+
+    }
+
+    companion object {
+        var iconIdx = 0
+    }
+
     private fun onClick() = with(binding){
         btnNext.setOnClickListener() {
             if (viewModel?.btnEnable?.value == true) {
-                val intent = Intent(this@ChoiceActivity,AddReviewActivity::class.java)
-                startActivity(intent)
+                val intentAddReview = Intent(this@ChoiceActivity,AddReviewActivity::class.java)
+                intentAddReview.putExtra("iconIdx", iconIdx)
+                intentAddReview.putExtra("title", intent.getStringExtra("title"))
+                startActivity(intentAddReview)
                 finish()
             } else {
                 Toast.makeText(this@ChoiceActivity, "아이콘을 클릭해주세요!", Toast.LENGTH_SHORT).show()
@@ -64,6 +76,7 @@ class ChoiceActivity : AppCompatActivity() {
                         choiceIcon()
                         choiceText.setText("별로에요..")
                         Glide.with(this@ChoiceActivity).load(R.drawable.icon_1).into(choiceImg)
+                        iconIdx = 1
                     }
                 }
                 2 -> {
@@ -76,6 +89,7 @@ class ChoiceActivity : AppCompatActivity() {
                         choiceIcon()
                         choiceText.setText("애매해요..")
                         Glide.with(this@ChoiceActivity).load(R.drawable.icon_2).into(choiceImg)
+                        iconIdx = 2
                     }
                 }
                 3 -> {
@@ -88,6 +102,7 @@ class ChoiceActivity : AppCompatActivity() {
                         choiceIcon()
                         choiceText.setText("보통이에요!")
                         Glide.with(this@ChoiceActivity).load(R.drawable.icon_3).into(choiceImg)
+                        iconIdx = 3
                     }
                 }
                 4 -> {
@@ -100,6 +115,7 @@ class ChoiceActivity : AppCompatActivity() {
                         choiceIcon()
                         choiceText.setText("좋아요!")
                         Glide.with(this@ChoiceActivity).load(R.drawable.icon_4).into(choiceImg)
+                        iconIdx = 4
                     }
                 }
                 5 -> {
@@ -112,6 +128,7 @@ class ChoiceActivity : AppCompatActivity() {
                         choiceIcon()
                         choiceText.setText("최고에요!")
                         Glide.with(this@ChoiceActivity).load(R.drawable.icon_5).into(choiceImg)
+                        iconIdx = 5
                     }
                 }
             }

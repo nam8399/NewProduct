@@ -54,6 +54,8 @@ class HomeFragment() : Fragment() {
         return binding.root
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -244,10 +246,6 @@ class HomeFragment() : Fragment() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-//        scrollJobCreate()
-    }
 
     override fun onPause() {
         super.onPause()

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sikstree.newproduct.Data.ProductData
@@ -48,6 +49,7 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
         private val review_brand_img: ImageView = itemView.findViewById(R.id.review_brand_img)
         private val review_img: ImageView = itemView.findViewById(R.id.review_img)
         private val review_comment_layout : LinearLayout = itemView.findViewById(R.id.review_comment)
+        private val review_frame : ConstraintLayout = itemView.findViewById(R.id.review_frame)
 
 
 
@@ -61,7 +63,7 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
             }
 
             review_title.text = item.review_title
-            review_price.text = item.review_price + "원"
+            review_price.text = item.review_price.substring(0,1) + "," + item.review_price.substring(1)+ "원"
 
             if (!"".equals(item.review_cm_comment) && !item.review_cm_comment.isEmpty()) {
                 review_comment_layout.visibility = View.VISIBLE
@@ -105,14 +107,20 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
                 1 -> {
                     Glide.with(itemView).load(R.drawable.icon_cu).into(review_brand_img)
                     review_title_sub.text = "CU"
+                    review_frame.setBackgroundResource(R.drawable.frame_cu)
+                    review_price.setBackgroundResource(R.drawable.price_cu)
                 }
                 2 -> {
                     Glide.with(itemView).load(R.drawable.icon_gs25).into(review_brand_img)
                     review_title_sub.text = "GS25"
+                    review_frame.setBackgroundResource(R.drawable.frame_gs25)
+                    review_price.setBackgroundResource(R.drawable.price_gs25)
                 }
                 3 -> {
                     Glide.with(itemView).load(R.drawable.icon_7eleven).into(review_brand_img)
                     review_title_sub.text = "세븐일레븐"
+                    review_frame.setBackgroundResource(R.drawable.frame_7eleven)
+                    review_price.setBackgroundResource(R.drawable.price_7)
                 }
 
             }

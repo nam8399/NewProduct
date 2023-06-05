@@ -39,8 +39,9 @@ class ReviewActivity : AppCompatActivity() {
         mViewModel?.initDetailData(intent.getStringExtra("title").toString())
         btnX.setOnClickListener { finish() }
         btnReview.setOnClickListener {
-            val intent = Intent(this@ReviewActivity, ChoiceActivity::class.java)
-            startActivity(intent)
+            val intentChoice = Intent(this@ReviewActivity, ChoiceActivity::class.java)
+            intentChoice.putExtra("title", intent.getStringExtra("title"))
+            startActivity(intentChoice)
             finish()
         }
 

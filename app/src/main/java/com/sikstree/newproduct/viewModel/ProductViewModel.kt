@@ -145,16 +145,16 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
                     var reviewId = ""
                     var reviewComment = ""
                     for (document in result) {  // 가져온 문서들은 result에 들어감)
-                        listReviewAll.add(ReviewData(Integer.parseInt(document["review_profile"] as String),
+                        listReviewAll.add(ReviewData((document["review_profile"] as Long).toInt(),
                             document["review_id"] as String,
-                            Integer.parseInt(document["review_imoji"] as String),
+                            (document["review_imoji"] as Long).toInt(),
                             document["review_title"] as String,
                             document["review_comment"] as String,
                             document["review_date"] as String,
                             document["review_img"] as String,
                             document["review_img2"] as String,
                             document["review_img3"] as String))
-                        imojiAvgSum += Integer.parseInt(document["review_imoji"] as String)
+                        imojiAvgSum += (document["review_imoji"] as Long).toInt()
                         Log.d(this@ProductViewModel.title, "로그확인 : " + document["review_title"] as String)
                     }
                     if (listReviewAll.size != 0) {

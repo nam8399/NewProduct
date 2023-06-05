@@ -15,6 +15,7 @@ import com.sikstree.minecraftstatus.Model.Event
 import com.sikstree.newproduct.Data.HomeData
 import com.sikstree.newproduct.Data.MyApplication
 import com.sikstree.newproduct.Data.UiState
+import com.sikstree.newproduct.Data.UserUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -65,6 +66,9 @@ class HomeViewModel( application: Application) : AndroidViewModel(application) {
                     if (uid?.equals(document["uid"] as String)!!) {
                         Log.d(title, "name - " + document["name"] as String)
                         name.value = document["name"] as String
+                        UserUtil.USER_NAME = document["name"] as String
+                        UserUtil.USER_PROFILE_IDX = Integer.parseInt(document["imoji"] as String)
+                        UserUtil.USER_ID = document["uid"] as String
                         break
                     }
                 }

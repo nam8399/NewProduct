@@ -57,9 +57,9 @@ class ReviewViewModel() : ViewModel() {
                 listReviewAll.clear()
                 for (document in result) {  // 가져온 문서들은 result에 들어감)
                     listReviewAll.add(
-                        ReviewData(Integer.parseInt(document["review_profile"] as String),
+                        ReviewData((document["review_profile"] as Long).toInt(),
                         document["review_id"] as String,
-                        Integer.parseInt(document["review_imoji"] as String),
+                        (document["review_imoji"] as Long).toInt(),
                         document["review_title"] as String,
                         document["review_comment"] as String,
                         document["review_date"] as String,

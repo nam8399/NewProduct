@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide
 import com.sikstree.newproduct.Adapter.ReviewAdapter
 import com.sikstree.newproduct.Data.ProductData
 import com.sikstree.newproduct.Data.ReviewData
+import com.sikstree.newproduct.Data.UserUtil
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.databinding.ActivityAddreviewBinding
 import com.sikstree.newproduct.databinding.ActivityChoiceBinding
@@ -30,22 +31,13 @@ import com.sikstree.newproduct.databinding.ActivityReviewBinding
 import com.sikstree.newproduct.viewModel.AddReviewViewModel
 import com.sikstree.newproduct.viewModel.ChoiceViewModel
 import com.sikstree.newproduct.viewModel.ReviewViewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class AddReviewActivity : AppCompatActivity() {
     private lateinit var binding : ActivityAddreviewBinding
     private val viewModel : AddReviewViewModel by viewModels()
     private var img_count = 0
-
-
-//    private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-//    private val checkPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
-//        result.forEach {
-//            if(!it.value) {
-//                Toast.makeText(applicationContext, "권한 동의 필요!", Toast.LENGTH_SHORT).show()
-//                finish()
-//            }
-//        }
-//    }
 
     var backPressedTime : Long = 0
 
@@ -55,14 +47,28 @@ class AddReviewActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        initView()
         onClick()
+    }
 
-//        checkPermission.launch(permissionList)
+    private fun initView() = with(binding) {
+        choiceProductName.text = intent.getStringExtra("title")
     }
 
 
     private fun onClick() = with(binding){
         btnSkip.setOnClickListener() {
+            viewModel?.addReviewImoji(ReviewData(UserUtil.USER_PROFILE_IDX,
+                UserUtil.USER_NAME,
+                intent.getIntExtra("iconIdx", 0),
+                intent.getStringExtra("title").toString(),
+                "",
+                getTime(),
+                "",
+                "",
+                ""
+            ))
+            UserUtil.PRODUCT_VIEW_RESET = true
             finish()
         }
 
@@ -74,6 +80,12 @@ class AddReviewActivity : AppCompatActivity() {
     }
 
 
+    fun getTime() : String {
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+        val formatted = current.format(formatter)
+        return formatted
+    }
 
 
     private fun navigatePhotos() {

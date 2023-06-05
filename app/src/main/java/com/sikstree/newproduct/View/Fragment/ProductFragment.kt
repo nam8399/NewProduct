@@ -15,6 +15,7 @@ import androidx.lifecycle.asLiveData
 import com.sikstree.newproduct.Adapter.ProductAdapter
 import com.sikstree.newproduct.Data.ProductData
 import com.sikstree.newproduct.Data.UiState
+import com.sikstree.newproduct.Data.UserUtil
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Activity.MainActivity
 import com.sikstree.newproduct.View.Activity.ReviewActivity
@@ -65,6 +66,17 @@ class ProductFragment() : Fragment() {
         observeCategory()
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (UserUtil.PRODUCT_VIEW_RESET) {
+            initData()
+            initView()
+            observeCategory()
+
+            UserUtil.PRODUCT_VIEW_RESET = false
+        }
     }
 
     private fun showSomething() { // UI State 정의

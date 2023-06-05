@@ -56,7 +56,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="@color/white"
-            android:background="@drawable/review_price"
+            android:background="@drawable/price_cu"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginRight="20dp"
@@ -77,13 +77,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/review_frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="344dp"
+            android:background="@drawable/frame_cu"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="21dp"
+            android:paddingBottom="21dp">
 
             <ImageView
                 android:id="@+id/review_img"
                 android:layout_width="match_parent"
-                android:layout_height="344dp"
+                android:layout_height="match_parent"
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
