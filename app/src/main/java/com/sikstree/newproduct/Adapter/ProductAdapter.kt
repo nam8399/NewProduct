@@ -68,7 +68,14 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
             if (!"".equals(item.review_cm_comment) && !item.review_cm_comment.isEmpty()) {
                 review_comment_layout.visibility = View.VISIBLE
                 review_cm_id.text = item.review_cm_id
-                review_cm_comment.text = item.review_cm_comment
+                var comment = item.review_cm_comment
+                comment = comment.replace("\n", " ")
+
+                if (comment.length > 18) {
+                    comment = comment.substring(0, 17) + "... 더보기"
+                }
+
+                review_cm_comment.text = comment
             }
 
             if (!"".equals(item.review_cnt) && !item.review_cnt.isEmpty() && !item.review_cnt.equals("0")) {

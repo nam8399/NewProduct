@@ -75,6 +75,20 @@ class ProductFragment() : Fragment() {
             initView()
             observeCategory()
 
+            with(binding) {
+                imgAll.isSelected = true
+                imgCookie.isSelected = false
+                imgBread.isSelected = false
+                imgRice.isSelected = false
+                imgDrink.isSelected = false
+
+                textAll.setTextColor(Color.WHITE)
+                textRice.setTextColor(Color.parseColor("#676767"))
+                textCookie.setTextColor(Color.parseColor("#676767"))
+                textBread.setTextColor(Color.parseColor("#676767"))
+                textDrink.setTextColor(Color.parseColor("#676767"))
+            }
+
             UserUtil.PRODUCT_VIEW_RESET = false
         }
     }
@@ -157,24 +171,27 @@ class ProductFragment() : Fragment() {
 
     }
 
-    private fun initRecycler(data : ArrayList<ProductData>) {
+    private fun initRecycler(datas : ArrayList<ProductData>) {
         reviewAdapter = ProductAdapter(activity as MainActivity)
         binding.reviewRecycler.adapter = reviewAdapter
 
-        if (data.size == 0) {
+        if (datas.size == 0) {
             return
         }
 
 
-        data.apply {
-            reviewAdapter.datas = data
+        datas.apply {
+            reviewAdapter.datas = datas
             reviewAdapter.notifyDataSetChanged()
         }
 
         reviewAdapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener{
             override fun onItemClick(v: View, data: ProductData, pos : Int) {
                 Log.d(title, "상품 선택 pos : " + pos)
+
                 val intent = Intent(context, ReviewActivity::class.java)
+                Log.d(title, "클릭 리뷰 데이터2" + data.review_title)
+                intent.putExtra("title",data.review_title)
                 startActivity(intent)
             }
 

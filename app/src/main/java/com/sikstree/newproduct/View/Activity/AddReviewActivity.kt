@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.sikstree.newproduct.Data.ReviewData
 import com.sikstree.newproduct.Data.UserUtil
 import com.sikstree.newproduct.R
@@ -67,10 +68,10 @@ class AddReviewActivity : AppCompatActivity() {
         }
 
         btnAdd.setOnClickListener {
-            mViewModel?.uploadImg(imgUri.toUri(), imgUri2.toUri(), imgUri3.toUri(), img_count)
+            mViewModel?.uploadImg(imgUri.toUri(), imgUri2.toUri(), imgUri3.toUri(), img_count) // 이미지 등록 버튼 클릭 시 갤러리에서 가져온 이미지 서버에 등록
         }
 
-        mViewModel?.imgAddEvent?.observe(this@AddReviewActivity) {
+        mViewModel?.imgAddEvent?.observe(this@AddReviewActivity) { // 이미지 저장 이벤트 받으면 데이터 가져온 뒤 셋팅
             if (it) {
                 mViewModel?.addReview(ReviewData(UserUtil.USER_PROFILE_IDX,
                     UserUtil.USER_NAME,
@@ -86,10 +87,11 @@ class AddReviewActivity : AppCompatActivity() {
 
         }
 
-        mViewModel.finishEvent.observe(this@AddReviewActivity) {
+        mViewModel.finishEvent.observe(this@AddReviewActivity) { // 액티비티 종료 이벤트 받으면 액티비티 종료
             if (it) {
                 finish()
                 UserUtil.PRODUCT_VIEW_RESET = true
+                img_count = 0
             }
         }
 
@@ -101,7 +103,7 @@ class AddReviewActivity : AppCompatActivity() {
     }
 
 
-    fun getTime() : String {
+    fun getTime() : String { // 파이어스토어 이미지 저장 시 이름에 날짜 들어가게 하기 위해 현재 시간 계산
         val current = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
         val formatted = current.format(formatter)
@@ -109,13 +111,13 @@ class AddReviewActivity : AppCompatActivity() {
     }
 
 
-    private fun navigatePhotos() {
+    private fun navigatePhotos() { // 갤러리 이미지 접근
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startActivityForResult(intent,2000)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { // 갤러리 이미지 등록 처리
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode != Activity.RESULT_OK) {
             Toast.makeText(this,"잘못된 접근입니다",Toast.LENGTH_SHORT).show()
@@ -130,19 +132,22 @@ class AddReviewActivity : AppCompatActivity() {
 
                 when(img_count) {
                     0 -> {
-                        binding.btnImg1.setImageBitmap(bitmap)
+//                        binding.btnImg1.setImageBitmap(bitmap)
+                        Glide.with(this).load(currentImgUrl).into(binding.btnImg1) // Glide를 사용하지 않으면 갤러리 이미지 돌아감
                         binding.btnImg1.visibility = View.VISIBLE
                         imgUri = currentImgUrl.toString()!!
                         img_count++
                     }
                     1 -> {
-                        binding.btnImg2.setImageBitmap(bitmap)
+//                        binding.btnImg2.setImageBitmap(bitmap)
+                        Glide.with(this).load(currentImgUrl).into(binding.btnImg2)
                         binding.btnImg2.visibility = View.VISIBLE
                         img_count++
                         imgUri2 = currentImgUrl.toString()!!
                     }
                     2 -> {
-                        binding.btnImg3.setImageBitmap(bitmap)
+//                        binding.btnImg3.setImageBitmap(bitmap)
+                        Glide.with(this).load(currentImgUrl).into(binding.btnImg3)
                         binding.btnImg3.visibility = View.VISIBLE
                         img_count++
                         imgUri3 = currentImgUrl.toString()!!
@@ -169,6 +174,7 @@ class AddReviewActivity : AppCompatActivity() {
         }
         Toast.makeText(this, "한번 더 클릭 시 홈으로 이동됩니다.", Toast.LENGTH_SHORT).show()
         backPressedTime = System.currentTimeMillis()
+        img_count = 0
     }
 
 

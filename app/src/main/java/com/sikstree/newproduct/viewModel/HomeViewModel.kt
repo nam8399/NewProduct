@@ -67,7 +67,7 @@ class HomeViewModel( application: Application) : AndroidViewModel(application) {
                         Log.d(title, "name - " + document["name"] as String)
                         name.value = document["name"] as String
                         UserUtil.USER_NAME = document["name"] as String
-                        UserUtil.USER_PROFILE_IDX = Integer.parseInt(document["imoji"] as String)
+                        UserUtil.USER_PROFILE_IDX = (document["imoji"] as Long).toInt()
                         UserUtil.USER_ID = document["uid"] as String
                         break
                     }

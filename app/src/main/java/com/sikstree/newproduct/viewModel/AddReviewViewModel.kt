@@ -39,7 +39,7 @@ class AddReviewViewModel() : ViewModel() {
     }
 
 
-    fun addReview(reviewData : ReviewData) {
+    fun addReview(reviewData : ReviewData) { // 리뷰 데이터 등록
         firestore?.collection("Review_Detail")?.document("[" + reviewData.review_id + "]" + reviewData.review_title)
             ?.set(reviewData)
             ?.addOnSuccessListener { Log.d(title, "성공")
@@ -59,7 +59,7 @@ class AddReviewViewModel() : ViewModel() {
     }
 
 
-    private fun uploadPhoto(
+    private fun uploadPhoto( // 파이어스토어에 사진 업로드 후 성공 시 다시 받아와서 로드
         imageURI: Uri,
         img_count: Int
     ) = viewModelScope.launch {
@@ -85,7 +85,7 @@ class AddReviewViewModel() : ViewModel() {
             }
     }
 
-    fun getImgArr(): ArrayList<String> {
+    fun getImgArr(): ArrayList<String> { // 이미지 Arr 호출 시 데이터 반환, 이미지 개수에 따라서 3개 미만일 시 나머지 부분은 공백으로 리턴
         if (imgArr.size == 0) {
             imgArr.add("")
             imgArr.add("")
