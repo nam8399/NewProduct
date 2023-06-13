@@ -1,17 +1,12 @@
 package com.sikstree.newproduct.View.Dialog
 
-import android.app.Activity
 import android.app.Dialog
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
-import android.provider.MediaStore
-import android.util.Log
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.startActivityForResult
-import com.sikstree.newproduct.View.Fragment.AuthFragment
+import com.sikstree.newproduct.View.Activity.AuthActivity
+import com.sikstree.newproduct.View.Fragment.MyFragment
 import com.sikstree.newproduct.databinding.ActivityCustomDialogBinding
 
 class CustomDialog(private val context : AppCompatActivity) {
@@ -29,12 +24,12 @@ class CustomDialog(private val context : AppCompatActivity) {
         dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         binding.btnCamera.setOnClickListener() {
-            AuthFragment.getInstance()?.CallCamera()
+            AuthActivity.getInstance()?.CallCamera()
             dlg.dismiss()
         }
 
         binding.btnGallery.setOnClickListener() {
-            AuthFragment.getInstance()?.navigatePhotos()
+            AuthActivity.getInstance()?.navigatePhotos()
             dlg.dismiss()
         }
 

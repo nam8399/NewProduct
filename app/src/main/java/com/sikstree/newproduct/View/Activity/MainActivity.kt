@@ -1,9 +1,7 @@
 package com.sikstree.newproduct.View.Activity
 
-import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -13,10 +11,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.sikstree.newproduct.R
-import com.sikstree.newproduct.View.Fragment.AuthFragment
+import com.sikstree.newproduct.View.Fragment.MyFragment
 import com.sikstree.newproduct.View.Fragment.HomeFragment
 import com.sikstree.newproduct.View.Fragment.ProductFragment
 import com.sikstree.newproduct.databinding.ActivityMainBinding
@@ -114,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             when(item.itemId) {
                 R.id.homeFragment -> viewModel.setFragment(TAG_HOME, HomeFragment(), fragmentManager)
                 R.id.productFragment -> viewModel.setFragment(TAG_PRODUCT, ProductFragment(), fragmentManager)
-                R.id.authFragment-> viewModel.setFragment(TAG_AUTH, AuthFragment(), fragmentManager)
+                R.id.authFragment-> viewModel.setFragment(TAG_AUTH, MyFragment(), fragmentManager)
             }
             true
         }
