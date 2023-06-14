@@ -42,12 +42,22 @@
                     android:gravity="center_vertical">
                 </TextView>
                 <ImageView
-                    android:layout_width="28dp"
+                    android:layout_width="0dp"
                     android:layout_height="28dp"
+                    android:layout_weight="1"
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:src="@drawable/icon_paper">
+                    android:layout_marginBottom="4dp">
+                </ImageView>
+                <ImageView
+                    android:id="@+id/auth_back"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginRight="27dp"
+                    android:layout_marginBottom="2dp"
+                    android:padding="6dp"
+                    android:src="@drawable/btn_x">
                 </ImageView>
             </LinearLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,20 +80,20 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:background="@color/black">
+                    android:src="@drawable/img_addimg">
                 </ImageView>
             </androidx.constraintlayout.widget.ConstraintLayout>
             <Button
                 android:id="@+id/btn_add_cert"
-                android:layout_width="match_parent"
+                android:layout_width="122dp"
                 android:layout_height="56dp"
                 android:orientation="horizontal"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:scaleType="centerCrop"
                 android:enabled="false"
-                android:background="@drawable/selector_btn_add_cert"
+                android:background="@drawable/btn_save"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/frame_certification">

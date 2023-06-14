@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Dialog.CustomDialog
 import com.sikstree.newproduct.databinding.ActivityAuthBinding
@@ -47,20 +48,30 @@ class AuthActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-        binding.imgCertification.setOnClickListener() {
-//            navigatePhotos()
-            val dlg = CustomDialog(this)
-            dlg.show()
-        }
+        initView()
 
-        binding.btnAddCert.setOnClickListener() {
-            if(imageExternalSave(this, viewToBitmap(binding.frameCertification), "")) {
-                Toast.makeText(this,"사진저장 성공", Toast.LENGTH_SHORT).show()
-            }
-        }
 
     }
 
+    private fun initView() = with(binding){
+        imgCertification.setOnClickListener() {
+//            navigatePhotos()
+            val dlg = CustomDialog(this@AuthActivity)
+            dlg.show()
+        }
+
+        btnAddCert.setOnClickListener() {
+            if(imageExternalSave(this@AuthActivity, viewToBitmap(frameCertification), "")) {
+                val dlg = CustomDialog(this@AuthActivity)
+                dlg.showSaveDlg()
+            }
+        }
+
+        authBack.setOnClickListener() {
+            finish()
+        }
+
+    }
 
 
     fun imageExternalSave(context: Context, bitmap: Bitmap, path: String): Boolean {
@@ -134,11 +145,12 @@ class AuthActivity : AppCompatActivity() {
                 var currentImgUrl : Uri? = data?.data
 
                 try {
-                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,currentImgUrl)
+//                    val bitmap = MediaStore.Images.Media.getBitmap(contentResolver,currentImgUrl)
 
 
                     with(binding) {
-                        imgCertification.setImageBitmap(bitmap)
+//                        imgCertification.setImageBitmap(bitmap)
+                        Glide.with(this@AuthActivity).load(currentImgUrl).into(imgCertification)
                         btnAddCert.isEnabled = true
                         btnAddCert.isSelected = true
                     }
