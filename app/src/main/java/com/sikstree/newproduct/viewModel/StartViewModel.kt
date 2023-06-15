@@ -75,6 +75,7 @@ class StartViewModel() : ViewModel() {
         loginData.uid = auth?.currentUser?.uid
         loginData.name = name
         loginData.imoji = iconClickPosition.value
+        loginData.autoLogin = "1"
 
         firestore?.collection("UserID")?.document(auth!!.currentUser!!.uid)?.set(loginData)
 //        Toast.makeText(this,"저장완료",Toast.LENGTH_SHORT).show()

@@ -100,6 +100,7 @@
         android:id="@+id/dlg_save_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +133,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dlg_logout_layout"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -158,58 +158,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dlg_logout_img"
-            app:layout_constraintBottom_toTopOf="@+id/dlg_logout_line"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:textSize="16sp"
-            android:text="정말 로그아웃 하실건가요?"
+            android:text="로그아웃 되었습니다"
             android:gravity="center"
             android:textColor="@color/white">
         </TextView>
-        <View
-            android:id="@+id/dlg_logout_line"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#222222"
-            android:layout_marginTop="25dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dlg_logout_text"
-            app:layout_constraintBottom_toBottomOf="parent">
-        </View>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constrainedHeight="true"
-            android:orientation="horizontal"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dlg_logout_line">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="취소"
-                android:gravity="center"
-                android:textSize="14sp"
-                android:textColor="#F65461"
-                android:layout_weight="1">
-            </TextView>
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:background="#222222"
-                android:gravity="center">
-            </View>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="로그아웃"
-                android:textSize="14sp"
-                android:gravity="center"
-                android:textColor="#0CFBB2"
-                android:layout_weight="1">
-            </TextView>
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dlg_secession_layout"

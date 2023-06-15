@@ -83,6 +83,11 @@ class LoginViewModel() : ViewModel() {
                 // 성공할 경우
                 for (document in result) {  // 가져온 문서들은 result에 들어감
                     if (uid?.equals(document["uid"] as String)!!) {
+                        if ("0".equals(document["autoLogin"] as String)) {
+                            login_check.value = false
+                            break
+                        }
+
                         Log.d(title, "Login check - " + document["uid"] as String)
                         login_check.value = true
                         break

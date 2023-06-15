@@ -28,6 +28,7 @@ class AuthActivity : AppCompatActivity() {
     private val title = "AuthActivity"
 
     var backPressedTime : Long = 0
+    var checkImgAdd = false
 
 
     init{
@@ -61,7 +62,9 @@ class AuthActivity : AppCompatActivity() {
         }
 
         btnAddCert.setOnClickListener() {
-            if(imageExternalSave(this@AuthActivity, viewToBitmap(frameCertification), "")) {
+            if (!checkImgAdd) {
+                Toast.makeText(this@AuthActivity, "사진을 등록해주세요.", Toast.LENGTH_SHORT).show()
+            } else if(imageExternalSave(this@AuthActivity, viewToBitmap(frameCertification), "")) {
                 val dlg = CustomDialog(this@AuthActivity)
                 dlg.showSaveDlg()
             }
@@ -151,8 +154,9 @@ class AuthActivity : AppCompatActivity() {
                     with(binding) {
 //                        imgCertification.setImageBitmap(bitmap)
                         Glide.with(this@AuthActivity).load(currentImgUrl).into(imgCertification)
-                        btnAddCert.isEnabled = true
-                        btnAddCert.isSelected = true
+                        checkImgAdd = true
+//                        btnAddCert.isEnabled = true
+//                        btnAddCert.isSelected = true
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -162,7 +166,13 @@ class AuthActivity : AppCompatActivity() {
             3000 -> {
                 if(data?.extras?.get("data") != null){
                     val img = data?.extras?.get("data") as Bitmap
-                    binding.imgCertification.setImageBitmap(img)
+                    with(binding) {
+//                        imgCertification.setImageBitmap(img)
+                        Glide.with(this@AuthActivity).load(img).into(imgCertification)
+                        checkImgAdd = true
+//                        btnAddCert.isEnabled = true
+//                        btnAddCert.isSelected = true
+                    }
                 }
             }
         }
@@ -170,13 +180,7 @@ class AuthActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        //2.5초이내에 한 번 더 뒤로가기 클릭 시
-        if (System.currentTimeMillis() - backPressedTime < 2500) {
-            super.onBackPressed()
-            return
-        }
-        Toast.makeText(this, "한번 더 클릭 시 홈으로 이동됩니다.", Toast.LENGTH_SHORT).show()
-        backPressedTime = System.currentTimeMillis()
+        finish()
     }
 
 

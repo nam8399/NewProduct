@@ -92,7 +92,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:scaleType="centerCrop"
-                android:enabled="false"
                 android:background="@drawable/btn_save"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -14,7 +14,7 @@
 
     <item
         android:id="@+id/authFragment"
-        android:title="인증"
+        android:title="마이"
         android:icon="@drawable/icon_my"/>
 
 </menu>
