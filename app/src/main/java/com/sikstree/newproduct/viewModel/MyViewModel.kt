@@ -54,8 +54,10 @@ class MyViewModel(application: Application) : AndroidViewModel(application){
 
         firestore?.collection("UserID")?.document(auth!!.currentUser!!.uid)?.set(loginData)
 //        Toast.makeText(this,"저장완료",Toast.LENGTH_SHORT).show()
-        Log.d(title, "파이어베이스 저장완료 - " + auth!!.uid.toString())
 
+        Log.d(title, "로그아웃 완료 - " + auth!!.uid.toString())
+
+        auth!!.signOut()
     }
 
 

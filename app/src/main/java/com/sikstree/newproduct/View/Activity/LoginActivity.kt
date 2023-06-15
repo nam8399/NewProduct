@@ -5,22 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.airbnb.lottie.model.content.RoundedCorners
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
+import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.sikstree.newproduct.Data.LoginState
@@ -100,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViews() = with(binding) {
-        viewModel?.getLoginState()
+        viewModel?.getLogoutState()
 
         viewModel?.login_check?.observe(this@LoginActivity) {
             if (it) {
@@ -146,11 +138,20 @@ class LoginActivity : AppCompatActivity() {
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(this@LoginActivity) { task ->
                 if (task.isSuccessful) {  //Login 성공
-                    Toast.makeText(this@LoginActivity, "구글 로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@LoginActivity, StartActivity::class.java)
-                    intent.putExtra("uid",firebaseAuth.uid)
-                    startActivity(intent)
-                    finish()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel?.getLoginState()?.join()
+                    }
+
+                    viewModel?.login_check?.observe(this@LoginActivity, Observer {
+                        if (!it) {
+                            Toast.makeText(this@LoginActivity, "구글 로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@LoginActivity, StartActivity::class.java)
+                            intent.putExtra("uid",firebaseAuth.uid)
+                            startActivity(intent)
+                            finish()
+                        }
+                    })
+
                 } else { //Login 실패
                     Toast.makeText(this@LoginActivity, "구글 로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show()
                 }
