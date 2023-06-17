@@ -92,12 +92,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViews() = with(binding) {
+
         viewModel?.getLogoutState()
 
         viewModel?.login_check?.observe(this@LoginActivity) {
-            if (it) {
+            if (it == 1) {
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(intent)
+                viewModel?.uploadFirebase()
+
 //                Snackbar.make(binding.root, "자동 로그인", Snackbar.LENGTH_SHORT).show()
                 finish()
             }
@@ -143,7 +146,7 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     viewModel?.login_check?.observe(this@LoginActivity, Observer {
-                        if (!it) {
+                        if (it == 2) {
                             Toast.makeText(this@LoginActivity, "구글 로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@LoginActivity, StartActivity::class.java)
                             intent.putExtra("uid",firebaseAuth.uid)

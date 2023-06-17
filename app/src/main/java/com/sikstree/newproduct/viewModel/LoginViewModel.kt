@@ -9,7 +9,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.sikstree.newproduct.Data.LoginData
 import com.sikstree.newproduct.Data.LoginState
+import com.sikstree.newproduct.Data.UserUtil
+import com.sikstree.newproduct.View.Activity.StartActivity
 import kotlinx.coroutines.*
 
 class LoginViewModel() : ViewModel() {
@@ -18,7 +21,7 @@ class LoginViewModel() : ViewModel() {
 
     private var _loginStateLiveData = MutableLiveData<LoginState>(LoginState.UnInitialized)
     val loginStateLiveData: LiveData<LoginState> = _loginStateLiveData
-    var login_check = MutableLiveData<Boolean>()
+    var login_check = MutableLiveData<Int>() // 기본 0, 성공 1, 실패 2
 
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore? = null
@@ -28,7 +31,7 @@ class LoginViewModel() : ViewModel() {
         auth = Firebase.auth
         firestore = FirebaseFirestore.getInstance()
         uid = FirebaseAuth.getInstance().currentUser?.uid
-        login_check.value = false
+        login_check.value = 0
     }
 
     fun fetchData(tokenId: String?): Job = viewModelScope.launch {
@@ -51,6 +54,18 @@ class LoginViewModel() : ViewModel() {
         }
     }
 
+    fun uploadFirebase() {
+        var loginData = LoginData()
+        loginData.uid = auth?.currentUser?.uid
+        loginData.name = UserUtil.USER_NAME
+        loginData.imoji = UserUtil.USER_PROFILE_IDX
+        loginData.autoLogin = "1"
+
+        firestore?.collection("UserID")?.document(auth!!.currentUser!!.uid)?.set(loginData)
+//        Toast.makeText(this,"저장완료",Toast.LENGTH_SHORT).show()
+        Log.d(title, "파이어베이스 저장완료 - " + auth!!.uid.toString())
+    }
+
 
     fun getLogoutState() = viewModelScope.launch {
         firestore?.collection("UserID")
@@ -59,13 +74,17 @@ class LoginViewModel() : ViewModel() {
                 // 성공할 경우
                 for (document in result) {  // 가져온 문서들은 result에 들어감
                     if (uid?.equals(document["uid"] as String)!!) {
+                        UserUtil.USER_ID = document["uid"] as String
+                        UserUtil.USER_NAME = document["name"] as String
+                        UserUtil.USER_PROFILE_IDX = (document["imoji"] as Long).toInt()
+
                         if ("0".equals(document["autoLogin"] as String)) {
-                            login_check.value = false
+                            login_check.value = 2
                             break
                         }
 
                         Log.d(title, "Login check - " + document["uid"] as String)
-                        login_check.value = true
+                        login_check.value = 1
                         break
                     }
                 }
@@ -81,10 +100,26 @@ class LoginViewModel() : ViewModel() {
             ?.get()      // 문서 가져오기
             ?.addOnSuccessListener { result ->
                 // 성공할 경우
-                for (document in result) {  // 가져온 문서들은 result에 들어감
-                    if (uid?.equals(document["uid"] as String)!!) {
-                        login_check.value = true
-                        break
+
+                try {
+                    for (document in result) {  // 가져온 문서들은 result에 들어감
+                        if (uid?.equals(document["uid"] as String)!!) {
+                            login_check.value = 1
+                            break
+                        }
+                    }
+                } catch (e : Exception) {
+                    e.printStackTrace()
+
+                    try {
+                        for (document in result) {  // 가져온 문서들은 result에 들어감
+                            if (UserUtil.USER_ID.equals(document["uid"] as String)!!) {
+                                login_check.value = 1
+                                break
+                            }
+                        }
+                    } catch (e : Exception) {
+                        e.printStackTrace()
                     }
                 }
             }

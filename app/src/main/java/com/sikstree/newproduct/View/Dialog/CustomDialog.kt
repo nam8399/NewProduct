@@ -93,6 +93,10 @@ class CustomDialog(private val context : AppCompatActivity) {
 
     }
 
+    fun dismissDlg() {
+        dlg.dismiss()
+    }
+
 
 
     fun setOnOKClickedListener(listener: (String) -> Unit) {

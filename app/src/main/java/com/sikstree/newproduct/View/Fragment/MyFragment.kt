@@ -118,6 +118,7 @@ class MyFragment() : Fragment() {
                 viewModel?.logoutFireStore()?.join()
 
                 launch {
+
                     Handler(Looper.getMainLooper()).post {
                         val dlg = CustomDialog(activity as MainActivity)
                         dlg.showLogoutDlg() // 로그아웃 다이얼로그
