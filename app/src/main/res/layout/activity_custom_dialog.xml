@@ -135,6 +135,7 @@
         android:id="@+id/dlg_logout_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -167,9 +168,8 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/dlg_secession_layout"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="272dp"
+        android:layout_height="184dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -203,24 +203,24 @@
             android:id="@+id/dlg_secession_line"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="#222222"
             android:layout_marginTop="25dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dlg_secession_text"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@+id/dlg_secession_btn_layout">
         </View>
         <LinearLayout
+            android:id="@+id/dlg_secession_btn_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constrainedHeight="true"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.3"
             android:orientation="horizontal"
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dlg_secession_line">
+            app:layout_constraintBottom_toBottomOf="parent">
             <TextView
+                android:id="@+id/btn_x"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:text="취소"
@@ -232,10 +232,10 @@
             <View
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
-                android:background="#222222"
                 android:gravity="center">
             </View>
             <TextView
+                android:id="@+id/btn_ok"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:text="탈퇴"

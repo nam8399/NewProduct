@@ -39,10 +39,14 @@ class MyViewModel(application: Application) : AndroidViewModel(application){
     var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore? = null
 
+    var isSecession = MutableLiveData<Boolean>() // 회원탈퇴 성공
+
 
     init {
         firestore = FirebaseFirestore.getInstance()
         auth = Firebase.auth
+
+        isSecession.value = false
     }
 
     fun logoutFireStore() = viewModelScope.launch {
@@ -58,6 +62,28 @@ class MyViewModel(application: Application) : AndroidViewModel(application){
         Log.d(title, "로그아웃 완료 - " + auth!!.uid.toString())
 
         auth!!.signOut()
+    }
+
+
+    fun secessionFireStore() = viewModelScope.launch {
+//        var loginData = LoginData()
+//        loginData.uid = UserUtil.USER_ID
+//        loginData.name = UserUtil.USER_NAME
+//        loginData.imoji = UserUtil.USER_PROFILE_IDX
+//        loginData.autoLogin = "0"
+//
+//        firestore?.collection("UserID")?.document(auth!!.currentUser!!.uid)?.set(loginData)
+//        Toast.makeText(this,"저장완료",Toast.LENGTH_SHORT).show()
+
+        val user = auth!!.currentUser!!
+        user.delete().addOnCompleteListener{ task ->
+            if (task.isSuccessful) {
+                Log.d(title, "회원탈퇴 완료 - " + auth!!.uid.toString())
+                isSecession.value = true
+            } else {
+                Log.d(title, "회원탈퇴 실패 - " + auth!!.uid.toString())
+            }
+        }
     }
 
 

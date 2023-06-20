@@ -46,6 +46,7 @@ import java.io.FileOutputStream
 
 class MyFragment() : Fragment() {
     lateinit var binding : FragmentMyBinding
+    lateinit var viewModel : MyViewModel
     var isSeverAdd : Boolean = false
     private val title = "MyFragment"
 
@@ -72,6 +73,10 @@ class MyFragment() : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my, container, false)
 
+        viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
+
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
 
 
@@ -134,6 +139,11 @@ class MyFragment() : Fragment() {
                 }.join()
             }
         }
+
+        btnSecession.setOnClickListener {
+            val dlg = CustomDialog(activity as MainActivity)
+            dlg.showSecessionDlg() // 로그아웃 다이얼로그
+        }
     }
 
 
@@ -163,6 +173,19 @@ class MyFragment() : Fragment() {
 //                    hideLoadingView()
 //                    showErrorText(it.message.toString())
                 }
+            }
+        })
+    }
+
+    fun secession() {
+        viewModel.secessionFireStore()
+
+        viewModel.isSecession.observe(this, Observer {
+            if (it) {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+                Toast.makeText(activity as MainActivity, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                (activity as MainActivity).finish()
             }
         })
     }

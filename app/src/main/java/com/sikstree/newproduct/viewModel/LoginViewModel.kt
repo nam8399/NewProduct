@@ -108,6 +108,8 @@ class LoginViewModel() : ViewModel() {
                             break
                         }
                     }
+
+                    login_check.value = 2
                 } catch (e : Exception) {
                     e.printStackTrace()
 
@@ -118,6 +120,8 @@ class LoginViewModel() : ViewModel() {
                                 break
                             }
                         }
+
+                        login_check.value = 2
                     } catch (e : Exception) {
                         e.printStackTrace()
                     }
