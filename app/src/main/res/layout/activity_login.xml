@@ -41,6 +41,44 @@
                     android:src="@drawable/img_welcome_text">
                 </ImageView>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="344dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/login_google"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="344dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/btn_privacy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="개인정보처리방침"
+                        android:textSize="16sp"
+                        style="@style/Hyperlink">
+                    </TextView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:text="에 동의하시면">
+                    </TextView>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="아래 버튼을 클릭해주세요."
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="#FFFFFF">
+                </TextView>
+            </LinearLayout>
             <ImageView
                 android:id="@+id/login_google"
                 android:layout_width="344dp"

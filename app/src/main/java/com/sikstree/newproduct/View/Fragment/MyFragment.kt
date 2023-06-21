@@ -147,7 +147,7 @@ class MyFragment() : Fragment() {
         }
 
 
-        btnApprule.setOnClickListener { intentWebView("") }
+        btnApprule.setOnClickListener { intentWebView("www.naver.com") }
     }
 
 

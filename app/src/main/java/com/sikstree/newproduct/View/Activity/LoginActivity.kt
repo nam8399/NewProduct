@@ -110,6 +110,10 @@ class LoginActivity : AppCompatActivity() {
             val signInIntent: Intent = googleSignIn.signInIntent
             loginLauncher.launch(signInIntent)  //loginLauncher 로 결과 수신하여 처리
         }
+
+        btnPrivacy.setOnClickListener {
+            intentWebView("www.naver.com")
+        }
     }
 
 
@@ -201,6 +205,14 @@ class LoginActivity : AppCompatActivity() {
         intent.putExtra("uid",firebaseAuth.uid)
         startActivity(intent)
         finish()
+    }
+
+
+    fun intentWebView(url : String) {
+        val intent = Intent(this, WebviewActivity::class.java)
+        intent.putExtra("url",url)
+
+        startActivity(intent)
     }
 
 
