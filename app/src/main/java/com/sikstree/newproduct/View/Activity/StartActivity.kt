@@ -39,7 +39,7 @@ class StartActivity : AppCompatActivity() {
 
 //        viewModel.setFragment(TAG_HOME, HomeFragment(), fragmentManager)
 
-//        initName()
+        initName()
 
         initView("불타는삼각김밥")
     }

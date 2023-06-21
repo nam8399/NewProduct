@@ -1,19 +1,26 @@
 package com.sikstree.newproduct.View.Activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.WebViewClient
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AppCompatActivity
 import com.sikstree.newproduct.R
-import com.sikstree.newproduct.databinding.ActivityWebViewBinding
+import com.sikstree.newproduct.databinding.ActivityWebviewBinding
 
 class WebviewActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityWebViewBinding
+    private var mBinding: ActivityWebviewBinding? = null
+    private val binding get() = mBinding!!
+
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_web_view)
+        mBinding = ActivityWebviewBinding.inflate(layoutInflater)
+
+        // getRoot 메서드로 레이아웃 내부의 최상위 위치 뷰의
+        // 인스턴스를 활용하여 생성된 뷰를 액티비티에 표시 합니다.
+        setContentView(binding.root)
+
 
         binding.webview.apply {
             webViewClient = WebViewClient()

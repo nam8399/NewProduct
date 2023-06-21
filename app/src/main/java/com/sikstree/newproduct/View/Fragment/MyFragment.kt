@@ -1,17 +1,9 @@
 package com.sikstree.newproduct.View.Fragment
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.os.Looper
-import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,11 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.sikstree.newproduct.Data.LoginData
 import com.sikstree.newproduct.Data.UiState
 import com.sikstree.newproduct.Data.UserUtil
 import com.sikstree.newproduct.R
@@ -36,14 +23,11 @@ import com.sikstree.newproduct.View.Activity.MainActivity
 import com.sikstree.newproduct.View.Activity.WebviewActivity
 import com.sikstree.newproduct.View.Dialog.CustomDialog
 import com.sikstree.newproduct.databinding.FragmentMyBinding
-import com.sikstree.newproduct.viewModel.HomeViewModel
 import com.sikstree.newproduct.viewModel.MyViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.FileOutputStream
 
 class MyFragment() : Fragment() {
     lateinit var binding : FragmentMyBinding
@@ -99,18 +83,18 @@ class MyFragment() : Fragment() {
         myName.text = UserUtil.USER_NAME
 
         when(UserUtil.USER_PROFILE_IDX){
-            1 -> Glide.with(this@MyFragment).load(R.drawable.imoji_1).into(myIcon)
-            2 -> Glide.with(this@MyFragment).load(R.drawable.imoji_2).into(myIcon)
-            3 -> Glide.with(this@MyFragment).load(R.drawable.imoji_3).into(myIcon)
-            4 -> Glide.with(this@MyFragment).load(R.drawable.imoji_4).into(myIcon)
-            5 -> Glide.with(this@MyFragment).load(R.drawable.imoji_5).into(myIcon)
-            6 -> Glide.with(this@MyFragment).load(R.drawable.imoji_6).into(myIcon)
-            7 -> Glide.with(this@MyFragment).load(R.drawable.imoji_7).into(myIcon)
-            8 -> Glide.with(this@MyFragment).load(R.drawable.imoji_8).into(myIcon)
-            9 -> Glide.with(this@MyFragment).load(R.drawable.imoji_9).into(myIcon)
-            10 -> Glide.with(this@MyFragment).load(R.drawable.imoji_10).into(myIcon)
-            11 -> Glide.with(this@MyFragment).load(R.drawable.imoji_11).into(myIcon)
-            12 -> Glide.with(this@MyFragment).load(R.drawable.imoji_12).into(myIcon)
+            0 -> Glide.with(this@MyFragment).load(R.drawable.imoji_1).into(myIcon)
+            1 -> Glide.with(this@MyFragment).load(R.drawable.imoji_2).into(myIcon)
+            2 -> Glide.with(this@MyFragment).load(R.drawable.imoji_3).into(myIcon)
+            3 -> Glide.with(this@MyFragment).load(R.drawable.imoji_4).into(myIcon)
+            4 -> Glide.with(this@MyFragment).load(R.drawable.imoji_5).into(myIcon)
+            5 -> Glide.with(this@MyFragment).load(R.drawable.imoji_6).into(myIcon)
+            6 -> Glide.with(this@MyFragment).load(R.drawable.imoji_7).into(myIcon)
+            7 -> Glide.with(this@MyFragment).load(R.drawable.imoji_8).into(myIcon)
+            8 -> Glide.with(this@MyFragment).load(R.drawable.imoji_9).into(myIcon)
+            9 -> Glide.with(this@MyFragment).load(R.drawable.imoji_10).into(myIcon)
+            10 -> Glide.with(this@MyFragment).load(R.drawable.imoji_11).into(myIcon)
+            11 -> Glide.with(this@MyFragment).load(R.drawable.imoji_12).into(myIcon)
         }
 
 
@@ -147,7 +131,7 @@ class MyFragment() : Fragment() {
         }
 
 
-        btnApprule.setOnClickListener { intentWebView("www.naver.com") }
+        btnApprule.setOnClickListener { intentWebView("https://sikdroid.tistory.com/21") }
     }
 
 

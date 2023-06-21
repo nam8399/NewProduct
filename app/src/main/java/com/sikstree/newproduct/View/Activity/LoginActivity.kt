@@ -112,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnPrivacy.setOnClickListener {
-            intentWebView("www.naver.com")
+            intentWebView("https://sikdroid.tistory.com/21")
         }
     }
 
@@ -209,7 +209,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     fun intentWebView(url : String) {
-        val intent = Intent(this, WebviewActivity::class.java)
+        val intent = Intent(this@LoginActivity, WebviewActivity::class.java)
         intent.putExtra("url",url)
 
         startActivity(intent)
