@@ -36,6 +36,10 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
         holder.bind(datas[position])
     }
 
+    override fun getItemViewType(position: Int): Int { // 리사이클러뷰 재활용으로 인해 중복데이터 보여지는 현상 방지를 위한 메서드 오버라이드
+        return position
+    }
+
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val review_title: TextView = itemView.findViewById(R.id.review_title)

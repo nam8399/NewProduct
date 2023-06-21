@@ -68,7 +68,7 @@ class ProductFragment() : Fragment() {
 
     }
 
-    override fun onResume() {
+    override fun onResume() { // 리뷰 등록 같은 데이터 변경해야 할 FLAG 발생 시 화면 업데이트
         super.onResume()
         if (UserUtil.PRODUCT_VIEW_RESET) {
             initData()
@@ -124,12 +124,11 @@ class ProductFragment() : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-//        onclick()
         initRecycler()
 
     }
 
-    private fun initData() {
+    private fun initData() { // 화면에 보여질 데이터 생성
         viewModel.initData()
 
         viewModel.getEvent.observe(viewLifecycleOwner, Observer {
@@ -148,7 +147,7 @@ class ProductFragment() : Fragment() {
     }
 
 
-    private fun initRecycler() {
+    private fun initRecycler() { // 전체 데이터 초기화
         reviewAdapter = ProductAdapter(activity as MainActivity)
         binding.reviewRecycler.adapter = reviewAdapter
 
@@ -162,7 +161,7 @@ class ProductFragment() : Fragment() {
             override fun onItemClick(v: View, data: ProductData, pos : Int) {
                 Log.d(title, "상품 선택 pos : " + pos)
                 val intent = Intent(context, ReviewActivity::class.java)
-                Log.d(title, "클릭 리뷰 데이터" + data.review_title)
+                Log.d(title, "클릭 리뷰 데이터 - 전체" + data.review_title)
                 intent.putExtra("title",data.review_title)
                 startActivity(intent)
             }
@@ -171,7 +170,7 @@ class ProductFragment() : Fragment() {
 
     }
 
-    private fun initRecycler(datas : ArrayList<ProductData>) {
+    private fun initRecycler(datas : ArrayList<ProductData>) { // 카테고리 클릭 시 해당 카테고리 데이터만 초기화
         reviewAdapter = ProductAdapter(activity as MainActivity)
         binding.reviewRecycler.adapter = reviewAdapter
 
@@ -185,12 +184,12 @@ class ProductFragment() : Fragment() {
             reviewAdapter.notifyDataSetChanged()
         }
 
-        reviewAdapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener{
+        reviewAdapter.setOnItemClickListener(object : ProductAdapter.OnItemClickListener{ // 카테고리 클릭 처리
             override fun onItemClick(v: View, data: ProductData, pos : Int) {
                 Log.d(title, "상품 선택 pos : " + pos)
 
                 val intent = Intent(context, ReviewActivity::class.java)
-                Log.d(title, "클릭 리뷰 데이터2" + data.review_title)
+                Log.d(title, "클릭 리뷰 데이터 - 카테고리" + data.review_title)
                 intent.putExtra("title",data.review_title)
                 startActivity(intent)
             }
@@ -198,7 +197,7 @@ class ProductFragment() : Fragment() {
         })
     }
 
-    private fun observeCategory() = with(viewModel) {
+    private fun observeCategory() = with(viewModel) { // 상단 카테고리 버튼 클릭 시 처리
         onclickIdx.observe(viewLifecycleOwner, Observer {
             when (it) {
                 0 -> {

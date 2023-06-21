@@ -197,10 +197,10 @@ class LoginActivity : AppCompatActivity() {
     /* Error 상태인 경우 */
     private fun handleErrorState() = with(binding) {
         Toast.makeText(this@LoginActivity, "Error State", Toast.LENGTH_SHORT).show()
-//        val intent = Intent(this@LoginActivity, StartActivity::class.java)
-//        intent.putExtra("uid",firebaseAuth.uid)
-//        startActivity(intent)
-//        finish()
+        val intent = Intent(this@LoginActivity, StartActivity::class.java)
+        intent.putExtra("uid",firebaseAuth.uid)
+        startActivity(intent)
+        finish()
     }
 
 

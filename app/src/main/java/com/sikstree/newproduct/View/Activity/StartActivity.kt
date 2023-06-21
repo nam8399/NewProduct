@@ -39,7 +39,9 @@ class StartActivity : AppCompatActivity() {
 
 //        viewModel.setFragment(TAG_HOME, HomeFragment(), fragmentManager)
 
-        initName()
+//        initName()
+
+        initView("불타는삼각김밥")
     }
 
 
@@ -86,7 +88,6 @@ class StartActivity : AppCompatActivity() {
             layoutManager = listManager
             adapter = listAdapter
         }
-
 
         viewModel.iconClickPosition.observe(this) {
             if (it > -1) {
