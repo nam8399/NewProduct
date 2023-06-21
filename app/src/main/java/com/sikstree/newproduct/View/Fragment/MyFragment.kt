@@ -33,6 +33,7 @@ import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Activity.AuthActivity
 import com.sikstree.newproduct.View.Activity.LoginActivity
 import com.sikstree.newproduct.View.Activity.MainActivity
+import com.sikstree.newproduct.View.Activity.WebviewActivity
 import com.sikstree.newproduct.View.Dialog.CustomDialog
 import com.sikstree.newproduct.databinding.FragmentMyBinding
 import com.sikstree.newproduct.viewModel.HomeViewModel
@@ -144,6 +145,9 @@ class MyFragment() : Fragment() {
             val dlg = CustomDialog(activity as MainActivity)
             dlg.showSecessionDlg() // 로그아웃 다이얼로그
         }
+
+
+        btnApprule.setOnClickListener { intentWebView("") }
     }
 
 
@@ -191,7 +195,12 @@ class MyFragment() : Fragment() {
     }
 
 
+    fun intentWebView(url : String) {
+        val intent = Intent(context, WebviewActivity::class.java)
+        intent.putExtra("url",url)
 
+        startActivity(intent)
+    }
 
 
     override fun onResume() {
