@@ -8,6 +8,7 @@ import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.sikstree.newproduct.View.Activity.AuthActivity
+import com.sikstree.newproduct.View.Activity.MainActivity
 import com.sikstree.newproduct.View.Fragment.MyFragment
 import com.sikstree.newproduct.databinding.ActivityCustomDialogBinding
 import java.util.logging.Handler
@@ -17,6 +18,12 @@ class CustomDialog(private val context : AppCompatActivity) {
     private lateinit var binding : ActivityCustomDialogBinding
     private val dlg = Dialog(context)   //부모 액티비티의 context 가 들어감
     private lateinit var listener : MyDialogGalleryListener
+    private lateinit var loadingAnimDialog : CustomLoadingDialog
+
+    init {
+        loadingAnimDialog = CustomLoadingDialog(context)
+        loadingAnimDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
 
     fun show() {
         binding = ActivityCustomDialogBinding.inflate(context.layoutInflater)
@@ -112,6 +119,7 @@ class CustomDialog(private val context : AppCompatActivity) {
 
         binding.btnX.setOnClickListener() { dlg.dismiss() }
         binding.btnOk.setOnClickListener {
+            loadingAnimDialog.show()
             var myFragment = MyFragment.getInstance()
             myFragment?.secession()
         }

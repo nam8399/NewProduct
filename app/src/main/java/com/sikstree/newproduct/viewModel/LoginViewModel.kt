@@ -109,7 +109,9 @@ class LoginViewModel() : ViewModel() {
                         }
                     }
 
-                    login_check.value = 2
+                    if (login_check.value != 1) {
+                        login_check.value = 2
+                    }
                 } catch (e : Exception) {
                     e.printStackTrace()
 
@@ -121,7 +123,9 @@ class LoginViewModel() : ViewModel() {
                             }
                         }
 
-                        login_check.value = 2
+                        if (login_check.value != 1) {
+                            login_check.value = 2
+                        }
                     } catch (e : Exception) {
                         e.printStackTrace()
                     }

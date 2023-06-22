@@ -2,6 +2,8 @@ package com.sikstree.newproduct.View.Activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -16,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.sikstree.newproduct.Data.ReviewData
 import com.sikstree.newproduct.Data.UserUtil
 import com.sikstree.newproduct.R
+import com.sikstree.newproduct.View.Dialog.CustomLoadingDialog
 import com.sikstree.newproduct.databinding.ActivityAddreviewBinding
 import com.sikstree.newproduct.viewModel.AddReviewViewModel
 import java.time.LocalDateTime
@@ -25,6 +28,7 @@ class AddReviewActivity : AppCompatActivity() {
     private val title = "AddReviewActivity"
     private lateinit var binding : ActivityAddreviewBinding
     private val mViewModel : AddReviewViewModel by viewModels()
+    private lateinit var loadingAnimDialog : CustomLoadingDialog
 
 
     var backPressedTime : Long = 0
@@ -49,11 +53,15 @@ class AddReviewActivity : AppCompatActivity() {
 
     private fun initView() = with(binding) {
         choiceProductName.text = intent.getStringExtra("title")
+
+        loadingAnimDialog = CustomLoadingDialog(this@AddReviewActivity)
+        loadingAnimDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
 
     private fun onClick() = with(binding){
         btnSkip.setOnClickListener() {
+            loadingAnimDialog.show()
             mViewModel?.addReview(ReviewData(UserUtil.USER_PROFILE_IDX,
                 UserUtil.USER_NAME,
                 intent.getIntExtra("iconIdx", 0),
@@ -68,6 +76,7 @@ class AddReviewActivity : AppCompatActivity() {
         }
 
         btnAdd.setOnClickListener {
+            loadingAnimDialog.show()
             mViewModel?.uploadImg(imgUri.toUri(), imgUri2.toUri(), imgUri3.toUri(), img_count) // 이미지 등록 버튼 클릭 시 갤러리에서 가져온 이미지 서버에 등록
         }
 
@@ -89,6 +98,7 @@ class AddReviewActivity : AppCompatActivity() {
 
         mViewModel.finishEvent.observe(this@AddReviewActivity) { // 액티비티 종료 이벤트 받으면 액티비티 종료
             if (it) {
+                loadingAnimDialog.dismiss()
                 finish()
                 UserUtil.PRODUCT_VIEW_RESET = true
                 img_count = 0

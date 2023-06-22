@@ -1,6 +1,8 @@
 package com.sikstree.newproduct.View.Fragment
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -22,6 +24,7 @@ import com.sikstree.newproduct.View.Activity.LoginActivity
 import com.sikstree.newproduct.View.Activity.MainActivity
 import com.sikstree.newproduct.View.Activity.WebviewActivity
 import com.sikstree.newproduct.View.Dialog.CustomDialog
+import com.sikstree.newproduct.View.Dialog.CustomLoadingDialog
 import com.sikstree.newproduct.databinding.FragmentMyBinding
 import com.sikstree.newproduct.viewModel.MyViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -34,6 +37,7 @@ class MyFragment() : Fragment() {
     lateinit var viewModel : MyViewModel
     var isSeverAdd : Boolean = false
     private val title = "MyFragment"
+    private lateinit var loadingAnimDialog : CustomLoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +68,8 @@ class MyFragment() : Fragment() {
         binding.viewModel = viewModel
 
 
+        loadingAnimDialog = CustomLoadingDialog(activity as MainActivity)
+        loadingAnimDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         return binding.root
     }
@@ -104,6 +110,7 @@ class MyFragment() : Fragment() {
         }
 
         btnLogout.setOnClickListener {// 로그아웃
+            loadingAnimDialog.show()
             CoroutineScope(Dispatchers.IO).launch {
                 viewModel?.logoutFireStore()?.join()
 
@@ -120,6 +127,7 @@ class MyFragment() : Fragment() {
                 launch {
                     val intent = Intent(context, LoginActivity::class.java)
                     startActivity(intent)
+                    loadingAnimDialog.dismiss()
                     (activity as MainActivity).finish()
                 }.join()
             }
@@ -172,6 +180,7 @@ class MyFragment() : Fragment() {
         viewModel.isSecession.observe(this, Observer {
             if (it) {
                 val intent = Intent(context, LoginActivity::class.java)
+                intent.putExtra("Secession", 1)
                 startActivity(intent)
                 Toast.makeText(activity as MainActivity, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show()
                 (activity as MainActivity).finish()

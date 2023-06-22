@@ -93,10 +93,21 @@ class LoginActivity : AppCompatActivity() {
         loadingAnimDialog = CustomLoadingDialog(this@LoginActivity)
         loadingAnimDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        checkSecession() // 회원탈퇴 감지
+
         fetchJob = viewModel.fetchData(tokenId)
 
         observeData()
     }
+
+    private fun checkSecession() {
+        var secessionFlag = intent.getIntExtra("Secession", 0)
+
+        if (secessionFlag == 1) {
+            viewModel.login_check.value = 0
+        }
+    }
+
 
     private fun initViews() = with(binding) {
         viewModel?.getLogoutState()
@@ -172,6 +183,7 @@ class LoginActivity : AppCompatActivity() {
 
                 } else { //Login 실패
                     Toast.makeText(this@LoginActivity, "구글 로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show()
+                    handleLoadingState(false)
                 }
             }
     }
