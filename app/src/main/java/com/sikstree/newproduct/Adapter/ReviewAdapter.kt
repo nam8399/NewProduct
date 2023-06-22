@@ -97,18 +97,18 @@ class ReviewAdapter(private val context: Context) : RecyclerView.Adapter<ReviewA
 
 
             when(item.review_profile){
-                1 -> Glide.with(itemView).load(R.drawable.imoji_1).into(review_profile)
-                2 -> Glide.with(itemView).load(R.drawable.imoji_2).into(review_profile)
-                3 -> Glide.with(itemView).load(R.drawable.imoji_3).into(review_profile)
-                4 -> Glide.with(itemView).load(R.drawable.imoji_4).into(review_profile)
-                5 -> Glide.with(itemView).load(R.drawable.imoji_5).into(review_profile)
-                6 -> Glide.with(itemView).load(R.drawable.imoji_6).into(review_profile)
-                7 -> Glide.with(itemView).load(R.drawable.imoji_7).into(review_profile)
-                8 -> Glide.with(itemView).load(R.drawable.imoji_8).into(review_profile)
-                9 -> Glide.with(itemView).load(R.drawable.imoji_9).into(review_profile)
-                10 -> Glide.with(itemView).load(R.drawable.imoji_10).into(review_profile)
-                11 -> Glide.with(itemView).load(R.drawable.imoji_11).into(review_profile)
-                12 -> Glide.with(itemView).load(R.drawable.imoji_12).into(review_profile)
+                0 -> Glide.with(itemView).load(R.drawable.imoji_1).into(review_profile)
+                1 -> Glide.with(itemView).load(R.drawable.imoji_2).into(review_profile)
+                2 -> Glide.with(itemView).load(R.drawable.imoji_3).into(review_profile)
+                3 -> Glide.with(itemView).load(R.drawable.imoji_4).into(review_profile)
+                4 -> Glide.with(itemView).load(R.drawable.imoji_5).into(review_profile)
+                5 -> Glide.with(itemView).load(R.drawable.imoji_6).into(review_profile)
+                6 -> Glide.with(itemView).load(R.drawable.imoji_7).into(review_profile)
+                7 -> Glide.with(itemView).load(R.drawable.imoji_8).into(review_profile)
+                8 -> Glide.with(itemView).load(R.drawable.imoji_9).into(review_profile)
+                9 -> Glide.with(itemView).load(R.drawable.imoji_10).into(review_profile)
+                10 -> Glide.with(itemView).load(R.drawable.imoji_11).into(review_profile)
+                11 -> Glide.with(itemView).load(R.drawable.imoji_12).into(review_profile)
             }
 
         }
