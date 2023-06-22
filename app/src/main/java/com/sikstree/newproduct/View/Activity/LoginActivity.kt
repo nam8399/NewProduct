@@ -2,6 +2,8 @@ package com.sikstree.newproduct.View.Activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -17,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.sikstree.newproduct.Data.LoginState
 import com.sikstree.newproduct.R
+import com.sikstree.newproduct.View.Dialog.CustomLoadingDialog
 import com.sikstree.newproduct.databinding.ActivityLoginBinding
 import com.sikstree.newproduct.viewModel.LoginViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -27,6 +30,8 @@ import kotlinx.coroutines.launch
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
     private val viewModel : LoginViewModel by viewModels()
+
+    private lateinit var loadingAnimDialog : CustomLoadingDialog
 
     private val TAG = this.javaClass.simpleName
 
@@ -84,7 +89,9 @@ class LoginActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
-//        viewModel.setFragment(TAG_HOME, HomeFragment(), fragmentManager)
+
+        loadingAnimDialog = CustomLoadingDialog(this@LoginActivity)
+        loadingAnimDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         fetchJob = viewModel.fetchData(tokenId)
 
@@ -92,7 +99,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initViews() = with(binding) {
-
         viewModel?.getLogoutState()
 
         viewModel?.login_check?.observe(this@LoginActivity) {
@@ -107,6 +113,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginGoogle.setOnClickListener {   //로그인 버튼 클릭 시
+            handleLoadingState(true)
             val signInIntent: Intent = googleSignIn.signInIntent
             loginLauncher.launch(signInIntent)  //loginLauncher 로 결과 수신하여 처리
         }
@@ -122,19 +129,22 @@ class LoginActivity : AppCompatActivity() {
         Log.d(TAG, "observeData() - it : $it")
         when (it) {
             is LoginState.UnInitialized -> initViews()
-            is LoginState.Loading -> handleLoadingState()
+            is LoginState.LoadingShow -> handleLoadingState(true)
+            is LoginState.LoadingDismiss -> handleLoadingState(false)
             is LoginState.Login -> handleLoginState(it)
             is LoginState.Success -> handleSuccessState(it)
-            is LoginState.Error -> handleLoadingState()
+            is LoginState.Error -> handleErrorState()
         }
     }
 
 
     /* Loading 상태인 경우 */
-    private fun handleLoadingState() = with(binding) {
-//        progressBar.isVisible = true
-//        groupLoginRequired.isGone = true
-//        groupLogoutRequired.isGone = true
+    private fun handleLoadingState(show : Boolean) = with(binding) {
+        if (show) {
+            loadingAnimDialog.show()
+        } else {
+            loadingAnimDialog.dismiss()
+        }
     }
 
 
@@ -155,6 +165,7 @@ class LoginActivity : AppCompatActivity() {
                             val intent = Intent(this@LoginActivity, StartActivity::class.java)
                             intent.putExtra("uid",firebaseAuth.uid)
                             startActivity(intent)
+                            handleLoadingState(false)
                             finish()
                         }
                     })
@@ -201,10 +212,13 @@ class LoginActivity : AppCompatActivity() {
     /* Error 상태인 경우 */
     private fun handleErrorState() = with(binding) {
         Toast.makeText(this@LoginActivity, "Error State", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this@LoginActivity, StartActivity::class.java)
-        intent.putExtra("uid",firebaseAuth.uid)
-        startActivity(intent)
-        finish()
+
+        handleLoadingState(false)
+
+    //        val intent = Intent(this@LoginActivity, StartActivity::class.java)
+//        intent.putExtra("uid",firebaseAuth.uid)
+//        startActivity(intent)
+//        finish()
     }
 
 

@@ -35,7 +35,7 @@ class LoginViewModel() : ViewModel() {
     }
 
     fun fetchData(tokenId: String?): Job = viewModelScope.launch {
-        setState(LoginState.Loading)
+//        setState(LoginState.Loading)
         tokenId?.let {
             setState(
                 LoginState.Login(it)

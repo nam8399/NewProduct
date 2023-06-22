@@ -6,7 +6,8 @@ sealed class LoginState {
 
     object UnInitialized : LoginState()
 
-    object Loading : LoginState()
+    object LoadingShow : LoginState()
+    object LoadingDismiss : LoginState()
 
     data class Login(
         val idToken: String
