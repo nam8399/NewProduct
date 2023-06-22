@@ -144,7 +144,7 @@ class MyFragment() : Fragment() {
 
         viewModel.uiState.asLiveData().observe(viewLifecycleOwner, Observer {
             when (it) {
-                is UiState.Loading -> {
+                is UiState.LoadingShow -> {
 //                    showLoadingView()
 //                    hideRecyclerView()
                 }
@@ -161,6 +161,7 @@ class MyFragment() : Fragment() {
 //                    hideLoadingView()
 //                    showErrorText(it.message.toString())
                 }
+                else -> {}
             }
         })
     }

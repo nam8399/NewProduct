@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 class MainViewModel() : ViewModel() {
     private val title = "MainViewModel"
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState>(UiState.LoadingShow)
     val uiState = _uiState.asStateFlow()
 
 

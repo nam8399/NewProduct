@@ -24,7 +24,7 @@ class MyViewModel(application: Application) : AndroidViewModel(application){
 
     private val title = "MyViewModel"
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState>(UiState.LoadingShow)
     val uiState = _uiState.asStateFlow()
 
     var auth : FirebaseAuth? = null

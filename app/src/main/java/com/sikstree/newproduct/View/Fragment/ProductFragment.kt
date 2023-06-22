@@ -2,6 +2,7 @@ package com.sikstree.newproduct.View.Fragment
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import com.sikstree.newproduct.Data.UserUtil
 import com.sikstree.newproduct.R
 import com.sikstree.newproduct.View.Activity.MainActivity
 import com.sikstree.newproduct.View.Activity.ReviewActivity
+import com.sikstree.newproduct.View.Dialog.CustomLoadingDialog
 import com.sikstree.newproduct.databinding.FragmentProductBinding
 import com.sikstree.newproduct.viewModel.HomeViewModel
 import com.sikstree.newproduct.viewModel.ProductViewModel
@@ -31,6 +33,7 @@ class ProductFragment() : Fragment() {
     var datas = arrayListOf<ProductData>()
     lateinit var viewModel: ProductViewModel
 
+    private lateinit var loadingAnimDialog : CustomLoadingDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +59,9 @@ class ProductFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
+
+        loadingAnimDialog = CustomLoadingDialog(activity as MainActivity)
+        loadingAnimDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         showSomething()
 
@@ -97,15 +103,13 @@ class ProductFragment() : Fragment() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
-        viewModel.uiState.asLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.uiState.observe(viewLifecycleOwner, Observer {
             when (it) {
-                is UiState.Loading -> {
-//                    showLoadingView()
-//                    hideRecyclerView()
+                is UiState.LoadingShow -> {
+                    handleLoadingState(true)
                 }
-                is UiState.Empty -> {
-//                    hideLoadingView()
-//                    showEmptyText()
+                is UiState.LoadingDismiss -> {
+                    handleLoadingState(true)
                 }
                 is UiState.Success -> {
 //                    hideLoadingView()
@@ -116,6 +120,7 @@ class ProductFragment() : Fragment() {
 //                    hideLoadingView()
 //                    showErrorText(it.message.toString())
                 }
+                else -> {}
             }
         })
     }
@@ -129,6 +134,7 @@ class ProductFragment() : Fragment() {
     }
 
     private fun initData() { // 화면에 보여질 데이터 생성
+        handleLoadingState(true)
         viewModel.initData()
 
         viewModel.getEvent.observe(viewLifecycleOwner, Observer {
@@ -139,10 +145,11 @@ class ProductFragment() : Fragment() {
                         datas.add(viewModel.getList().get(i))
                     }
                     initRecycler()
+
+                    handleLoadingState(false)
                 }
             }
         })
-
 
     }
 
@@ -167,7 +174,6 @@ class ProductFragment() : Fragment() {
             }
 
         })
-
     }
 
     private fun initRecycler(datas : ArrayList<ProductData>) { // 카테고리 클릭 시 해당 카테고리 데이터만 초기화
@@ -196,6 +202,15 @@ class ProductFragment() : Fragment() {
 
         })
     }
+
+    private fun handleLoadingState(show : Boolean) = with(binding) {
+        if (show) {
+            loadingAnimDialog.show()
+        } else {
+            loadingAnimDialog.dismiss()
+        }
+    }
+
 
     private fun observeCategory() = with(viewModel) { // 상단 카테고리 버튼 클릭 시 처리
         onclickIdx.observe(viewLifecycleOwner, Observer {

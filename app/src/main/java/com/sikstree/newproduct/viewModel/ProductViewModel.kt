@@ -3,6 +3,7 @@ package com.sikstree.newproduct.viewModel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,8 +22,8 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
     private var uid : String? = null
 
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
-    val uiState = _uiState.asStateFlow()
+    private val _uiState = MutableLiveData<UiState>(UiState.LoadingShow)
+    val uiState: LiveData<UiState> = _uiState
 
     var onclickIdx = MutableLiveData<Int>()
     var categoryIdx = MutableLiveData<Int>()
@@ -186,6 +187,10 @@ class ProductViewModel(application: Application) : AndroidViewModel(application)
 
     fun getList(): ArrayList<ProductData> {
         return listAll
+    }
+
+    private fun setState(state: UiState) {
+        _uiState.postValue(state)
     }
 
 

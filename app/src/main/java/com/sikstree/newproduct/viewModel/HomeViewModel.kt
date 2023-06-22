@@ -31,7 +31,7 @@ class HomeViewModel( application: Application) : AndroidViewModel(application) {
 
     private val title = "HomeViewModel"
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState>(UiState.LoadingShow)
     val uiState = _uiState.asStateFlow()
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
