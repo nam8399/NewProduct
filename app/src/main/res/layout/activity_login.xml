@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.sikstree.newproduct.viewModel.LoginViewModel" />
+            type="com.sikstree.newproducts.viewModel.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

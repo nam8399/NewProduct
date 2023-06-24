@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.sikstree.newproduct.viewModel.MyViewModel" />
+            type="com.sikstree.newproducts.viewModel.MyViewModel" />
     </data>
 
     <FrameLayout
@@ -196,6 +196,16 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="24dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="현재버전"
+                    android:textSize="16sp"
+                    android:textColor="@color/white">
+                </TextView>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

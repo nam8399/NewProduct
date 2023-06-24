@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.sikstree.newproduct'
+    namespace 'com.sikstree.newproducts'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.sikstree.newproduct"
+        applicationId "com.sikstree.newproducts"
         minSdk 24
         targetSdk 33
         versionCode 2

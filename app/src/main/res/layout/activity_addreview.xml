@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.sikstree.newproduct.viewModel.AddReviewViewModel" />
+            type="com.sikstree.newproducts.viewModel.AddReviewViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

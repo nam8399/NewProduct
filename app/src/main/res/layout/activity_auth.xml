@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.sikstree.newproduct.viewModel.MyViewModel" />
+            type="com.sikstree.newproducts.viewModel.MyViewModel" />
     </data>
 
     <FrameLayout

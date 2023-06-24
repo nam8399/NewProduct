@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.sikstree.newproduct.viewModel.ChoiceViewModel" />
+            type="com.sikstree.newproducts.viewModel.ChoiceViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
