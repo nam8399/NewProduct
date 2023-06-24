@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.sikstree.newproduct.Data.LoginState
 import com.sikstree.newproduct.R
+import com.sikstree.newproduct.View.Dialog.CustomDialog
 import com.sikstree.newproduct.View.Dialog.CustomLoadingDialog
 import com.sikstree.newproduct.databinding.ActivityLoginBinding
 import com.sikstree.newproduct.viewModel.LoginViewModel
@@ -40,6 +41,17 @@ class LoginActivity : AppCompatActivity() {
     private var tokenId: String? = null  //Google Auth 인증에 성공하면 token 값으로 설정된다
 
     var backPressedTime : Long = 0
+
+    init{
+        instance = this
+    }
+
+    companion object{
+        private var instance: LoginActivity? = null
+        fun getInstance(): LoginActivity?{
+            return instance
+        }
+    }
 
 
     /* GoogleSignInOptions */
@@ -132,6 +144,11 @@ class LoginActivity : AppCompatActivity() {
         btnPrivacy.setOnClickListener {
             intentWebView("https://sikdroid.tistory.com/21")
         }
+
+        btnTest.setOnClickListener {
+            val dlg = CustomDialog(this@LoginActivity)
+            dlg.showTestDlg() // 로그아웃 다이얼로그
+        }
     }
 
 
@@ -148,6 +165,36 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+
+    fun testLogin() { // 구글 심사 위한 테스트 계정 로그인
+        Log.d(TAG, "test Login Start")
+        val email = "namjs1012@gmail.com"
+        val password = "slondy1012509"
+        firebaseAuth?.signInWithEmailAndPassword(email, password)
+            ?.addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        baseContext, "테스트 로그인에 성공 하였습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel?.getLoginState()?.join()
+                    }
+
+                    val intent = Intent(this@LoginActivity, StartActivity::class.java)
+                    intent.putExtra("uid",firebaseAuth.uid)
+                    startActivity(intent)
+                    handleLoadingState(false)
+                    finish()
+                } else {
+                    Toast.makeText(
+                        baseContext, "로그인에 실패 하였습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
 
     /* Loading 상태인 경우 */
     private fun handleLoadingState(show : Boolean) = with(binding) {
