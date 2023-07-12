@@ -9,6 +9,7 @@
             type="com.sikstree.newproducts.viewModel.MyViewModel" />
     </data>
 
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"

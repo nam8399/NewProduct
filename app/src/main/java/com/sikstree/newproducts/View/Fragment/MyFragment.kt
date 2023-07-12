@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.sikstree.newproducts.Data.UiState
 import com.sikstree.newproducts.Data.UserUtil
@@ -111,7 +112,7 @@ class MyFragment() : Fragment() {
 
         btnLogout.setOnClickListener {// 로그아웃
             loadingAnimDialog.show()
-            CoroutineScope(Dispatchers.IO).launch {
+            lifecycleScope.launch(Dispatchers.IO) {
                 viewModel?.logoutFireStore()?.join()
 
                 launch {
