@@ -218,10 +218,9 @@ class LoginActivity : AppCompatActivity() {
                         viewModel?.getLoginState()?.join()
                     }
 
-
                     viewModel?.login_check?.observe(this@LoginActivity, Observer {
                         if (it == 2) {
-                            Toast.makeText(this@LoginActivity, "구글 로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginActivity, "구글 로그인에 성공하셨습니다.", Toast.LENGTH_SHORT).show() // 로그인 성공 시
                             val intent = Intent(this@LoginActivity, StartActivity::class.java)
                             intent.putExtra("uid",firebaseAuth.uid)
                             startActivity(intent)
@@ -231,7 +230,7 @@ class LoginActivity : AppCompatActivity() {
                     })
 
                 } else { //Login 실패
-                    Toast.makeText(this@LoginActivity, "구글 로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "구글 로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show() // 로그인 실패 시
                     handleLoadingState(false)
                 }
             }
