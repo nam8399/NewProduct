@@ -225,7 +225,7 @@ class LoginActivity : AppCompatActivity() {
                             intent.putExtra("uid",firebaseAuth.uid)
                             startActivity(intent)
                             handleLoadingState(false)
-                            finish()
+                            finish() // 로그인 성공 액티비티 전환하면서 기존 액티비티 종료
                         }
                     })
 
