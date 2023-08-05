@@ -228,7 +228,6 @@ class LoginActivity : AppCompatActivity() {
                             finish() // 로그인 성공 액티비티 전환하면서 기존 액티비티 종료
                         }
                     })
-
                 } else { //Login 실패
                     Toast.makeText(this@LoginActivity, "구글 로그인에 실패하셨습니다.", Toast.LENGTH_SHORT).show() // 로그인 실패 시
                     handleLoadingState(false)
