@@ -236,7 +236,6 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-
     /* Google Auth Login Success 상태인 경우 */
     private fun handleSuccessState(state: LoginState.Success) = with(binding) {
 //        progressBar.isGone = true
